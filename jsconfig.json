@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "jsx": "react",  
+    "baseUrl": ".",
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules",                    
+    "dist",
+    "build"
+  ]
+}
