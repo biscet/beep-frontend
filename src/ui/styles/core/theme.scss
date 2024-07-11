@@ -1,7 +1,7 @@
 .dark {
-  --var2: black;
+  #{$bg-general}: black;
 }
 
 .light {
-  --var2: green;
+  #{$bg-general}: green;
 }

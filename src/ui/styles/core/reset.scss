@@ -9,7 +9,7 @@
 
 #root {
   width: 100%;
-  max-width: 1920px;
+  max-width: $max-screen-width;
   height: 100vh;
   height: 100svh;
   margin: 0 auto;
