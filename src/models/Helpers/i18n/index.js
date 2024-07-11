@@ -4,19 +4,17 @@ import {
 } from 'src/lib/lodash';
 import { storage } from 'src/lib/storage';
 import {
-  dictI18n, crossLang, LANG_FIELD, LANGUAGES,
+  dictI18n, crossLang, LANG_FIELD,
 } from 'src/dict/translates';
-import { getLang } from 'src/lib/i18n';
-import { allDomain } from '../App';
+import { getLang } from 'src/lib/helpers';
+import { allDomain } from 'src/models/App';
 
-const GET_DEFAULT_LANG = storage.get(LANG_FIELD);
-
-export const i18nDomain = allDomain.createDomain('i18nDomain');
+export const i18nDomain = allDomain.createDomain('i18n');
 
 export const getLangFn = i18nDomain.createEvent();
 export const changeLangFn = i18nDomain.createEvent();
 
-export const $lang = i18nDomain.createStore(isEmpty(GET_DEFAULT_LANG) ? LANGUAGES.RU : GET_DEFAULT_LANG);
+export const $lang = i18nDomain.createStore(getLang());
 
 export const $translates = i18nDomain.createStore(dictI18n);
 

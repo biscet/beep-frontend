@@ -5,8 +5,7 @@ import { get } from 'src/lib/lodash';
 import { PAGES_PATH } from 'src/dict/path';
 import { AppGate } from 'src/models/App';
 import { BasicRoute as Route } from 'src/ui/components/Routes';
-import { Helmet } from 'src/ui/components/Helmet';
-import { I18nProvider } from 'src/ui/components/i18n';
+import { Helmet, I18nProvider, Theme } from 'src/ui/components/Helpers';
 
 import { Default } from './children/Default';
 
@@ -14,7 +13,6 @@ const { DEFAULT } = PAGES_PATH;
 
 export const App = () => {
   useGate(AppGate, {
-    firstPage: get(window, 'location.pathname', ''),
     pathname: get(window, 'location.pathname', ''),
     pathParams: get(window, 'location.search', ''),
   });
@@ -23,6 +21,7 @@ export const App = () => {
     <I18nProvider>
       <BrowserRouter>
         <Helmet />
+        <Theme />
 
         <Suspense fallback="...">
           <Switch>

@@ -1,0 +1,1 @@
+export const htmlContainer = document.getElementsByTagName('html')[0];

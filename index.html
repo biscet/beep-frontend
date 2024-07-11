@@ -12,6 +12,13 @@
     <meta name="msapplication-navbutton-color" content="#fff" />
     <meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
 
+    <meta name="description" content="Beep Default Page" />
+    <meta name="keywords" content="Beep,Video" />
+
+    <meta property="og:title" content="Beep Frontend" />
+    <meta property="og:description" content="Beep Default Page" />
+    <meta property="og:keywords" content="Beep,Video" />
+
     <meta property="og:type" content="website" />
     <meta property="og:url" content="***permalink***" />
     <meta property="og:image" content="***img***" />
@@ -21,6 +28,12 @@
     <link rel="apple-touch-icon" href="/images/favicon.svg" />
 
     <meta name="format-detection" content="telephone=no, address=no, email=no, date=no, password=no" />
+    
+    <script type="text/javascript">
+      const htmlContainer = document.getElementsByTagName('html')[0];
+      const theme = localStorage.getItem('theme');
+      if (theme) { htmlContainer.classList = [theme]; }
+    </script>
   </head>
   <body>
     <div id="root"></div>

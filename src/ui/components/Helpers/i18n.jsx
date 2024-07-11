@@ -1,6 +1,6 @@
 import React, { createContext } from 'react';
 import { useUnit } from 'effector-react';
-import { $i18nCombineData, translate } from 'src/models/i18n';
+import { $i18nCombineData, translate } from 'src/models/Helpers/i18n';
 
 export const I18nContext = createContext();
 
