@@ -14,3 +14,7 @@ export const get = (object, path, value) => {
 };
 
 export const intersection = (a, b) => a.filter((value) => b.includes(value));
+
+export const isArray = (value) => !!value && value.constructor === Array;
+
+export const strTrim = (str) => str.trim();

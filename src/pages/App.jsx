@@ -5,7 +5,9 @@ import { get } from 'src/lib/lodash';
 import { PAGES_PATH } from 'src/dict/path';
 import { AppGate } from 'src/models/App';
 import { BasicRoute as Route } from 'src/ui/components/Routes';
-import Helmet from 'src/ui/components/Helmet';
+import { Helmet } from 'src/ui/components/Helmet';
+import { I18nProvider } from 'src/ui/components/i18n';
+
 import { Default } from './children/Default';
 
 const { DEFAULT } = PAGES_PATH;
@@ -18,15 +20,17 @@ export const App = () => {
   });
 
   return (
-    <BrowserRouter>
-      <Helmet />
+    <I18nProvider>
+      <BrowserRouter>
+        <Helmet />
 
-      <Suspense fallback="...">
-        <Switch>
-          <Route path={`/${DEFAULT}`} component={Default} exact />
-          <Redirect to={`/${DEFAULT}`} />
-        </Switch>
-      </Suspense>
-    </BrowserRouter>
+        <Suspense fallback="...">
+          <Switch>
+            <Route path={`/${DEFAULT}`} component={Default} exact />
+            <Redirect to={`/${DEFAULT}`} />
+          </Switch>
+        </Suspense>
+      </BrowserRouter>
+    </I18nProvider>
   );
 };
