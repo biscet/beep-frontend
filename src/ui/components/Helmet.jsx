@@ -4,7 +4,7 @@ import { Helmet as Head } from 'react-helmet';
 import { HELMET_FIELDS } from 'src/dict/fields/app';
 import { $helmetDataCombine } from 'src/models/App';
 
-const Helmet = () => {
+export const Helmet = () => {
   const {
     [HELMET_FIELDS.TITLE]: helmetTitle,
     [HELMET_FIELDS.DESCRIPTION]: helmetDescription,
@@ -24,5 +24,3 @@ const Helmet = () => {
     </Head>
   );
 };
-
-export default Helmet;

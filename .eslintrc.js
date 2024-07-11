@@ -5,11 +5,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: [
-    'plugin:react/recommended',
-    'plugin:unicorn/recommended',
-    'airbnb',
-  ],
+  extends: ['plugin:react/recommended', 'plugin:unicorn/recommended', 'airbnb', 'plugin:storybook/recommended'],
   ignorePatterns: [],
   parserOptions: {
     ecmaFeatures: {

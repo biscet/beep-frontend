@@ -3,6 +3,7 @@ import { spread } from 'patronum/spread';
 import { isEmpty } from 'src/lib/lodash';
 import { HELMET_FIELDS } from 'src/dict/fields/app';
 import { PAGES_PATH } from 'src/dict/path';
+import { HELMET_DICT, HELMET_ROUTES } from 'src/dict/helmet';
 import {
   AppGate, RouteGate, $pathnameUrl, $pathParams,
   $helmetTitle,
@@ -34,17 +35,17 @@ sample({
 sample({
   clock: $pathnameUrl,
   fn: (pathnameUrl) => {
-    const helmet = {
+    let helmet = {
       [HELMET_FIELDS.TITLE]: '-',
       [HELMET_FIELDS.DESCRIPTION]: '-',
       [HELMET_FIELDS.KEYWORDS]: '-',
     };
 
-    if (pathnameUrl.includes(PAGES_PATH.DEFAULT)) {
-      helmet[HELMET_FIELDS.TITLE] = 'Beep - Default';
-      helmet[HELMET_FIELDS.DESCRIPTION] = 'Beep Default Page';
-      helmet[HELMET_FIELDS.KEYWORDS] = 'Beep,Video';
-    }
+    HELMET_ROUTES.forEach((route) => {
+      if (pathnameUrl.includes(route)) {
+        helmet = HELMET_DICT[route];
+      }
+    });
 
     return helmet;
   },

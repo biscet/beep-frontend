@@ -1,8 +1,12 @@
+import React, { useContext } from 'react';
+import { I18nContext } from 'src/ui/components/i18n';
 
-import React from 'react';
+export const Default = () => {
+  const t = useContext(I18nContext);
 
-export const Default = () => (
-  <div>
-    Test
-  </div>
-);
+  return (
+    <div>
+      {t('Текст')}
+    </div>
+  );
+};
