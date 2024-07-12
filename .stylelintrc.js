@@ -15,7 +15,7 @@ module.exports = {
       ignorePseudoClasses: ['global']
     }],
      'unit-no-unknown': null,
-    'plugin/no-low-performance-animation-properties': true,
+    'plugin/no-low-performance-animation-properties':[true, { ignoreProperties: ['color', 'background-color'] }],
     'selector-type-no-unknown': [true, { ignore: ['custom-elements', 'default-namespace'] }],
     'selector-type-case': ['lower', { ignoreTypes: ['/.+/'] }],
   },

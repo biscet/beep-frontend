@@ -1,0 +1,6 @@
+body {
+  @include theme-transition-base(background-color);
+
+  background-color: var($bg-general);
+  color: var($text-general);
+}

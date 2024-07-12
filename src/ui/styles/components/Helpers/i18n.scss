@@ -1,0 +1,22 @@
+.language-picker {
+  @include flex-centered;
+
+  @extend .inter-medium;
+
+  min-width: 56px;
+  justify-content: space-between;
+  color: var($text-general);
+  cursor: pointer;
+  gap: 8px;
+  user-select: none;
+
+  @include default-hover;
+
+  svg {
+    path {
+      @include theme-transition-base(fill);
+
+      fill: var($text-general);
+    }
+  }
+}

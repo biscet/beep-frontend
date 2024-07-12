@@ -1,3 +1,4 @@
 export const en = {
-  0: 'Text',
+  0: 'Log in',
+  1: 'Registration',
 };

@@ -1,0 +1,21 @@
+.header {
+  @include flex-centered;
+
+  height: 104px;
+  justify-content: space-between;
+  padding: var($pad-general);
+
+  &__logo {
+    @extend .chakra-petch-medium;
+
+    color: var($text-general);
+
+    @include default-hover;
+  }
+
+  .nav {
+    @include flex-centered;
+
+    gap: 48px;
+  }
+}

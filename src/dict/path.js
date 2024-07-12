@@ -1,3 +1,5 @@
 export const PAGES_PATH = {
-  DEFAULT: 'default',
+  DEFAULT: '',
+  REGISTRATION: 'registration',
+  LOGIN: 'login',
 };

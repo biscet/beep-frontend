@@ -1,0 +1,26 @@
+@mixin flex-centered {
+  display: flex;
+  align-items: center;
+}
+
+@mixin theme-transition-base($pattern) {
+  transition: $pattern 0.1s linear;
+}
+
+@mixin hover {
+  &:not([disabled]):hover {
+    @content;
+  }
+}
+
+@mixin active {
+  &:not([disabled]):active {
+    @content;
+  }
+}
+
+@mixin default-hover {
+  @include hover {
+    opacity: 0.9;
+  }
+}

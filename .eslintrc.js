@@ -67,5 +67,6 @@ module.exports = {
     'jsx-a11y/click-events-have-key-events': 'off',
     'eol-last': 0,
     'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
+    'react/button-has-type': 0,
   },
 };
