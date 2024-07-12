@@ -9,7 +9,7 @@
 
 1. Клонируйте репозиторий с помощью команды `git clone git@github.com:biscet/beep-frontend.git`
 2. Перейдите в папку проекта с помощью команды `cd beep-frontend/`
-3. Переключите git ветку на develop `git checkout dev`
+3. Переключите git ветку на dev `git checkout dev`
 4. Установите зависимости с помощью команды `yarn OR yarn install`
 5. Создайте .env файл и переместите в него содержимое файла .env.example
 6. В .env замените все нужны параметры для корректного запуска приложения
@@ -24,7 +24,7 @@
 #### Описание зависимостей ENV
 
 - `FARM_BACKEND_API` - Ссылка для Backend API.
-- `FARM_SITEMAP_HOST` - Ссылка на домен Fronend приложения для Sitemap.
+- `FARM_SITEMAP_HOST` - Ссылка на домен Frontend приложения для Sitemap.
 
 #### Линтеры
 

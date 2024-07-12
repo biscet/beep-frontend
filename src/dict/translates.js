@@ -14,8 +14,8 @@ export const LANGUAGES_NAMES = {
 };
 
 export const LANGUAGES_NAMES_ABRV = {
-  [LANGUAGES.RU]: 'РУС',
-  [LANGUAGES.EN]: 'ENG',
+  [LANGUAGES.RU]: 'RU',
+  [LANGUAGES.EN]: 'EN',
 };
 
 export const crossLang = LANGUAGES.RU;

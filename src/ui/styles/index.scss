@@ -1,2 +1,17 @@
+@import "https://unpkg.com/open-props/easings.min.css";
+
+// Core
+@import './core/fields.scss';
+@import './core/mixins.scss';
 @import './core/reset.scss';
 @import './core/theme.scss';
+@import './core/typography.scss';
+@import './core/global.scss';
+
+// Components
+@import './components/Form/button.scss';
+@import './components/Helpers/i18n.scss';
+@import './components/Helpers/theme.scss';
+
+// Blocks
+@import './blocks/header.scss';

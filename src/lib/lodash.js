@@ -18,3 +18,12 @@ export const intersection = (a, b) => a.filter((value) => b.includes(value));
 export const isArray = (value) => !!value && value.constructor === Array;
 
 export const strTrim = (str) => str.trim();
+
+export const cx = ({
+  defaultClass, activeClass, nonActiveClass, condition = true,
+}) => {
+  const className = isArray(defaultClass) ? [...defaultClass] : defaultClass.split(' ');
+  const pushCondition = isEmpty(nonActiveClass) ? '' : nonActiveClass;
+  className.push(condition ? activeClass : pushCondition);
+  return className.join(' ');
+};

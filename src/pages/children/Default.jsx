@@ -6,7 +6,7 @@ export const Default = () => {
 
   return (
     <div>
-      {t('Текст')}
+      {t('')}
     </div>
   );
 };

@@ -1,7 +1,15 @@
 .dark {
-  --var2: black;
+  #{$bg-general}: #1c171d;
+  #{$text-general}: #ffffff;
+  #{$pad-general}: 0 80px;
+  #{$accent-color-general}: #8d62f8;
+  #{$button-text}: #1c171d;
 }
 
 .light {
-  --var2: green;
+  #{$bg-general}: #ffffff;
+  #{$text-general}: #131313;
+  #{$pad-general}: 0 80px;
+  #{$accent-color-general}: #8d62f8;
+  #{$button-text}: #ffffff;
 }

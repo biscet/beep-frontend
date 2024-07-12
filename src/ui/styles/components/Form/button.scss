@@ -1,0 +1,25 @@
+.button {
+  @extend .inter-medium;
+
+  cursor: pointer;
+
+  @include default-hover;
+
+  &_primary {
+    @include flex-centered;
+
+    width: 308px;
+    flex-shrink: 0;
+    justify-content: center;
+    padding: 16px;
+    background: var($accent-color-general);
+    border-radius: 24px;
+    color: var($button-text);
+    gap: 10px;
+    user-select: none;
+  }
+
+  &_text {
+    color: var($text-general);
+  }
+}

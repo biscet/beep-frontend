@@ -1,17 +1,17 @@
 * {
+  @include theme-transition-base(color);
+
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Inter', sans-serif;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
 }
 
 #root {
   width: 100%;
-  max-width: 1920px;
-  height: 100vh;
-  height: 100svh;
+  max-width: $max-screen-width;
   margin: 0 auto;
   overflow-x: hidden;
 }
