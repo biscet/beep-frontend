@@ -2,14 +2,20 @@ import { sample } from 'effector';
 import { spread } from 'patronum/spread';
 import { isEmpty } from 'src/lib/lodash';
 import { HELMET_FIELDS } from 'src/dict/fields/app';
-import { PAGES_PATH } from 'src/dict/path';
 import { HELMET_DICT, HELMET_ROUTES } from 'src/dict/helmet';
+import { debounce } from 'patronum';
 import {
   AppGate, RouteGate, $pathnameUrl, $pathParams,
   $helmetTitle,
   $helmetKeywords,
   $helmetDescription,
+  $fullyLoadApplication,
+  setLoadAppliactionStateFn,
+  $headerAnimationComplete,
+  setHeaderAnimationStateFn,
 } from './index';
+
+$headerAnimationComplete.on(setHeaderAnimationStateFn, (_, complete) => complete);
 
 sample({
   clock: AppGate.state,
@@ -56,4 +62,23 @@ sample({
       [HELMET_FIELDS.KEYWORDS]: $helmetKeywords,
     },
   }),
+});
+
+sample({
+  clock: debounce({
+    source: setLoadAppliactionStateFn,
+    timeout: 100,
+  }),
+  target: $fullyLoadApplication,
+});
+
+sample({
+  clock: $fullyLoadApplication,
+  filter: (loaded) => loaded,
+  fn: () => {
+    const loaderAppContainer = document.getElementById('loader-application');
+    if (loaderAppContainer) {
+      loaderAppContainer.remove();
+    }
+  },
 });

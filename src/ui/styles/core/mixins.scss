@@ -24,3 +24,9 @@
     opacity: 0.9;
   }
 }
+
+@mixin default-layout-width {
+  width: 100vw;
+  max-width: $max-screen-width;
+  margin: 0 auto;
+}

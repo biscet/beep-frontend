@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="google" content="notranslate">
 
-    <title>Beep Frontend</title>
+    <title>beep - ^%#@</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -36,11 +36,33 @@
     <script type="text/javascript">
       const htmlContainer = document.getElementsByTagName('html')[0];
       const theme = localStorage.getItem('theme');
-      if (theme) { htmlContainer.classList = [theme]; }
+
+      if (theme) { htmlContainer.classList = [theme]; } 
+
+      document.addEventListener('DOMContentLoaded', () => {
+        const loaderAppContainer = document.getElementById('loader-application');
+        loaderAppContainer.style.backgroundColor = JSON.parse(theme) === 'dark' ? '#1c171d' : 'white';
+      });
     </script>
+
+    <style type="text/css">
+      #loader-application {
+        width: 100vw;
+        height: 100vh;
+        height: 100svh;
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        background-color: white;
+        left: 0;
+        overflow: hidden;
+        transition: background-color 0.1s linear;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
+    <div id="loader-application"></div>
     <script type="module" src="/src/index.jsx"></script>
   </body>
 </html>

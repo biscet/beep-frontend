@@ -1,0 +1,7 @@
+.default-content {
+  &__wrapper {
+    @include default-layout-width;
+
+    padding: var($pad-general);
+  }
+}

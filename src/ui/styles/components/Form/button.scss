@@ -1,3 +1,16 @@
+@mixin arrow-svg-hover {
+  #arrow-svg {
+    transform: translateX(0);
+    transition: transform 0.1s linear;
+  }
+
+  @include hover {
+    #arrow-svg {
+      transform: translateX(2px);
+    }
+  }
+}
+
 .button {
   @extend .inter-medium;
 
@@ -7,6 +20,7 @@
 
   &_primary {
     @include flex-centered;
+    @include arrow-svg-hover;
 
     width: 308px;
     flex-shrink: 0;
@@ -16,6 +30,21 @@
     border-radius: 24px;
     color: var($button-text);
     gap: 10px;
+    user-select: none;
+  }
+
+  &_secondary {
+    @include flex-centered;
+    @include arrow-svg-hover;
+
+    width: max-content;
+    flex-shrink: 0;
+    justify-content: center;
+    padding: 16px 50px;
+    border: 2px solid var($accent-color-general);
+    border-radius: 24px;
+    color: var($accent-color-general);
+    gap: 15px;
     user-select: none;
   }
 
