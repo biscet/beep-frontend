@@ -1,9 +1,23 @@
 .header {
-  @include flex-centered;
+  @include theme-transition-base(background-color);
 
+  position: sticky;
+  z-index: 10;
+  top: 0;
+  width: 100vw;
   height: 104px;
-  justify-content: space-between;
-  padding: var($pad-general);
+  backdrop-filter: blur(15px);
+
+  &__box {
+    @include flex-centered;
+
+    width: 100%;
+    max-width: 1920px;
+    height: 100%;
+    justify-content: space-between;
+    padding: var($pad-general);
+    margin: 0 auto;
+  }
 
   &__logo {
     @extend .chakra-petch-medium;

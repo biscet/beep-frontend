@@ -1,0 +1,138 @@
+.default-page {
+  display: flex;
+  height: calc(100vh - 105px - 52px);
+  height: calc(100svh - 105px - 52px);
+  min-height: 750px;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-top: 15vh;
+  padding-top: 15svh;
+  margin-bottom: 32px;
+
+  &__box {
+    @include flex-centered;
+
+    gap: 32px;
+  }
+
+  &__copyright {
+    @extend .inter-medium;
+
+    width: max-content;
+    margin: 0 auto;
+  }
+
+  &__texts {
+    z-index: 2;
+    display: flex;
+    width: 100%;
+    max-width: 505px;
+    flex-direction: column;
+    flex-shrink: 0;
+    gap: 32px;
+
+    h1 {
+      @extend .inter-semibold;
+    }
+
+    p {
+      @extend .inter-regular-thinner;
+    }
+  }
+
+  .preview {
+    position: relative;
+    width: 100%;
+
+    &__box {
+      @include theme-transition-base(background-color);
+
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 730px;
+      height: 440px;
+      flex-shrink: 0;
+      background-color: var($bg-preview);
+      border-radius: 32px;
+    }
+
+    .shape {
+      width: 250px;
+      height: 250px;
+      filter: blur(100px);
+
+      &_one {
+        position: absolute;
+        top: -75px;
+        left: -80px;
+        animation: shape-animation 4s alternate infinite;
+        background: var($accent-color-general);
+      }
+
+      &_two {
+        position: absolute;
+        right: -30px;
+        bottom: -5px;
+        animation: shape-animation 7s infinite;
+        background: var($accent-color-general);
+      }
+
+      &_three {
+        position: absolute;
+        bottom: -100px;
+        left: 20px;
+        animation: shape-animation 5s alternate-reverse infinite;
+        background-color: var($accent-color-secondary);
+      }
+    }
+
+    .symbol {
+      @extend .chakra-petch-medium;
+
+      user-select: none;
+
+      &_one {
+        position: absolute;
+        z-index: 2;
+        top: -25px;
+        left: -40px;
+        transform: rotate(-35deg);
+      }
+
+      &_two {
+        position: absolute;
+        z-index: 2;
+        top: -5px;
+        right: 30px;
+        transform: rotate(20deg);
+      }
+
+      &_three {
+        position: absolute;
+        z-index: 1;
+        bottom: -40px;
+        left: 40px;
+        transform: rotate(20deg);
+      }
+    }
+  }
+}
+
+@keyframes shape-animation {
+  0% {
+    border-radius: 50% 50% 50% 70%/50% 50% 70% 20%;
+    transform: scale(1);
+  }
+
+  50% {
+    border-radius: 100% 30% 50% 50%/50%;
+    opacity: 0.7;
+    transform: scale(0.99);
+  }
+
+  100% {
+    border-radius: 40% 40% 50% 40%/30% 50% 40% 100%;
+    transform: scale(1);
+  }
+}

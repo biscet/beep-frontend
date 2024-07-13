@@ -23,7 +23,7 @@ export const getFarmDefine = ({ mode }) => ({
   'process.env.NODE_ENV': JSON.stringify(mode),
 });
 
-export const getDefaultCopmilation = ({ mode }) => ({
+export const getDefaultCopmilation = () => ({
   input: {
     index: path.resolve(__dirname, '../index.html'),
   },
@@ -34,7 +34,8 @@ export const getDefaultCopmilation = ({ mode }) => ({
   },
   persistentCache: false,
   treeShaking: false,
-  sourcemap: mode === 'dev' ? false : 'inline',
+  // sourcemap: mode === 'dev' ? false : 'inline',
+  sourcemap: false,
   script: {
     target: 'esnext',
   },

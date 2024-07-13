@@ -3,7 +3,15 @@
   #{$text-general}: #ffffff;
   #{$pad-general}: 0 80px;
   #{$accent-color-general}: #8d62f8;
+  #{$accent-color-secondary}: #7d288b;
   #{$button-text}: #1c171d;
+  #{$bg-preview}: #333333;
+
+  .header {
+    &_scrolled {
+      background-color: rgba(28, 23, 29, 0.5);
+    }
+  }
 }
 
 .light {
@@ -11,5 +19,13 @@
   #{$text-general}: #131313;
   #{$pad-general}: 0 80px;
   #{$accent-color-general}: #8d62f8;
+  #{$accent-color-secondary}: #e362f8;
   #{$button-text}: #ffffff;
+  #{$bg-preview}: #ffffff;
+
+  .header {
+    &_scrolled {
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
 }

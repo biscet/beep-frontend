@@ -1,6 +1,4 @@
 * {
-  @include theme-transition-base(color);
-
   box-sizing: border-box;
   padding: 0;
   margin: 0;
@@ -11,15 +9,16 @@
 
 #root {
   width: 100%;
-  max-width: $max-screen-width;
+  height: 100vh;
+  height: 100svh;
   margin: 0 auto;
   overflow-x: hidden;
 }
 
 html,
 body {
+  overflow: hidden;
   width: 100vw;
-  overflow-x: hidden;
 }
 
 a,
