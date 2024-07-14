@@ -58,12 +58,12 @@
     }
 
     .shape {
+      position: absolute;
       width: 250px;
       height: 280px;
       filter: blur(70px);
 
       &_one {
-        position: absolute;
         top: -75px;
         left: -80px;
         animation: shape-animation 4s linear infinite;
@@ -71,7 +71,6 @@
       }
 
       &_two {
-        position: absolute;
         right: -30px;
         bottom: -30px;
         animation: shape-animation 7s linear infinite;
@@ -79,7 +78,6 @@
       }
 
       &_three {
-        position: absolute;
         bottom: -100px;
         left: 20px;
         animation: shape-animation 5s alternate infinite;

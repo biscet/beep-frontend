@@ -1,0 +1,35 @@
+.input {
+  @extend .inter-medium;
+
+  &_primary {
+    @include theme-transition-base(color);
+
+    width: max-content;
+    flex-shrink: 0;
+    padding: 16px 24px;
+    border: 1px solid var($input-border);
+    border-radius: 16px;
+    color: var($text-general);
+
+    &::placeholder {
+      color: var($input-border);
+    }
+
+    @include hover {
+      border-color: var($accent-color-general);
+    }
+
+    &:focus {
+      border-color: var($accent-color-general);
+      color: var($accent-color-general);
+    }
+  }
+
+  &_large {
+    width: 308px;
+  }
+
+  &_full {
+    width: 100%;
+  }
+}
