@@ -22,14 +22,15 @@
     @include flex-centered;
     @include arrow-svg-hover;
 
-    width: 308px;
+    width: max-content;
     flex-shrink: 0;
     justify-content: center;
-    padding: 16px;
+    padding: 16px 50px;
+    border: 2px solid var($accent-color-general);
     background: var($accent-color-general);
     border-radius: 24px;
     color: var($button-text);
-    gap: 10px;
+    gap: 15px;
     user-select: none;
   }
 
@@ -50,5 +51,13 @@
 
   &_text {
     color: var($text-general);
+  }
+
+  &_large {
+    width: 308px;
+  }
+
+  &_full {
+    width: 100%;
   }
 }

@@ -13,6 +13,7 @@
 
 // Components
 @import './components/Form/button.scss';
+@import './components/Form/input.scss';
 @import './components/Helpers/i18n.scss';
 @import './components/Helpers/theme.scss';
 
@@ -21,3 +22,5 @@
 
 // Pages
 @import './pages/default-page.scss';
+@import './pages/login-page.scss';
+@import './pages/registration-page.scss';
