@@ -22,8 +22,6 @@ export const Header = () => {
 
   useEffect(() => {
     rootContainer.addEventListener('scroll', () => {
-      console.log(rootContainer.scrollTop);
-
       if (rootContainer.scrollTop > 0) {
         setScrolledRoot(true);
       }

@@ -1,7 +1,7 @@
 export const HEADER_ANIMATION = {
   animate: (complete) => (complete ? { y: 0, opacity: 1 } : { y: [-20, 0], opacity: [0, 1] }),
   transition: (complete) => (complete ? { duration: 0 } : {
-    duration: 0.3, type: 'spring',
+    duration: 0.3, type: 'spring', delay: 0.15,
   }),
 };
 

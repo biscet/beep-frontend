@@ -5,7 +5,7 @@
   z-index: 10;
   top: 0;
   width: 100vw;
-  height: 104px;
+  height: $header-height;
   backdrop-filter: blur(15px);
 
   &__box {

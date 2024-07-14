@@ -1,7 +1,7 @@
 .default-page {
   display: flex;
-  height: calc(100vh - 105px - 52px);
-  height: calc(100svh - 105px - 52px);
+  height: calc(100vh - $header-height - 52px);
+  height: calc(100svh - $header-height - 52px);
   min-height: 750px;
   flex-direction: column;
   justify-content: space-between;

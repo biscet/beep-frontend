@@ -10,6 +10,7 @@ import { BasicRoute as Route } from 'src/ui/components/Routes';
 import { Helmet, I18nProvider, Theme } from 'src/ui/components/Helpers';
 import { AnimatePresence } from 'framer-motion';
 
+import { Header } from 'src/ui/blocks/Header';
 import { Default } from './children/Default';
 import { Login } from './children/Login';
 import { Registration } from './children/Registration';
@@ -43,6 +44,7 @@ export const App = () => {
       <BrowserRouter>
         <Helmet />
         <Theme />
+        <Header />
 
         <Suspense fallback="">
           <Routes />
