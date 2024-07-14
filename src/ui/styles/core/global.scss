@@ -4,3 +4,30 @@ body {
   background-color: var($bg-general);
   color: var($text-general);
 }
+
+@keyframes shape-animation {
+  0% {
+    border-radius: 190% 50% 50% 70%/50% 50% 70% 20%;
+    transform: scale(1) translateX(0);
+  }
+
+  25% {
+    border-radius: 0% 30% 200% 50%/50% 30% 50% 20%;
+    transform: scale(1.1) translateX(5px);
+  }
+
+  50% {
+    border-radius: 150% 20% 230% 20%/50% 30% 100% 20%;
+    transform: scale(0.98) translateX(-2px);
+  }
+
+  75% {
+    border-radius: 20% 60% 10% 40%/30% 50% 30% 100%;
+    transform: scale(1.05)  translateX(-5px);
+  }
+
+  100% {
+    border-radius: 190% 50% 50% 70%/50% 50% 70% 20%;
+    transform: scale(1) translateX(0);
+  }
+}

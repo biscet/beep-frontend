@@ -2,21 +2,27 @@ import React from 'react';
 import { useGate, useUnit } from 'effector-react';
 import { get } from 'src/lib/lodash';
 import { $fullyLoadApplication, RouteGate } from 'src/models/App';
-import { motion } from 'framer-motion';
+import { motion, LayoutGroup } from 'framer-motion';
 import { DEFAULT_LAYOUT_ANIMATION } from 'src/dict/animate';
 import { MouseParallaxContainer } from 'react-parallax-mouse';
 import { MOUSE_PARALLAX_CONTAINER_STYLE } from 'src/dict/config';
+import { $isLoginPage } from 'src/models/Login';
+import { $isRegistrationPage } from 'src/models/Registration';
 
 const DefaultLayout = ({ children }) => {
-  const fullyLoadApplication = useUnit($fullyLoadApplication);
+  const [fullyLoadApplication, isLoginPage, isRegistrationPage] = useUnit(
+    [$fullyLoadApplication, $isLoginPage, $isRegistrationPage],
+  );
 
   useGate(RouteGate, {
     pathname: get(window, 'location.pathname', ''),
     pathParams: get(window, 'location.search', ''),
   });
 
+  const authPage = isLoginPage || isRegistrationPage;
+
   return fullyLoadApplication ? (
-    <>
+    <LayoutGroup id="default">
       <motion.div
         initial="initial"
         animate="animate"
@@ -24,18 +30,23 @@ const DefaultLayout = ({ children }) => {
         exit="exit"
         variants={DEFAULT_LAYOUT_ANIMATION}
       >
-        <MouseParallaxContainer
-          globalFactorX={0.05}
-          globalFactorY={0.05}
-          containerStyle={MOUSE_PARALLAX_CONTAINER_STYLE}
-        >
-
+        {authPage ? (
           <div className="default-content__wrapper">
             {children}
           </div>
-        </MouseParallaxContainer>
+        ) : (
+          <MouseParallaxContainer
+            globalFactorX={0.05}
+            globalFactorY={0.05}
+            containerStyle={MOUSE_PARALLAX_CONTAINER_STYLE}
+          >
+            <div className="default-content__wrapper">
+              {children}
+            </div>
+          </MouseParallaxContainer>
+        )}
       </motion.div>
-    </>
+    </LayoutGroup>
   ) : null;
 };
 

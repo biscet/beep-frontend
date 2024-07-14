@@ -59,22 +59,22 @@
 
     .shape {
       width: 250px;
-      height: 250px;
-      filter: blur(100px);
+      height: 280px;
+      filter: blur(70px);
 
       &_one {
         position: absolute;
         top: -75px;
         left: -80px;
-        animation: shape-animation 4s alternate infinite;
+        animation: shape-animation 4s linear infinite;
         background: var($accent-color-general);
       }
 
       &_two {
         position: absolute;
         right: -30px;
-        bottom: -5px;
-        animation: shape-animation 7s infinite;
+        bottom: -30px;
+        animation: shape-animation 7s linear infinite;
         background: var($accent-color-general);
       }
 
@@ -82,7 +82,7 @@
         position: absolute;
         bottom: -100px;
         left: 20px;
-        animation: shape-animation 5s alternate-reverse infinite;
+        animation: shape-animation 5s alternate infinite;
         background-color: var($accent-color-secondary);
       }
     }
@@ -116,23 +116,5 @@
         transform: rotate(20deg);
       }
     }
-  }
-}
-
-@keyframes shape-animation {
-  0% {
-    border-radius: 50% 50% 50% 70%/50% 50% 70% 20%;
-    transform: scale(1);
-  }
-
-  50% {
-    border-radius: 100% 30% 50% 50%/50%;
-    opacity: 0.7;
-    transform: scale(0.99);
-  }
-
-  100% {
-    border-radius: 40% 40% 50% 40%/30% 50% 40% 100%;
-    transform: scale(1);
   }
 }

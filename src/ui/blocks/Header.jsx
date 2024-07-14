@@ -5,11 +5,13 @@ import { Button } from 'src/ui/components/Form';
 import { I18nContext, LanguagePicker, ThemePicker } from 'src/ui/components/Helpers';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { HEADER_ANIMATION } from 'src/dict/animate';
+import { HEADER_ANIMATION, HEADER_TEXT_BUTTON_ANIMATION } from 'src/dict/animate';
 import { $headerAnimationComplete, setHeaderAnimationStateFn } from 'src/models/App';
 import { useUnit } from 'effector-react';
 import { rootContainer } from 'src/dict/config';
 import { cx } from 'src/lib/lodash';
+import { $isLoginPage } from 'src/models/Login';
+import { $isRegistrationPage } from 'src/models/Registration';
 
 const onAnimationComplete = () => {
   setHeaderAnimationStateFn(true);
@@ -17,7 +19,9 @@ const onAnimationComplete = () => {
 
 export const Header = () => {
   const t = useContext(I18nContext);
-  const headerAnimationComplete = useUnit($headerAnimationComplete);
+  const [headerAnimationComplete, isLoginPage, isRegistrationPage] = useUnit(
+    [$headerAnimationComplete, $isLoginPage, $isRegistrationPage],
+  );
   const [scrolledRoot, setScrolledRoot] = useState(false);
 
   useEffect(() => {
@@ -31,6 +35,8 @@ export const Header = () => {
       }
     });
   }, []);
+
+  const authPage = isLoginPage || isRegistrationPage;
 
   return (
     <motion.div
@@ -53,20 +59,40 @@ export const Header = () => {
         </NavLink>
 
         <div className="header__nav nav">
-          <ThemePicker />
-          <LanguagePicker />
+          <motion.div layout>
+            <ThemePicker />
+          </motion.div>
+          <motion.div layout>
+            <LanguagePicker />
+          </motion.div>
 
-          <Button
-            type={BUTTON_TYPES.LINK}
-            variant={BUTTON_VARIATION.TEXT}
-            path={`/${PAGES_PATH.LOGIN}`}
-          >
-            {t('Вход')}
-          </Button>
+          {authPage === false ? (
+            <motion.div
+              initial={HEADER_TEXT_BUTTON_ANIMATION.initial(headerAnimationComplete)}
+              animate={HEADER_TEXT_BUTTON_ANIMATION.animate}
+              exit={HEADER_TEXT_BUTTON_ANIMATION.exit}
+              transition={HEADER_TEXT_BUTTON_ANIMATION.transition}
+            >
+              <Button
+                type={BUTTON_TYPES.LINK}
+                variant={BUTTON_VARIATION.TEXT}
+                path={`/${PAGES_PATH.LOGIN}`}
+              >
+                {t('Вход')}
+              </Button>
+            </motion.div>
+          ) : null}
 
-          <Button type={BUTTON_TYPES.LINK} path={`/${PAGES_PATH.REGISTRATION}`}>
-            {t('Регистрация')}
-          </Button>
+          <motion.div layout>
+            <Button
+              type={BUTTON_TYPES.LINK}
+              nonActiveClass="button_large"
+              path={isRegistrationPage ? `/${PAGES_PATH.LOGIN}` : `/${PAGES_PATH.REGISTRATION}`}
+              variant={authPage ? BUTTON_VARIATION.SECONDARY : BUTTON_VARIATION.PRIMARY}
+            >
+              {t(isRegistrationPage ? 'Вход' : 'Регистрация')}
+            </Button>
+          </motion.div>
         </div>
       </div>
     </motion.div>

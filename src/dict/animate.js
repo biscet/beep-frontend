@@ -5,6 +5,13 @@ export const HEADER_ANIMATION = {
   }),
 };
 
+export const HEADER_TEXT_BUTTON_ANIMATION = {
+  initial: (complete) => (complete ? { opacity: 0, scale: 0.9 } : { opacity: 1, scale: 1 }),
+  animate: { opacity: 1, scale: 1 },
+  exit: { opacity: 0, scale: 0.9 },
+  transition: { duration: 0.25 },
+};
+
 export const DEFAULT_LAYOUT_ANIMATION = {
   initial: {
     opacity: 0,
