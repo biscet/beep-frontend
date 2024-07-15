@@ -1,13 +1,8 @@
 .login-page {
-  display: flex;
-  height: calc(100vh - $header-height);
-  height: calc(100svh - $header-height);
-  min-height: 630px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 15vh;
-  padding-top: 15svh;
+  @include page-creator('auto', 'none', 'auto') {
+    min-height: 680px;
+    align-items: center;
+  }
 
   &__wrapper {
     position: relative;

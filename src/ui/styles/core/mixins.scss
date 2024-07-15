@@ -30,3 +30,25 @@
   max-width: $max-screen-width;
   margin: 0 auto;
 }
+
+@mixin page-creator($height: 'auto', $min-height: 'auto', $padding-top: 'auto') {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @if $height == 'auto' {
+    height: calc(100vh - $header-height);
+    height: calc(100svh - $header-height);
+  }
+
+  @if $min-height == 'auto' {
+    min-height: 750px;
+  }
+
+  @if $padding-top == 'auto' {
+    padding-top: 15vh;
+    padding-top: 15svh;
+  }
+
+  @content;
+}

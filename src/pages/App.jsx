@@ -21,15 +21,19 @@ const Routes = () => {
   const location = useLocation();
 
   return (
-    <AnimatePresence exitBeforeEnter>
-      <Switch location={location} key={location.pathname}>
-        <Route path={`/${LOGIN}`} component={Login} exact />
-        <Route path={`/${DEFAULT}`} component={Default} exact />
-        <Route path={`/${REGISTRATION}`} component={Registration} exact />
+    <Suspense fallback="">
+      <Header />
 
-        <Redirect to={`/${DEFAULT}`} />
-      </Switch>
-    </AnimatePresence>
+      <AnimatePresence exitBeforeEnter>
+        <Switch location={location} key={location.pathname}>
+          <Route path={`/${LOGIN}`} component={Login} exact />
+          <Route path={`/${DEFAULT}`} component={Default} exact />
+          <Route path={`/${REGISTRATION}`} component={Registration} exact />
+
+          <Redirect to={`/${DEFAULT}`} />
+        </Switch>
+      </AnimatePresence>
+    </Suspense>
   );
 };
 
@@ -44,11 +48,7 @@ export const App = () => {
       <BrowserRouter>
         <Helmet />
         <Theme />
-        <Header />
-
-        <Suspense fallback="">
-          <Routes />
-        </Suspense>
+        <Routes />
       </BrowserRouter>
     </I18nProvider>
   );

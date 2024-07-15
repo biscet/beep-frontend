@@ -1,13 +1,9 @@
 .default-page {
-  display: flex;
-  height: calc(100vh - $header-height - 52px);
-  height: calc(100svh - $header-height - 52px);
-  min-height: 750px;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-top: 15vh;
-  padding-top: 15svh;
-  margin-bottom: 32px;
+  @include page-creator('none', 'auto', 'auto') {
+    height: calc(100vh - $header-height - 32px);
+    height: calc(100svh - $header-height - 32px);
+    margin-bottom: 32px;
+  }
 
   &__box {
     @include flex-centered;
