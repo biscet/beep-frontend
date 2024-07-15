@@ -1,6 +1,5 @@
 .login-page {
-  @include page-creator('auto', 'none', 'auto') {
-    min-height: 680px;
+  @include page-creator('auto', 'auto', 'auto') {
     align-items: center;
   }
 

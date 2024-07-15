@@ -1,31 +1,52 @@
 import React, { useContext } from 'react';
 import { BUTTON_TYPES } from 'src/dict/fields/button';
-import { Button, Input } from 'src/ui/components/Form';
+import { INPUT_TYPES } from 'src/dict/fields/input';
+import { LOGIN_FIELDS } from 'src/dict/fields/models/login';
+import { Button, Form, Input } from 'src/ui/components/Form';
 import { I18nContext } from 'src/ui/components/Helpers';
+import { getPropsField } from 'src/lib/form';
+import { useForm } from 'effector-forms';
+import { loginForm } from 'src/models/Login';
 
 export const Login = () => {
   const t = useContext(I18nContext);
+  const { submit, ...restProps } = useForm(loginForm);
 
   return (
     <div className="login-page">
       <div className="login-page__wrapper">
-        <div className="login-page__window window">
+        <Form className="login-page__window window" submit={submit}>
           <h1>{t('Вход')}</h1>
 
           <div className="window__box">
             <Input
               placeholder="E-mail"
               nonActiveClass="input_full"
+              type={INPUT_TYPES.TEXT}
+              name={LOGIN_FIELDS.EMAIL}
+              {...getPropsField({
+                fieldName: LOGIN_FIELDS.EMAIL, props: restProps,
+              })}
             />
 
             <Input
               placeholder="Пароль"
               nonActiveClass="input_full"
+              type={INPUT_TYPES.PASSWORD}
+              name={LOGIN_FIELDS.PASSWORD}
+              {...getPropsField({
+                fieldName: LOGIN_FIELDS.PASSWORD, props: restProps,
+              })}
             />
           </div>
 
-          <Button type={BUTTON_TYPES.BUTTON} nonActiveClass="button_full">{t('Войти')}</Button>
-        </div>
+          <Button
+            type={BUTTON_TYPES.SUBMIT}
+            nonActiveClass="button_full"
+          >
+            {t('Войти')}
+          </Button>
+        </Form>
 
         <div className="login-page__shape shape shape_one" />
         <div className="login-page__shape shape shape_two" />

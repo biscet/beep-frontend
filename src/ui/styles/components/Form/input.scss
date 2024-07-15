@@ -1,3 +1,5 @@
+$icon-width: 50px;
+
 .input {
   @extend .inter-medium;
 
@@ -9,6 +11,7 @@
     padding: 16px 24px;
     border: 1px solid var($input-border);
     border-radius: 16px;
+    caret-color: var($accent-color-general);
     color: var($text-general);
 
     &::placeholder {
@@ -25,6 +28,10 @@
     }
   }
 
+  &_error {
+    border-color: var($error);
+  }
+
   &_large {
     width: 308px;
   }
@@ -32,4 +39,107 @@
   &_full {
     width: 100%;
   }
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__error {
+    @include theme-transition-base(color);
+
+    color: var($error);
+  }
+
+  &__box {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    &[aria-valuetext="password"] .input_primary {
+      padding-right: calc(24px + $icon-width);
+    }
+
+    &[aria-disabled="false"]:hover .input_primary {
+      border-color: var($accent-color-general);
+    }
+  }
+
+  .icon {
+    @include flex-centered;
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: $icon-width;
+    height: 100%;
+    flex-shrink: 0;
+    justify-content: center;
+    border-bottom-right-radius: 16px;
+    border-top-right-radius: 16px;
+    cursor: pointer;
+    user-select: none;
+
+    &::after {
+      position: absolute;
+      right: $icon-width;
+      width: 1px;
+      height: 60%;
+      background-color: var($input-border);
+      content: '';
+    }
+
+    svg {
+      position: relative;
+      top: 1px;
+      right: 2px;
+
+      path {
+        fill: var($input-border);
+      }
+    }
+
+    &::before {
+      position: absolute;
+      width: 2px;
+      background-color: var($input-border);
+      content: '';
+      transform: translateY(1px) translateX(-2px) rotate(35deg);
+      transition: height 0.1s ease-in-out;
+    }
+
+    &_show {
+      &::before {
+        height: 22px;
+      }
+    }
+
+    &_hide {
+      &::before {
+        height: 0;
+      }
+    }
+
+    @include hover {
+      svg {
+        path {
+          fill: var($accent-color-general);
+        }
+      }
+
+      &::before {
+        background-color: var($accent-color-general);
+      }
+    }
+  }
+}
+
+.autocomplete-input {
+  position: fixed;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
 }

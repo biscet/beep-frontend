@@ -7,11 +7,18 @@
   #{$button-text}: #1c171d;
   #{$bg-preview}: #333333;
   #{$input-border}: #a19da9;
+  #{$error}: #fd7e7e;
 
   .header {
     &_scrolled {
       background-color: rgba(28, 23, 29, 0.5);
     }
+  }
+
+  @include autofill {
+    -webkit-box-shadow: 0 0 0 30px #333333 inset !important;
+    caret-color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
   }
 }
 
@@ -24,10 +31,17 @@
   #{$button-text}: #ffffff;
   #{$bg-preview}: #ffffff;
   #{$input-border}: #a19da9;
+  #{$error}: #9d3333;
 
   .header {
     &_scrolled {
       background-color: rgba(255, 255, 255, 0.5);
     }
+  }
+
+  @include autofill {
+    -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+    caret-color: #333333 !important;
+    -webkit-text-fill-color: #333333 !important;
   }
 }
