@@ -23,7 +23,7 @@ export const $helmetTitle = settingsDomain.createStore('');
 export const $helmetDescription = settingsDomain.createStore('');
 export const $helmetKeywords = settingsDomain.createStore('');
 
-export const $helmetDataCombine = combine(
+export const $helmetCombineData = combine(
   $helmetTitle, $helmetDescription, $helmetKeywords,
   (helmetTitle, helmetDescription, helmetKeywords) => ({
     [HELMET_FIELDS.TITLE]: helmetTitle,

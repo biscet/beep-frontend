@@ -1,8 +1,9 @@
 .registration-page {
-  @include page-creator('auto', 'auto', 'none') {
+  @include page-creator('auto', 'none', 'none') {
+    min-height: 850px;
     align-items: center;
-    padding-top: 13vh;
-    padding-top: 13svh;
+    padding-top: 8vh;
+    padding-top: 8svh;
   }
 
   &__wrapper {

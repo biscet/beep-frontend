@@ -18,6 +18,11 @@
 
   @include default-hover;
 
+  &:is([disabled]) {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
   &_primary {
     @include flex-centered;
     @include arrow-svg-hover;

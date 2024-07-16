@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { INPUT_TYPES, INPUT_VARIATION } from 'src/dict/fields/input';
-import { cx, get, isObject } from 'src/lib/lodash';
+import {
+  cx, get, isEmpty, isObject,
+} from 'src/lib/lodash';
 import { I18nContext } from 'src/ui/components/Helpers';
 import { EyeSVG } from 'src/ui/media/images';
 
@@ -15,7 +17,7 @@ const handlerClick = ({ onChange, value }) => () => {
 export const Input = ({
   type, placeholder, conditionClass, onChange, errorText,
   activeClass, nonActiveClass, variant, value, hasError,
-  onBlur, name, disabled, ...restProps
+  onBlur, name, disabled, caption, ...restProps
 }) => {
   const t = useContext(I18nContext);
   const [viewPass, setViewPass] = useState(false);
@@ -38,7 +40,11 @@ export const Input = ({
     <div className="input-group">
       <input type={type} name={name} className="autocomplete-input" autoComplete="off" />
 
-      <div className="input-group__box" aria-disabled={disabled} aria-valuetext={type}>
+      <div
+        className="input-group__box"
+        aria-disabled={disabled}
+        aria-valuetext={type}
+      >
         <input
           {...restProps}
           type={viewPass ? 'text' : type}
@@ -67,7 +73,15 @@ export const Input = ({
         ) : null}
       </div>
 
-      {hasError ? <p className="input-group__error">{t(errorText)}</p> : null}
+      {hasError ? (
+        <p className="input-group__error">
+          {t(errorText)}
+        </p>
+      ) : null}
+
+      {!isEmpty(caption) && !hasError ? (
+        <p>{t(caption)}</p>
+      ) : null}
     </div>
   );
 };
@@ -84,5 +98,6 @@ Input.defaultProps = {
   onBlur: () => {},
   errorText: '',
   hasError: false,
+  caption: '',
   disabled: false,
 };

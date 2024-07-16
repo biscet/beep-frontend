@@ -7,12 +7,14 @@ $icon-width: 50px;
     @include theme-transition-base(color);
 
     width: max-content;
+    height: 56px;
     flex-shrink: 0;
     padding: 16px 24px;
     border: 1px solid var($input-border);
     border-radius: 16px;
     caret-color: var($accent-color-general);
     color: var($text-general);
+    white-space: nowrap;
 
     &::placeholder {
       color: var($input-border);
@@ -46,10 +48,16 @@ $icon-width: 50px;
   flex-direction: column;
   gap: 8px;
 
-  &__error {
+  p {
     @include theme-transition-base(color);
 
-    color: var($error);
+    @extend .caption-regular;
+
+    color: var($input-border);
+  }
+
+  &__error {
+    color: var($error) !important;
   }
 
   &__box {
