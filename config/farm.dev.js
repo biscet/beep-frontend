@@ -15,7 +15,7 @@ export default defineConfig(() => ({
   server: {
     hmr: true,
     open: true,
-    port: 3000,
+    port: 3005,
   },
   vitePlugins: [
     FarmfeEslintPlugin({

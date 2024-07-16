@@ -5,7 +5,7 @@ import { cx } from 'src/lib/lodash';
 
 export const Button = React.memo(({
   type, children, path, conditionClass, onClick,
-  activeClass, nonActiveClass, variant,
+  activeClass, nonActiveClass, variant, disabled,
 }) => {
   const className = cx({
     defaultClass: ['button', `button_${variant}`],
@@ -31,6 +31,7 @@ export const Button = React.memo(({
     <button
       type={type}
       className={className}
+      disabled={disabled}
       onClick={onClick}
     >
       {children}

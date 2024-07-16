@@ -1,13 +1,10 @@
 .registration-page {
-  display: flex;
-  height: calc(100vh - $header-height);
-  height: calc(100svh - $header-height);
-  min-height: 750px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 13vh;
-  padding-top: 13svh;
+  @include page-creator('auto', 'none', 'none') {
+    min-height: 850px;
+    align-items: center;
+    padding-top: 8vh;
+    padding-top: 8svh;
+  }
 
   &__wrapper {
     position: relative;

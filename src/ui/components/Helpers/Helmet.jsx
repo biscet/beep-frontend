@@ -2,7 +2,7 @@ import { useUnit } from 'effector-react';
 import React, { useContext } from 'react';
 import { Helmet as Head } from 'react-helmet';
 import { HELMET_FIELDS } from 'src/dict/fields/app';
-import { $helmetDataCombine } from 'src/models/App';
+import { $helmetCombineData } from 'src/models/App';
 import { I18nContext } from './i18n';
 
 export const Helmet = () => {
@@ -11,7 +11,7 @@ export const Helmet = () => {
     [HELMET_FIELDS.TITLE]: helmetTitle,
     [HELMET_FIELDS.DESCRIPTION]: helmetDescription,
     [HELMET_FIELDS.KEYWORDS]: helmetKeywords,
-  } = useUnit($helmetDataCombine);
+  } = useUnit($helmetCombineData);
 
   return (
     <Head>
