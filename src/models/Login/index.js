@@ -6,8 +6,25 @@ import { createForm } from 'effector-forms';
 import { rules } from 'src/lib/rules';
 import { LOGIN_FIELDS } from 'src/dict/fields/models/login';
 import { isEmpty } from 'src/lib/lodash';
+import { TOKENS } from 'src/dict/config';
+import { storage } from 'src/lib/storage';
+import { authLoginSign } from 'src/api/login';
 
-export const loginDomain = allDomain.createDomain('Login');
+const loginDomain = allDomain.createDomain('Login');
+
+export const $tokenData = loginDomain.createStore({
+  accessToken: storage.get(TOKENS.ACCESS),
+  refreshToken: storage.get(TOKENS.REFRESH),
+});
+
+export const authLoginFx = loginDomain.createEffect(authLoginSign);
+
+export const $isAuthenticated = combine($tokenData, (
+  ({ accessToken, refreshToken }) => (
+    !isEmpty(accessToken) || !isEmpty(refreshToken)
+  )));
+
+$isAuthenticated.watch(console.log);
 
 export const $isLoginPage = combine($pathnameUrl,
   (path) => isCurrentPath(path, PAGES_PATH.LOGIN));

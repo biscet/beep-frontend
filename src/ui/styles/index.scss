@@ -1,4 +1,5 @@
-@import "https://unpkg.com/open-props/easings.min.css";
+@import 'https://unpkg.com/open-props/easings.min.css';
+@import 'react-toastify/dist/ReactToastify.css';
 
 // Core
 @import './core/fields.scss';
@@ -14,6 +15,7 @@
 // Components
 @import './components/Form/button.scss';
 @import './components/Form/input.scss';
+@import './components/Form/loader-spinner.scss';
 @import './components/Helpers/i18n.scss';
 @import './components/Helpers/theme.scss';
 

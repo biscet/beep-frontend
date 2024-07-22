@@ -14,6 +14,8 @@ import {
   $headerAnimationComplete,
   setHeaderAnimationStateFn,
 } from './index';
+import { $enqueueSnackbar } from '../Helpers/Notify';
+import { $history } from '../Helpers/History';
 
 $headerAnimationComplete.on(setHeaderAnimationStateFn, (_, complete) => complete);
 
@@ -23,6 +25,7 @@ sample({
     targets: {
       pathname: $pathnameUrl,
       pathParams: $pathParams,
+      enqueueSnackbar: $enqueueSnackbar,
     },
   }),
 });
@@ -34,6 +37,7 @@ sample({
     targets: {
       pathname: $pathnameUrl,
       pathParams: $pathParams,
+      history: $history,
     },
   }),
 });

@@ -1,6 +1,7 @@
 import { sample } from 'effector';
 import { debounce } from 'patronum';
-import { $isRegistrationPage, registrationForm } from '.';
+import { $isRegistrationPage, authRegistrationFx, registrationForm } from '.';
+import { notifyErrorFn } from '../Helpers/Notify';
 
 sample({
   clock: debounce({
@@ -13,8 +14,19 @@ sample({
 });
 
 sample({
-  clock: registrationForm.formValidated,
-  fn: () => {
-    console.log('validated reg');
+  clock: registrationForm.submit,
+  target: authRegistrationFx,
+});
+
+sample({
+  clock: authRegistrationFx.doneData,
+  source: registrationForm.$values,
+  fn: (form) => {
+    console.log(form);
   },
+});
+
+sample({
+  clock: authRegistrationFx.fail,
+  target: notifyErrorFn.prepend(() => 'Что-то пошло не так. Повторите попытку позже.'),
 });

@@ -3,7 +3,7 @@ import { getTheme } from 'src/lib/helpers';
 import { storage } from 'src/lib/storage';
 import { allDomain } from 'src/models/App';
 
-export const themeDomain = allDomain.createDomain('Theme');
+const themeDomain = allDomain.createDomain('Theme');
 
 export const getThemeFn = themeDomain.createEvent();
 export const changeThemeFn = themeDomain.createEvent();

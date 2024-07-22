@@ -9,7 +9,7 @@ import {
 import { getLang } from 'src/lib/helpers';
 import { allDomain } from 'src/models/App';
 
-export const i18nDomain = allDomain.createDomain('i18n');
+const i18nDomain = allDomain.createDomain('i18n');
 
 export const getLangFn = i18nDomain.createEvent();
 export const changeLangFn = i18nDomain.createEvent();

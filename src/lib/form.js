@@ -4,14 +4,11 @@ const getValue = (f) => (e) => f(get(e, 'target.value', get(e, 'target.checked',
 
 const onChangeField = (field) => (val) => field.onChange(val);
 
-const onFocusField = (field) => () => field.onFocus();
-
 const onBlurField = (field) => () => field.onBlur();
 
 const getEventsField = (field) => ({
   onBlur: onBlurField(field),
   onChange: getValue(onChangeField(field)),
-  onFocus: onFocusField(field),
   value: get(field, 'value', ''),
 });
 
@@ -26,4 +23,8 @@ export const getPropsField = ({
   errorText: errorText(fieldName),
   hasError: hasError(fieldName),
   ...(getEventsField(get(fields, fieldName))),
+});
+
+export const createFx = (data, timeout) => new Promise((resolve) => {
+  setTimeout(() => { resolve(data); }, timeout);
 });

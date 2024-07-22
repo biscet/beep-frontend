@@ -6,13 +6,14 @@ import { Button, Form, Input } from 'src/ui/components/Form';
 import { I18nContext } from 'src/ui/components/Helpers';
 import { getPropsField } from 'src/lib/form';
 import { useForm } from 'effector-forms';
-import { $disabledLoginCombineData, loginForm } from 'src/models/Login';
+import { $disabledLoginCombineData, authLoginFx, loginForm } from 'src/models/Login';
 import { useUnit } from 'effector-react';
+import { LoaderSpinnerSVG } from 'src/ui/media/images';
 
 export const Login = () => {
   const t = useContext(I18nContext);
   const { submit, ...restProps } = useForm(loginForm);
-  const [disabledLoginButton] = useUnit([$disabledLoginCombineData]);
+  const [disabledLoginButton, loginPending] = useUnit([$disabledLoginCombineData, authLoginFx.pending]);
 
   return (
     <div className="login-page">
@@ -44,10 +45,10 @@ export const Login = () => {
 
           <Button
             type={BUTTON_TYPES.SUBMIT}
-            disabled={disabledLoginButton}
+            disabled={disabledLoginButton || loginPending}
             nonActiveClass="button_full"
           >
-            {t('Войти')}
+            {loginPending === false ? t('Войти') : <LoaderSpinnerSVG />}
           </Button>
         </Form>
 

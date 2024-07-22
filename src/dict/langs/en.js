@@ -19,4 +19,5 @@ export const en = {
   17: 'Invalid username specified.',
   18: 'The password must be at least 8 characters long.',
   19: 'The specified username is invalid; it must be between 4 and 30 characters long and can only include letters and numbers.',
+  20: 'Something went wrong. Please try again later.',
 };
