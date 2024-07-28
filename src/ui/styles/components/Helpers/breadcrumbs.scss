@@ -1,0 +1,23 @@
+.breadcrumbs {
+  @include flex-centered;
+
+  width: 100%;
+  gap: 16px;
+
+  .item {
+    @extend .inter-regular;
+
+    @include truncate-text(1);
+
+    width: fit-content;
+    color: var($gray);
+
+    &_active {
+      color: var($text-general);
+    }
+
+    &_divider {
+      flex-shrink: 0;
+    }
+  }
+}

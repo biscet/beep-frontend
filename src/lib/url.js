@@ -6,6 +6,8 @@ export const isCurrentPath = (path, value = '') => {
   return arrPath.includes(value);
 };
 
+export const isCurrentPathForBreadCrumb = (path, value = '') => path.includes(value);
+
 export const errorMsgHandler = (error) => get(
   error,
   'error.response.data',

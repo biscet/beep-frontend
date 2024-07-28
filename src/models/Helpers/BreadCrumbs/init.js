@@ -1,9 +1,36 @@
-import { sample } from 'effector';
+import { sample, split } from 'effector';
 import { $pathnameUrl } from 'src/models/App';
-import { $breadCrumbs } from '.';
+import { isEmpty } from 'src/lib/lodash';
+import { BREAD_CRUMBS_FIELD } from 'src/dict/breadcrumbs';
+import { isCurrentPathForBreadCrumb } from 'src/lib/url';
+import {
+  $allBreadCrumbsCombineData, $currentBreadCrumbs,
+  resetCurrentBCFn, triggerSplitBCLogicFn,
+  setCurrentBCFn,
+} from '.';
+
+const { PATH } = BREAD_CRUMBS_FIELD;
+
+$currentBreadCrumbs
+  .reset(resetCurrentBCFn)
+  .on(setCurrentBCFn, (_, breadcrumb) => breadcrumb);
 
 sample({
   clock: $pathnameUrl,
-  fn: () => [],
-  target: $breadCrumbs,
+  source: $allBreadCrumbsCombineData,
+  fn: (allBreadCrumbs, pathnameUrl) => allBreadCrumbs.filter(
+    ({ [PATH]: path }) => isCurrentPathForBreadCrumb(pathnameUrl, path),
+  ),
+  target: triggerSplitBCLogicFn,
+});
+
+split({
+  source: triggerSplitBCLogicFn,
+  match: {
+    set: (breadcrumb) => !isEmpty(breadcrumb),
+  },
+  cases: {
+    set: setCurrentBCFn.prepend((filteredData) => filteredData[0]),
+    __: resetCurrentBCFn,
+  },
 });
