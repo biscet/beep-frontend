@@ -26,4 +26,5 @@ export const en = {
   24: 'beep - Dashboard',
   25: 'Privacy Policy',
   26: 'Log out',
+  27: 'Dashboard',
 };
