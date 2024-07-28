@@ -1,0 +1,116 @@
+.sidebar {
+  @include theme-transition-base(border-color);
+
+  display: flex;
+  overflow: hidden;
+  width: $sidebar-width;
+  height: 100%;
+  flex-direction: column;
+  flex-shrink: 0;
+  padding: 32px 16px;
+  border-right: 1px var($border-sidebar) solid;
+
+  svg {
+    path {
+      @include theme-transition-base(fill);
+
+      fill: var($text-general);
+    }
+  }
+
+  &__logo {
+    @extend .chakra-petch-medium;
+
+    flex-shrink: 0;
+    margin-bottom: 74px;
+    color: var($text-general);
+    text-align: center;
+
+    @include default-hover;
+  }
+
+  .user-info {
+    @include flex-centered;
+    @include theme-transition-base(border-color);
+
+    overflow: hidden;
+    width: 100%;
+    height: $sidebar-info-height;
+    flex-shrink: 0;
+    padding: 16px;
+    border: $sidebar-info-border;
+    border-radius: $sidebar-radius;
+    gap: 8px;
+
+    &__avatar {
+      @include flex-centered;
+      @include theme-transition-base(color);
+
+      width: 48px;
+      height: 48px;
+      flex-shrink: 0;
+      justify-content: center;
+      background-color: var($accent-color-general);
+      border-radius: 16px;
+      color: var($bg-general);
+      font-size: 24px;
+      font-weight: 400;
+    }
+
+    &__wrapper {
+      @include theme-transition-base(color);
+
+      display: flex;
+      flex-direction: column;
+      color: var($text-general);
+
+      div {
+        @include truncate-text;
+
+        max-width: 170px;
+      }
+
+      div:last-child {
+        color: var($gray);
+      }
+    }
+  }
+
+  .link {
+    @include flex-centered;
+
+    width: 100%;
+    padding: 16px;
+    background-color: none;
+    border-radius: $sidebar-radius;
+    gap: 8px;
+    transition: background-color 0.1s linear, color 0.1s linear;
+
+    &:hover {
+      background-color: var($accent-color-general);
+      color: var($bg-general);
+
+      svg {
+        path {
+          fill: var($bg-general);
+        }
+      }
+    }
+  }
+
+  .bottom-side {
+    display: flex;
+    height: 100%;
+    min-height: 260px;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 18px;
+
+    &__policy {
+      color: var($gray);
+      text-align: center;
+
+      @include default-hover;
+    }
+  }
+}

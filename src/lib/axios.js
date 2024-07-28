@@ -26,7 +26,7 @@ class RefreshTokenError extends Error {
 
 initiateTokensInterceptors(instance);
 
-const sendRefreshTokenRequest = async (refreshToken) => instance.post('/auth/refresh/', { [REFRESH]: refreshToken });
+const sendRefreshTokenRequest = async (refreshToken) => instance.post('/auth/refresh', { [REFRESH]: refreshToken });
 
 const refreshTokens = async () => {
   const refreshToken = await storage.get(REFRESH);
@@ -41,8 +41,8 @@ const refreshTokens = async () => {
 
     const refreshedTokens = await refreshPromise;
 
-    storage.set(REFRESH, saltString(refreshedTokens?.refresh, true));
-    storage.set(ACCESS, saltString(refreshedTokens?.access, true));
+    storage.set(REFRESH, saltString(refreshedTokens?.refresh_token, true));
+    storage.set(ACCESS, saltString(refreshedTokens?.access_token, true));
   } finally {
     refreshPromise = undefined;
   }
@@ -73,8 +73,8 @@ const retryRequest = async (originalReq) => {
 
 const handleResponseError = async (error) => {
   const { config: originalReq, response } = error;
-  const isRefreshRequest = originalReq.url === '/auth/refresh/';
-  const isLoginRequest = originalReq.url === '/auth/login/';
+  const isRefreshRequest = originalReq.url === '/auth/refresh';
+  const isLoginRequest = originalReq.url === '/auth/login';
   const isSecondAttempt = originalReq.isRetryAttempt;
   const isOriginalRequestUnauthorized = response?.status === 401;
 

@@ -8,7 +8,7 @@ import { LOGIN_FIELDS } from 'src/dict/fields/models/login';
 import { isEmpty } from 'src/lib/lodash';
 import { TOKENS } from 'src/dict/config';
 import { storage } from 'src/lib/storage';
-import { authLoginSign } from 'src/api/login';
+import { authLoginSign, getUserInfoSign } from 'src/api/login';
 
 const loginDomain = allDomain.createDomain('Login');
 
@@ -18,13 +18,12 @@ export const $tokenData = loginDomain.createStore({
 });
 
 export const authLoginFx = loginDomain.createEffect(authLoginSign);
+export const getUserInfoFx = loginDomain.createEffect(getUserInfoSign);
 
 export const $isAuthenticated = combine($tokenData, (
   ({ accessToken, refreshToken }) => (
     !isEmpty(accessToken) || !isEmpty(refreshToken)
   )));
-
-$isAuthenticated.watch(console.log);
 
 export const $isLoginPage = combine($pathnameUrl,
   (path) => isCurrentPath(path, PAGES_PATH.LOGIN));

@@ -11,6 +11,7 @@
 
 // Layouts
 @import './layouts/default.scss';
+@import './layouts/web.scss';
 
 // Components
 @import './components/Form/button.scss';
@@ -18,9 +19,12 @@
 @import './components/Form/loader-spinner.scss';
 @import './components/Helpers/i18n.scss';
 @import './components/Helpers/theme.scss';
+@import './components/Helpers/shimmer.scss';
 
 // Blocks
 @import './blocks/header.scss';
+@import './blocks/sidebar.scss';
+@import './blocks/sidebar-header.scss';
 
 // Pages
 @import './pages/default-page.scss';

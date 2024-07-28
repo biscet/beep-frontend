@@ -1,5 +1,6 @@
 import { combine } from 'effector';
 import { createForm } from 'effector-forms';
+import { pending } from 'patronum';
 import { authRegistrationSign } from 'src/api/registration';
 import { REGISTRATION_FIELDS } from 'src/dict/fields/models/registration';
 import { PAGES_PATH } from 'src/dict/path';
@@ -7,6 +8,7 @@ import { isEmpty } from 'src/lib/lodash';
 import { rules } from 'src/lib/rules';
 import { isCurrentPath } from 'src/lib/url';
 import { $pathnameUrl, allDomain } from 'src/models/App';
+import { authLoginFx } from '../Login';
 
 const registrationDomain = allDomain.createDomain('Registration');
 
@@ -42,4 +44,8 @@ export const $disabledRegistrationCombineData = combine(registrationForm.$values
   } = values;
 
   return [email, password, username].some((field) => isEmpty(field));
+});
+
+export const $registrationPending = pending({
+  effects: [authRegistrationFx, authLoginFx],
 });

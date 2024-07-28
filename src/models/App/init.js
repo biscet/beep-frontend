@@ -1,7 +1,7 @@
 import { sample } from 'effector';
 import { spread } from 'patronum/spread';
 import { isEmpty } from 'src/lib/lodash';
-import { HELMET_FIELDS } from 'src/dict/fields/app';
+import { HELMET_FIELDS } from 'src/dict/fields/models/app';
 import { HELMET_DICT, HELMET_ROUTES } from 'src/dict/helmet';
 import { debounce } from 'patronum';
 import {

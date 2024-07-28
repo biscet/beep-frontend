@@ -14,3 +14,5 @@ export const TOKENS = {
   ACCESS: 'access_token',
   REFRESH: 'refresh_token',
 };
+
+export const DEFAULT_ERROR_MSG = 'Что-то пошло не так. Повторите попытку позже.';

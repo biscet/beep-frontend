@@ -5,14 +5,17 @@ import { BUTTON_TYPES } from 'src/dict/fields/button';
 import { INPUT_TYPES } from 'src/dict/fields/input';
 import { REGISTRATION_FIELDS } from 'src/dict/fields/models/registration';
 import { getPropsField } from 'src/lib/form';
-import { $disabledRegistrationCombineData, registrationForm } from 'src/models/Registration';
+import { $disabledRegistrationCombineData, $registrationPending, registrationForm } from 'src/models/Registration';
 import { Button, Form, Input } from 'src/ui/components/Form';
 import { I18nContext } from 'src/ui/components/Helpers';
+import { LoaderSpinnerSVG } from 'src/ui/media/images';
 
 export const Registration = () => {
   const t = useContext(I18nContext);
   const { submit, ...restProps } = useForm(registrationForm);
-  const [disabledRegistrationButton] = useUnit([$disabledRegistrationCombineData]);
+  const [disabledRegistrationButton, registrationPending] = useUnit(
+    [$disabledRegistrationCombineData, $registrationPending],
+  );
 
   return (
     <div className="registration-page">
@@ -55,11 +58,11 @@ export const Registration = () => {
           </div>
 
           <Button
-            disabled={disabledRegistrationButton}
+            disabled={disabledRegistrationButton || registrationPending}
             type={BUTTON_TYPES.SUBMIT}
             nonActiveClass="button_full"
           >
-            {t('Зарегистрироваться')}
+            {registrationPending === false ? t('Зарегистрироваться') : <LoaderSpinnerSVG />}
           </Button>
         </Form>
 

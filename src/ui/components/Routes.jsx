@@ -9,15 +9,14 @@ import { $isAuthenticated } from 'src/models/Login';
 import { DefaultLayout } from 'src/ui/layouts/Default';
 import { WebLayout } from 'src/ui/layouts/Web';
 
-const { LOGIN, REGISTRATION } = PAGES_PATH;
-const { DASHBOARD } = WEB_PATH;
+const { LOGIN, REGISTRATION, WEB } = PAGES_PATH;
 
 export const paths = [{
   routes: [LOGIN, REGISTRATION],
   component: DefaultLayout,
 },
 {
-  routes: [DASHBOARD],
+  routes: [WEB],
   component: WebLayout,
 }];
 
@@ -27,22 +26,28 @@ export const getLayout = (pathname) => {
   return element.length > 0 ? element[0].component : DefaultLayout;
 };
 
-export const BasicRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={(props) => {
-      const Layout = getLayout(get(props, 'location.pathname'));
+export const BasicRoute = ({ component: Component, ...rest }) => {
+  const isAuthenticated = useUnit($isAuthenticated);
 
-      return (
-        <Layout>
-          <ErrorBoundary>
-            <Component {...props} />
-          </ErrorBoundary>
-        </Layout>
-      );
-    }}
-  />
-);
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        const Layout = getLayout(get(props, 'location.pathname'));
+
+        return !isAuthenticated ? (
+          <Layout>
+            <ErrorBoundary>
+              <Component {...props} />
+            </ErrorBoundary>
+          </Layout>
+        ) : (
+          <Redirect to={`/${WEB}`} />
+        );
+      }}
+    />
+  );
+};
 
 export const PrivateRoute = ({ component: Component, ...rest }) => {
   const isAuthenticated = useUnit($isAuthenticated);

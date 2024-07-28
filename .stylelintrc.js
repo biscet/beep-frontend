@@ -18,5 +18,6 @@ module.exports = {
     'plugin/no-low-performance-animation-properties':[true, { ignoreProperties: ['color', 'background-color', 'border-radius', 'height'] }],
     'selector-type-no-unknown': [true, { ignore: ['custom-elements', 'default-namespace'] }],
     'selector-type-case': ['lower', { ignoreTypes: ['/.+/'] }],
+    "property-no-unknown": null,
   },
 };
