@@ -14,7 +14,7 @@ export const I18nProvider = ({ children }) => (
   </I18nContext.Provider>
 );
 
-export const LanguagePicker = () => {
+export const LanguagePicker = ({ abrvLeftSide = true }) => {
   const lang = useUnit($lang);
 
   const changeLanguage = () => {
@@ -23,8 +23,17 @@ export const LanguagePicker = () => {
 
   return (
     <div className="language-picker" onClick={changeLanguage}>
-      {LANGUAGES_NAMES_ABRV[lang]}
-      <LanguageSVG />
+      {abrvLeftSide ? (
+        <>
+          {LANGUAGES_NAMES_ABRV[lang]}
+          <LanguageSVG />
+        </>
+      ) : (
+        <>
+          <LanguageSVG />
+          {LANGUAGES_NAMES_ABRV[lang]}
+        </>
+      )}
     </div>
   );
 };

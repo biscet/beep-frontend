@@ -1,6 +1,6 @@
 import { combine, createDomain } from 'effector';
 import { createGate } from 'effector-react';
-import { HELMET_FIELDS } from 'src/dict/fields/app';
+import { HELMET_FIELDS } from 'src/dict/fields/models/app';
 
 export const AppGate = createGate('App');
 export const RouteGate = createGate('Route');

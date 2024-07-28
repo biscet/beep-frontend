@@ -1,0 +1,50 @@
+.shimmer {
+  @include flex-centered;
+  @include theme-transition-base(background-color);
+
+  position: relative;
+  overflow: hidden;
+  background-color: var($bg-general);
+  border-radius: 8px;
+
+  &::before {
+    position: absolute;
+    width: 100%;
+    height: 0;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: shimmer;
+    animation-timing-function: linear;
+    box-shadow: 0 0 40px 8px var($text-general);
+    content: ' ';
+  }
+
+  $shimmers: (
+    'user-info' 100% $sidebar-info-height $sidebar-radius,
+  );
+
+  @each $name, $width, $height, $border-radius in $shimmers {
+    &_#{ $name} {
+      width: $width;
+      height: $height;
+      flex-shrink: 0;
+      border-radius: $border-radius;
+    }
+  }
+
+  &_user-info {
+    @include theme-transition-base(border-color);
+
+    border: $sidebar-info-border;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) rotateZ(140deg);
+  }
+
+  100% {
+    transform: translateX(150%) rotateZ(100deg);
+  }
+}

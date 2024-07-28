@@ -1,7 +1,7 @@
 const sharp = require('sharp');
 const fs = require('fs-extra');
 const path = require('node:path');
-const os = require('os');
+const os = require('node:os');
 
 const srcDir = path.join(__dirname, '../src');
 
@@ -13,17 +13,21 @@ async function optimizeImage(filePath) {
 
   switch (ext) {
     case '.jpeg':
-    case '.jpg':
-      sharpInstance = sharpInstance.jpeg({ quality: 80 });
+    case '.jpg': {
+      sharpInstance = sharpInstance.jpeg({ quality: 80 }).metadata(() => void 0);
       break;
-    case '.png':
-      sharpInstance = sharpInstance.png({  quality: 90 , compressionLevel: 9 });
+    }
+    case '.png': {
+      sharpInstance = sharpInstance.png({ quality: 90, compressionLevel: 9 }).metadata(() => void 0);
       break;
-    case '.webp':
-      sharpInstance = sharpInstance.webp({ quality: 80 });
+    }
+    case '.webp': {
+      sharpInstance = sharpInstance.webp({ quality: 80 }).metadata(() => void 0);
       break;
-    default:
+    }
+    default: {
       throw new Error(`Unsupported file type: ${ext}`);
+    }
   }
 
   await sharpInstance.toFile(tempPath);

@@ -58,11 +58,24 @@
         overflow: hidden;
         transition: background-color 0.1s linear;
       }
+
+      #loader-web-page {
+        width: 100vw;
+        height: 100vh;
+        height: 100svh;
+        position: fixed;
+        z-index: 10;
+        top: 0;
+        background-color: var(--bg-general, white);
+        left: 0;
+        overflow: hidden;
+      }
     </style>
   </head>
   <body>
     <div id="root"></div>
     <div id="loader-application"></div>
+    <div id="loader-web-page" style="display: none;"></div>
     <script type="module" src="/src/index.jsx"></script>
   </body>
 </html>

@@ -1,15 +1,23 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { get, intersection, isEmpty } from 'src/lib/lodash';
-import { PAGES_PATH } from 'src/dict/path';
-import { DefaultLayout } from 'src/ui/layouts/Default';
+import { PAGES_PATH, WEB_PATH } from 'src/dict/path';
 import { ErrorBoundary } from 'src/ui/components/ErrorBoundary';
+import { useUnit } from 'effector-react';
+import { $isAuthenticated } from 'src/models/Login';
 
-const { DEFAULT } = PAGES_PATH;
+import { DefaultLayout } from 'src/ui/layouts/Default';
+import { WebLayout } from 'src/ui/layouts/Web';
+
+const { LOGIN, REGISTRATION, WEB } = PAGES_PATH;
 
 export const paths = [{
-  routes: [DEFAULT],
+  routes: [LOGIN, REGISTRATION],
   component: DefaultLayout,
+},
+{
+  routes: [WEB],
+  component: WebLayout,
 }];
 
 export const getLayout = (pathname) => {
@@ -18,19 +26,48 @@ export const getLayout = (pathname) => {
   return element.length > 0 ? element[0].component : DefaultLayout;
 };
 
-export const BasicRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={(props) => {
-      const Layout = getLayout(get(props, 'location.pathname'));
+export const BasicRoute = ({ component: Component, ...rest }) => {
+  const isAuthenticated = useUnit($isAuthenticated);
 
-      return (
-        <Layout>
-          <ErrorBoundary>
-            <Component {...props} />
-          </ErrorBoundary>
-        </Layout>
-      );
-    }}
-  />
-);
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        const Layout = getLayout(get(props, 'location.pathname'));
+
+        return !isAuthenticated ? (
+          <Layout>
+            <ErrorBoundary>
+              <Component {...props} />
+            </ErrorBoundary>
+          </Layout>
+        ) : (
+          <Redirect to={`/${WEB}`} />
+        );
+      }}
+    />
+  );
+};
+
+export const PrivateRoute = ({ component: Component, ...rest }) => {
+  const isAuthenticated = useUnit($isAuthenticated);
+
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        const Layout = getLayout(get(props, 'location.pathname'));
+
+        return isAuthenticated ? (
+          <Layout>
+            <ErrorBoundary>
+              <Component {...props} />
+            </ErrorBoundary>
+          </Layout>
+        ) : (
+          <Redirect to={`/${LOGIN}`} />
+        );
+      }}
+    />
+  );
+};

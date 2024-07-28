@@ -37,3 +37,15 @@ textarea {
   outline: 0;
   text-decoration: none;
 }
+
+:root {
+  --toastify-color-dark: #1c171d;
+}
+
+.Toastify__toast-container--bottom-right {
+  right: 2em;
+}
+
+.Toastify__toast {
+  border-radius: 12px;
+}

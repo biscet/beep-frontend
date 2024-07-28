@@ -8,6 +8,7 @@ import { MouseParallaxContainer } from 'react-parallax-mouse';
 import { MOUSE_PARALLAX_CONTAINER_STYLE } from 'src/dict/config';
 import { $isLoginPage } from 'src/models/Login';
 import { $isRegistrationPage } from 'src/models/Registration';
+import { useHistory } from 'react-router-dom';
 import { ScrollToTop } from '../components/ScrollToTop';
 
 const DefaultLayout = ({ children }) => {
@@ -18,6 +19,7 @@ const DefaultLayout = ({ children }) => {
   useGate(RouteGate, {
     pathname: get(window, 'location.pathname', ''),
     pathParams: get(window, 'location.search', ''),
+    history: useHistory(),
   });
 
   const authPage = isLoginPage || isRegistrationPage;

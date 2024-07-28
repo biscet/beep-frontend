@@ -1,7 +1,7 @@
 import { sample } from 'effector';
 import { spread } from 'patronum/spread';
 import { isEmpty } from 'src/lib/lodash';
-import { HELMET_FIELDS } from 'src/dict/fields/app';
+import { HELMET_FIELDS } from 'src/dict/fields/models/app';
 import { HELMET_DICT, HELMET_ROUTES } from 'src/dict/helmet';
 import { debounce } from 'patronum';
 import {
@@ -14,6 +14,8 @@ import {
   $headerAnimationComplete,
   setHeaderAnimationStateFn,
 } from './index';
+import { $enqueueSnackbar } from '../Helpers/Notify';
+import { $history } from '../Helpers/History';
 
 $headerAnimationComplete.on(setHeaderAnimationStateFn, (_, complete) => complete);
 
@@ -23,6 +25,7 @@ sample({
     targets: {
       pathname: $pathnameUrl,
       pathParams: $pathParams,
+      enqueueSnackbar: $enqueueSnackbar,
     },
   }),
 });
@@ -34,6 +37,7 @@ sample({
     targets: {
       pathname: $pathnameUrl,
       pathParams: $pathParams,
+      history: $history,
     },
   }),
 });

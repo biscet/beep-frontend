@@ -61,3 +61,21 @@
     @content;
   }
 }
+
+@mixin truncate-text($clamp: 0) {
+  @if ($clamp == 0) {
+    overflow: hidden;
+    min-width: auto;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @else {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    box-orient: vertical;
+    -webkit-line-clamp: $clamp;
+    line-clamp: $clamp;
+  }
+}
