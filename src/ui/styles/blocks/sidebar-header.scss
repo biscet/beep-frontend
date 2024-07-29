@@ -3,15 +3,17 @@
   @include theme-transition-base(border-color);
 
   width: 100%;
+  height: $sidebar-header-height;
   flex-shrink: 0;
+  justify-content: space-between;
   padding: 19px 36px;
   padding-right: 80px;
   border-bottom: 1px var($border-sidebar) solid;
 
   &__right-side {
-    display: flex;
-    width: 100%;
-    justify-content: flex-end;
+    @include flex-centered;
+
+    flex-shrink: 0;
     gap: 48px;
   }
 }

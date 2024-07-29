@@ -6,7 +6,7 @@ import { I18nContext, LanguagePicker, ThemePicker } from 'src/ui/components/Help
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HEADER_ANIMATION, HEADER_TEXT_BUTTON_ANIMATION } from 'src/dict/animate';
-import { $headerAnimationComplete, setHeaderAnimationStateFn } from 'src/models/App';
+import { $headerAnimationComplete, setHeaderAnimationStateFn } from 'src/models/Blocks';
 import { useUnit } from 'effector-react';
 import { rootContainer } from 'src/dict/config';
 import { cx } from 'src/lib/lodash';

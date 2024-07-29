@@ -18,29 +18,72 @@
     }
   }
 
+  &__divider {
+    width: 100%;
+    height: 1px;
+    padding: 0 32px;
+    margin: 32px 0;
+    background-color: var($border-sidebar);
+  }
+
   &__logo {
     @extend .chakra-petch-medium;
 
     flex-shrink: 0;
-    margin-bottom: 74px;
+    margin-bottom: 44px;
     color: var($text-general);
     text-align: center;
 
     @include default-hover;
   }
 
+  &__routes {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
   .user-info {
     @include flex-centered;
     @include theme-transition-base(border-color);
 
+    position: relative;
     overflow: hidden;
     width: 100%;
     height: $sidebar-info-height;
     flex-shrink: 0;
+    justify-content: space-between;
     padding: 16px;
+    padding-right: 0;
     border: $sidebar-info-border;
+    margin-bottom: $sidebar-info-mb;
     border-radius: $sidebar-radius;
-    gap: 8px;
+
+    &__box {
+      @include flex-centered;
+
+      gap: 8px;
+    }
+
+    &__logout {
+      @include flex-centered;
+
+      height: 100%;
+      flex-shrink: 0;
+      padding-right: 16px;
+      color: var($accent-color-general);
+      cursor: pointer;
+      gap: 8px;
+      text-wrap: nowrap;
+
+      &:hover {
+        #logout-svg {
+          #logout-path {
+            fill: var($accent-color-general);
+          }
+        }
+      }
+    }
 
     &__avatar {
       @include flex-centered;
@@ -67,7 +110,7 @@
       div {
         @include truncate-text;
 
-        max-width: 170px;
+        max-width: 145px;
       }
 
       div:last-child {
@@ -84,9 +127,39 @@
     background-color: none;
     border-radius: $sidebar-radius;
     gap: 8px;
-    transition: background-color 0.1s linear, color 0.1s linear;
+    transition: color 0.1s linear, background-color 0.1s linear;
 
-    &:hover {
+    &_active {
+      background-color: var($buttons-hover);
+      color: var($accent-color-primary);
+
+      svg {
+        path {
+          fill: var($accent-color-primary);
+        }
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &_active-create-project {
+      background-color: var($create-project-button);
+      color: var($create-project-button-text);
+
+      svg {
+        path {
+          fill: var($create-project-button-text);
+        }
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &:not([data-disabled="true"]):hover {
       background-color: var($accent-color-general);
       color: var($bg-general);
 

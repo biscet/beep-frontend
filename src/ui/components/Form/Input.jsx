@@ -73,13 +73,13 @@ export const Input = ({
         ) : null}
       </div>
 
-      {hasError ? (
+      {hasError && !isEmpty(errorText) ? (
         <p className="input-group__error">
           {t(errorText)}
         </p>
       ) : null}
 
-      {!isEmpty(caption) && !hasError ? (
+      {!hasError && !isEmpty(caption) ? (
         <p>{t(caption)}</p>
       ) : null}
     </div>

@@ -26,4 +26,12 @@ export const en = {
   24: 'beep - Dashboard',
   25: 'Privacy Policy',
   26: 'Log out',
+  27: 'Dashboard',
+  28: 'Projects',
+  29: 'beep - Projects',
+  30: 'Create project',
+  31: 'Creating a project',
+  32: 'The project name must be unique and contain from 1 to 255 characters.',
+  33: 'Project name',
+  34: 'Next',
 };

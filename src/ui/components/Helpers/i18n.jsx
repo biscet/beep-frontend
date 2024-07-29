@@ -14,7 +14,7 @@ export const I18nProvider = ({ children }) => (
   </I18nContext.Provider>
 );
 
-export const LanguagePicker = ({ abrvLeftSide = true }) => {
+export const LanguagePicker = React.memo(({ abrvLeftSide = true }) => {
   const lang = useUnit($lang);
 
   const changeLanguage = () => {
@@ -36,4 +36,4 @@ export const LanguagePicker = ({ abrvLeftSide = true }) => {
       )}
     </div>
   );
-};
+});

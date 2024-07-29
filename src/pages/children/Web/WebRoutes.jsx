@@ -1,28 +1,33 @@
 import React from 'react';
 import { useUnit } from 'effector-react';
 import {
-  Redirect, Route, Switch, withRouter,
+  Redirect, Route, Switch, withRouter, useLocation,
 } from 'react-router-dom';
 import { get, isEmpty } from 'src/lib/lodash';
-import { WEB_PATH } from 'src/dict/path';
+import { ROUTES_FIELDS, WEB_PATH } from 'src/dict/path';
 import { $itemsRoutesWeb } from 'src/models/Web';
-import { Dashboard } from './children/Dashboard';
 
-const { DASHBOARD } = WEB_PATH;
+import { Dashboard } from './children/Dashboard';
+import { Projects } from './children/Projects/Projects';
+
+const { PATH } = ROUTES_FIELDS;
+const { DASHBOARD, PROJECTS } = WEB_PATH;
 
 const pathMap = {
   [DASHBOARD]: Dashboard,
+  [PROJECTS]: Projects,
 };
 
 export const WebRoutes = withRouter(({ match: { url } }) => {
-  const routes = useUnit($itemsRoutesWeb).filter((item) => !isEmpty(item.path));
+  const location = useLocation();
+  const routes = useUnit($itemsRoutesWeb).filter((route) => !isEmpty(route[PATH]));
   const baseUrl = url.slice(-1) === '/' ? url.slice(0, Math.max(0, url.length - 1)) : url;
-  const defaultPath = DASHBOARD;
+  const defaultPath = PROJECTS;
 
   return (
-    <Switch>
+    <Switch location={location} key={location.pathname}>
       {routes.map(
-        ({ path }) => (
+        ({ [PATH]: path }) => (
           <Route
             key={`${path}_route_web`}
             path={`${baseUrl}/${path}`}

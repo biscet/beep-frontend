@@ -5,9 +5,15 @@ const {
   DEFAULT, LOGIN, REGISTRATION, WEB,
 } = PAGES_PATH;
 
-const { DASHBOARD } = WEB_PATH;
+const { DASHBOARD, PROJECTS } = WEB_PATH;
 
-export const HELMET_ROUTES = [DEFAULT, LOGIN, `${WEB}/${DASHBOARD}`];
+export const HELMET_ROUTES = [
+  DEFAULT,
+  LOGIN,
+  REGISTRATION,
+  `${WEB}/${DASHBOARD}`,
+  `${WEB}/${PROJECTS}`,
+];
 
 export const HELMET_DICT = {
   [DEFAULT]: {
@@ -27,7 +33,12 @@ export const HELMET_DICT = {
   },
   [`${WEB}/${DASHBOARD}`]: {
     [HELMET_FIELDS.TITLE]: 'beep - Дашборд',
-    [HELMET_FIELDS.DESCRIPTION]: 'Загрузите ваше видео, и наш AI обработает его, убирая маты. Получите очищенную аудиодорожку быстро и легко. Бесплатная и быстрая обработка видео онлайн.',
-    [HELMET_FIELDS.KEYWORDS]: 'обработка видео, запикивание мата, удаление мата из видео, AI обработка видео, аудиодорожка без мата, онлайн обработка видео, бесплатная обработка видео, beep, video',
+    [HELMET_FIELDS.DESCRIPTION]: 'Дашборд.',
+    [HELMET_FIELDS.KEYWORDS]: 'обработка видео, дашборд, dashboard, beep, video',
+  },
+  [`${WEB}/${PROJECTS}`]: {
+    [HELMET_FIELDS.TITLE]: 'beep - Проекты',
+    [HELMET_FIELDS.DESCRIPTION]: 'Список ваших проектов.',
+    [HELMET_FIELDS.KEYWORDS]: 'обработка видео, проекты, projects, beep, video',
   },
 };
