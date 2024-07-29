@@ -3,6 +3,7 @@ import { PAGES_PATH, WEB_PATH } from 'src/dict/path';
 import { rootContainer } from 'src/dict/config';
 import { $isWebPage, goToWebPageFn } from '.';
 import { pushHistoryFn } from '../Helpers/History';
+import { setHeaderAnimationStateFn } from '../Blocks';
 
 sample({
   clock: goToWebPageFn,
@@ -15,4 +16,5 @@ sample({
     rootContainer.style = isWebPage ? 'display: flex;' : null;
     return null;
   },
+  target: setHeaderAnimationStateFn.prepend(() => true),
 });

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useUnit } from 'effector-react';
 import { $currentBreadCrumbs } from 'src/models/Helpers/BreadCrumbs';
 import { BREAD_CRUMBS_FIELD, BREAD_CRUMBS_ROUTE } from 'src/dict/breadcrumbs';
-import { cx, get, isEmpty } from 'src/lib/lodash';
+import { cx, get } from 'src/lib/lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { PAGES_PATH } from 'src/dict/path';
 import { pushHistoryFn } from 'src/models/Helpers/History';
@@ -25,12 +25,7 @@ export const BreadCrumbs = () => {
         const path = get(breadcrumb, PATH, uuidv4());
         const link = get(breadcrumb, LINK, PAGES_PATH.WEB);
         const translatedName = translated ? t(name) : name;
-
-        const onClick = () => {
-          if (!isEmpty(link) && active === false) {
-            pushHistoryFn(link);
-          }
-        };
+        const onClick = active === false ? pushHistoryFn(link) : null;
 
         return (
           <React.Fragment key={path}>

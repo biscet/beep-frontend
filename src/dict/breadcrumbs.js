@@ -10,4 +10,5 @@ export const BREAD_CRUMBS_FIELD = {
 export const BREAD_CRUMBS_ROUTE = {
   PATH: 'path',
   BREADCRUMBS: 'breadcrumbs',
+  VISIBLE: 'visible',
 };

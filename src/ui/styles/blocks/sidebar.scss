@@ -39,6 +39,7 @@
     flex-shrink: 0;
     padding: 16px;
     border: $sidebar-info-border;
+    margin-bottom: $sidebar-info-mb;
     border-radius: $sidebar-radius;
     gap: 8px;
 
@@ -86,7 +87,18 @@
     gap: 8px;
     transition: background-color 0.1s linear, color 0.1s linear;
 
-    &:hover {
+    &_active {
+      background-color: var($buttons-hover);
+      color: var($accent-color-primary);
+
+      svg {
+        path {
+          fill: var($accent-color-primary);
+        }
+      }
+    }
+
+    &:not([data-disabled="true"]):hover {
       background-color: var($accent-color-general);
       color: var($bg-general);
 

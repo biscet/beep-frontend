@@ -57,3 +57,5 @@ export const saltString = (string = '', salting = true) => {
 
   return saltlingString;
 };
+
+export const isEmptyRef = (ref) => !isEmpty(ref) && !isEmpty(ref.current);

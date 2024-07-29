@@ -6,10 +6,15 @@ import { USER_FIELDS } from 'src/dict/fields/models/user';
 import { Button } from 'src/ui/components/Form';
 import { I18nContext, ShimmerUserInfo } from 'src/ui/components/Helpers';
 import { BUTTON_TYPES, BUTTON_VARIATION } from 'src/dict/fields/button';
-import { LogoutSVG } from 'src/ui/media/images';
+import { LogoutSVG, AddSVG } from 'src/ui/media/images';
 import { getUserInfoFx } from 'src/models/Login';
+import { PAGES_PATH, WEB_PATH } from 'src/dict/path';
+import { $modalIsOpen, closeModalFn, openModalFn } from 'src/models/Helpers/Modal';
+import { MODAL_FIELDS } from 'src/dict/modal';
 
 const { EMAIL, USERNAME, AVATAR } = USER_FIELDS;
+
+const Mod = () => (<div>kek</div>);
 
 export const Sidebar = () => {
   const t = useContext(I18nContext);
@@ -17,12 +22,14 @@ export const Sidebar = () => {
     [EMAIL]: email,
     [USERNAME]: username,
     [AVATAR]: avatarChar,
-  }, userInfoPending] = useUnit([$userCombineData, getUserInfoFx.pending]);
+  }, userInfoPending, modalIsOpen] = useUnit(
+    [$userCombineData, getUserInfoFx.pending, $modalIsOpen],
+  );
 
   return (
     <div className="sidebar">
       <NavLink
-        to="/web"
+        to={`/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}`}
         className="sidebar__logo"
         activeClassName=""
       >
@@ -38,6 +45,23 @@ export const Sidebar = () => {
           </div>
         </div>
       )}
+
+      <Button
+        type={BUTTON_TYPES.BUTTON}
+        variant={BUTTON_VARIATION.TEXT}
+        activeClass="bottom-side__link link link_active"
+        nonActiveClass="bottom-side__link link"
+        onClick={
+          modalIsOpen ? closeModalFn : openModalFn.prepend(() => ({
+            [MODAL_FIELDS.CHILDREN]: Mod,
+          }))
+        }
+        conditionClass={modalIsOpen}
+        data-disabled={modalIsOpen}
+      >
+        <AddSVG />
+        {t('Создать проект')}
+      </Button>
 
       <div className="sidebar__bottom-side bottom-side">
         <Button
