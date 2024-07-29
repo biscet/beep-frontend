@@ -1,5 +1,6 @@
 import { MODAL_FIELDS } from 'src/dict/modal';
 import { sample } from 'effector';
+import { $pathnameUrl } from 'src/models/App';
 import {
   $modal, closeModalFn, openModalFn, $modalIsOpen,
 } from '.';
@@ -19,4 +20,9 @@ sample({
   source: $modal,
   fn: ({ [IS_OPEN]: isOpen }) => isOpen,
   target: $modalIsOpen,
+});
+
+sample({
+  clock: $pathnameUrl,
+  target: closeModalFn,
 });

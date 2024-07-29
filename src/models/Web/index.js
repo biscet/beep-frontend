@@ -12,7 +12,7 @@ export const goToWebPageFn = webDomain.createEvent();
 export const $itemsRoutesWeb = combine(() => [
   {
     [PATH]: WEB_PATH.DASHBOARD,
-    [ACTIVE]: false,
+    [ACTIVE]: true,
   },
   {
     [PATH]: WEB_PATH.PROJECTS,

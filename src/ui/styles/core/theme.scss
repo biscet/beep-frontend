@@ -12,6 +12,9 @@
   #{$gray}: #a19da9;
   #{$buttons-hover}: #453d58;
   #{$accent-color-primary}: #a282ef;
+  #{$bg-modal}: rgba(48, 41, 64, 0.8);
+  #{$create-project-button}: #342237;
+  #{$create-project-button-text}: #dc95e7;
 
   .header {
     &_scrolled {
@@ -40,6 +43,9 @@
   #{$gray}: #a19da9;
   #{$buttons-hover}: #f2edff;
   #{$accent-color-primary}: #8d62f8;
+  #{$bg-modal}: rgba(161, 157, 169, 0.8);
+  #{$create-project-button}: #ffedfd;
+  #{$create-project-button-text}: #dc95e7;
 
   .header {
     &_scrolled {

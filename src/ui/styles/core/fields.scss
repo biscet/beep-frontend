@@ -15,10 +15,13 @@ $error: --error;
 $border-sidebar: --border-sidebar;
 $gray: --gray;
 $buttons-hover: --buttons-hover;
+$bg-modal: --bg-modal;
+$create-project-button: --create-project-button;
+$create-project-button-text: --create-project-button-text;
 
 $sidebar-width: 292px;
 $sidebar-radius: 24px;
 $sidebar-info-height: 82px;
-$sidebar-info-mb: 56px;
+$sidebar-info-mb: 10px;
 $sidebar-info-border: 1px solid var($border-sidebar);
 $sidebar-header-height: 64px;

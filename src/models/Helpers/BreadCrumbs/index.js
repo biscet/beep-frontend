@@ -28,7 +28,7 @@ export const $currentBreadCrumbs = breadCrumbsDomain.createStore({
 
 export const $webDashboardBC = combine(() => ([{
   [BREAD_CRUMBS_ROUTE.PATH]: `${PAGES_PATH.WEB}/${WEB_PATH.DASHBOARD}`,
-  [BREAD_CRUMBS_ROUTE.VISIBLE]: false,
+  [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
     {
       [PATH]: WEB_PATH.DASHBOARD,

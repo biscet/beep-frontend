@@ -7,7 +7,7 @@ import { setHeaderAnimationStateFn } from '../Blocks';
 
 sample({
   clock: goToWebPageFn,
-  target: pushHistoryFn.prepend(() => `/${PAGES_PATH.WEB}/${WEB_PATH.DASHBOARD}`),
+  target: pushHistoryFn.prepend(() => `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}`),
 });
 
 sample({

@@ -7,12 +7,12 @@ export const ScrollToTop = ({ container }) => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    if (!isEmpty(container)) {
-      container.scrollTo(0, 0);
+    if (!isEmpty(container?.current)) {
+      container.current.scrollTo(0, 0);
     } else {
       rootContainer.scrollTo(0, 0);
     }
-  }, [pathname]);
+  }, [pathname, container]);
 
   return null;
 };

@@ -1,0 +1,76 @@
+$modals: ('create-project' 530px,);
+
+.modal {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  &_web {
+    width: calc(100% - $sidebar-width);
+    margin-left: $sidebar-width;
+  }
+
+  &__wrapper {
+    @include flex-centered;
+
+    position: relative;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    background-color: var($bg-modal);
+  }
+
+  .form {
+    position: relative;
+    flex-shrink: 0;
+    padding: 48px 56px;
+    background-color: var($bg-general);
+    border-radius: 32px;
+
+    @each $name, $width in $modals {
+      &_#{$name} {
+        width: $width;
+      }
+    }
+
+    &__close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      cursor: pointer;
+
+      @include default-hover;
+    }
+
+    &__heading {
+      @extend .inter-semibold;
+
+      margin-bottom: 24px;
+    }
+
+    .caption {
+      @extend .inter-regular;
+
+      max-width: 410px;
+      margin-bottom: 16px;
+
+      &_error {
+        color: var($error);
+      }
+    }
+
+    .create-project {
+      &__input {
+        max-height: 47px;
+        margin-bottom: 36px;
+      }
+
+      &__button {
+        max-height: 54px;
+      }
+    }
+  }
+}

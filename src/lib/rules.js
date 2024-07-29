@@ -3,6 +3,7 @@ import { isEmpty } from 'src/lib/lodash';
 export const emailPattern = /\S+@\S+\.\S+/;
 export const passwordPattern = /^.{8,}$/;
 export const userNamePattern = /^[\dA-Za-z]{4,30}$/;
+export const projectNamePattern = /^.{1,255}$/;
 
 export const rules = {
   required: () => ({
@@ -31,6 +32,13 @@ export const rules = {
     validator: (value) => ({
       isValid: passwordPattern.test(value),
       errorText: 'Длина пароля должна быть не менее 8 символов.',
+    }),
+  }),
+  projectName: () => ({
+    name: 'projectName',
+    validator: (value) => ({
+      isValid: projectNamePattern.test(value),
+      errorText: '',
     }),
   }),
 };
