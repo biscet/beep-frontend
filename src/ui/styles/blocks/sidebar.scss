@@ -127,7 +127,7 @@
     background-color: none;
     border-radius: $sidebar-radius;
     gap: 8px;
-    transition: color 0.1s linear;
+    transition: color 0.1s linear, background-color 0.1s linear;
 
     &_active {
       background-color: var($buttons-hover);
