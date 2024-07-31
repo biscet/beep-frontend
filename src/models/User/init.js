@@ -5,8 +5,11 @@ import { spread } from 'patronum';
 import { $isWebPage } from '../Web';
 import { getUserInfoFx } from '../Login';
 import { $userAvatar, $userEmail, $userName } from '.';
+import { $initApp } from '../App';
 
-const { EMAIL, USERNAME, AVATAR } = USER_FIELDS;
+const {
+  EMAIL, USERNAME, AVATAR, LOADED,
+} = USER_FIELDS;
 
 sample({
   clock: $isWebPage,
@@ -29,6 +32,7 @@ sample({
       [EMAIL]: userEmail,
       [USERNAME]: userName,
       [AVATAR]: userAvatar,
+      [LOADED]: true,
     });
   },
   target: spread({
@@ -36,6 +40,7 @@ sample({
       [EMAIL]: $userEmail,
       [USERNAME]: $userName,
       [AVATAR]: $userAvatar,
+      [LOADED]: $initApp,
     },
   }),
 });

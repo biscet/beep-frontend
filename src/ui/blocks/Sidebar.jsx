@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useUnit } from 'effector-react';
 import { NavLink } from 'react-router-dom';
 import { $userCombineData } from 'src/models/User';
@@ -19,10 +19,11 @@ import { $pathnameUrl } from 'src/models/App';
 import { isEmpty } from 'src/lib/lodash';
 import { AnimatePresence, motion } from 'framer-motion';
 import { USER_INFO_LOGOUT_ANIMATE, USER_INFO_SPAN_ANIMATE, USER_INFO_WRAPPER_ANIMATE } from 'src/dict/animate';
+import { prependObstacleFn } from 'src/lib/helpers';
 
 const { EMAIL, USERNAME, AVATAR } = USER_FIELDS;
 const {
-  NAME, PATH, ICON,
+  NAME, PATH, ICON, VALIDATE, GENERAL_PAGE,
 } = SIDEBAR_ROUTES_FIELDS;
 
 const sidebarRoutesShimmerStyle = (length) => ({ height: (54 * length) + (8 * (length - 2)) });
@@ -38,6 +39,10 @@ export const Sidebar = () => {
     [$userCombineData, getUserInfoFx.pending, $modalIsOpen,
       $sidebarRoutes, $pathnameUrl, $isHovereLogout],
   );
+
+  useEffect(() => () => {
+    setIsHovereLogoutFn(false);
+  }, []);
 
   return (
     <div className="sidebar">
@@ -56,12 +61,14 @@ export const Sidebar = () => {
             type={BUTTON_TYPES.BUTTON}
             variant={BUTTON_VARIATION.TEXT}
             activeClass="bottom-side__link link link_active-create-project"
-            nonActiveClass="bottom-side__link link"
-            onClick={
-          modalIsOpen ? closeModalFn : openModalFn.prepend(() => ({
-            [MODAL_FIELDS.CHILDREN]: CreateProject,
-          }))
-        }
+            nonActiveClass="bottom-side__link link link_create-project "
+            onClick={() => {
+              if (modalIsOpen) {
+                closeModalFn();
+              } else {
+                openModalFn({ [MODAL_FIELDS.CHILDREN]: CreateProject });
+              }
+            }}
             conditionClass={modalIsOpen}
             data-disabled={modalIsOpen}
           >
@@ -73,10 +80,19 @@ export const Sidebar = () => {
       <div className="sidebar__divider" />
 
       <div className="sidebar__routes">
-        { userInfoPending
+        {userInfoPending
           ? <div className="shimmer shimmer_side-bar-link" style={sidebarRoutesShimmerStyle(sidebarRoutes.length)} />
-          : sidebarRoutes.map(({ [NAME]: name, [PATH]: path, [ICON]: Icon }) => {
-            const conditionClass = pathnameUrl.includes(path);
+          : sidebarRoutes.map(({
+            [NAME]: name,
+            [PATH]: path,
+            [ICON]: Icon,
+            [VALIDATE]: validate,
+            [GENERAL_PAGE]: page,
+          }) => {
+            const urls = pathnameUrl.split('/');
+            const conditionClass = urls.filter(
+              (url) => (url === page) || (validate.includes(url)),
+            ).length > 1;
 
             return (
               <Button
@@ -122,8 +138,8 @@ export const Sidebar = () => {
             <motion.div
               key="user-info__logout"
               className="user-info__logout"
-              onHoverStart={setIsHovereLogoutFn.prepend(() => true)}
-              onHoverEnd={setIsHovereLogoutFn.prepend(() => false)}
+              onHoverStart={prependObstacleFn(setIsHovereLogoutFn, true)}
+              onHoverEnd={prependObstacleFn(setIsHovereLogoutFn, false)}
               onClick={triggerLogoutFn}
               initial={USER_INFO_LOGOUT_ANIMATE.initial}
               animate={USER_INFO_LOGOUT_ANIMATE.animate(isHovered)}

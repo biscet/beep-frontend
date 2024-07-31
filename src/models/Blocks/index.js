@@ -9,6 +9,8 @@ const {
   NAME, ACTIVE, PATH, GENERAL_PAGE, VALIDATE, ICON,
 } = SIDEBAR_ROUTES_FIELDS;
 
+const { CATALOG, UPLOADING } = CRUD_PATH;
+
 const blocksDomain = allDomain.createDomain('Blocks');
 
 export const triggerLogoutFn = blocksDomain.createEvent();
@@ -25,17 +27,17 @@ export const $sidebarRoutes = combine(() => [
   {
     [NAME]: 'Проекты',
     [ACTIVE]: true,
-    [VALIDATE]: [],
+    [VALIDATE]: [CATALOG, UPLOADING],
     [ICON]: ProjectsSVG,
-    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}`,
-    [GENERAL_PAGE]: PAGES_PATH.WEB,
+    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CATALOG}`,
+    [GENERAL_PAGE]: WEB_PATH.PROJECTS,
   },
   {
     [NAME]: 'Дашборд',
     [ACTIVE]: true,
-    [VALIDATE]: [],
+    [VALIDATE]: [CATALOG],
     [ICON]: DashboardSVG,
-    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.DASHBOARD}/${CRUD_PATH.CATALOG}`,
-    [GENERAL_PAGE]: PAGES_PATH.WEB,
+    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.DASHBOARD}/${CATALOG}`,
+    [GENERAL_PAGE]: WEB_PATH.DASHBOARD,
   },
 ].filter(({ [ACTIVE]: active }) => active));

@@ -2,7 +2,7 @@ import { sample, split } from 'effector';
 import { $pathnameUrl } from 'src/models/App';
 import { isEmpty } from 'src/lib/lodash';
 import { BREAD_CRUMBS_FIELD } from 'src/dict/breadcrumbs';
-import { isCurrentPathForBreadCrumb } from 'src/lib/url';
+import { isCurrentPath } from 'src/lib/url';
 import {
   $allBreadCrumbsCombineData, $currentBreadCrumbs,
   resetCurrentBCFn, triggerSplitBCLogicFn,
@@ -19,7 +19,7 @@ sample({
   clock: $pathnameUrl,
   source: $allBreadCrumbsCombineData,
   fn: (allBreadCrumbs, pathnameUrl) => allBreadCrumbs.filter(
-    ({ [PATH]: path }) => isCurrentPathForBreadCrumb(pathnameUrl, path),
+    ({ [PATH]: path }) => isCurrentPath(pathnameUrl, path),
   ),
   target: triggerSplitBCLogicFn,
 });

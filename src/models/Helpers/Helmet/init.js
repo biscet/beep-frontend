@@ -3,6 +3,8 @@ import { HELMET_FIELDS } from 'src/dict/fields/models/app';
 import { HELMET_DICT, HELMET_ROUTES } from 'src/dict/helmet';
 import { $pathnameUrl } from 'src/models/App';
 import { spread } from 'patronum';
+import { isCurrentPath } from 'src/lib/url';
+import { isArray } from 'src/lib/lodash';
 import { $helmetDescription, $helmetKeywords, $helmetTitle } from '.';
 
 sample({
@@ -15,8 +17,8 @@ sample({
     };
 
     HELMET_ROUTES.forEach((route) => {
-      if (pathnameUrl.includes(route)) {
-        helmet = HELMET_DICT[route];
+      if (isCurrentPath(pathnameUrl, route)) {
+        helmet = HELMET_DICT[isArray(route) ? route.join('/') : route];
       }
     });
 

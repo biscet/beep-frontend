@@ -3,3 +3,7 @@ export const CREATE_PROJECT_FIELDS = {
   TYPE: 'projectType',
   UUID: 'localUploadId',
 };
+
+export const PROJECT_FIELDS = {
+  ID: 'projectId ',
+};

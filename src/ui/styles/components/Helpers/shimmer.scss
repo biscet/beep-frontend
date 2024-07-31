@@ -22,6 +22,7 @@
   $shimmers: (
     'user-info' 100% $sidebar-info-height $sidebar-radius,
     'side-bar-link' 100% $sidebar-link-height $sidebar-radius,
+    'side-bar-breadcrumbs' 50% 25px,
   );
 
   @each $name, $width, $height, $border-radius in $shimmers {
@@ -30,6 +31,10 @@
       height: $height;
       flex-shrink: 0;
       border-radius: $border-radius;
+    }
+
+    &_side-bar-breadcrumbs {
+      max-width: 500px;
     }
   }
 

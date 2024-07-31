@@ -6,10 +6,12 @@ import { logoutFn } from 'src/models/User';
 import { get } from 'src/lib/lodash';
 import { errorMsgHandler } from 'src/lib/url';
 import { LOGIN_ERRORS } from 'src/dict/fields/models/login';
+import { PAGES_PATH } from 'src/dict/path';
 import {
   $isLoginPage, $tokenData, authLoginFx, loginForm,
 } from '.';
 import { notifyErrorFn } from '../Helpers/Notify';
+import { $pathnameUrl } from '../App';
 
 $tokenData
   .reset(logoutFn)
@@ -58,4 +60,10 @@ sample({
 
     return msg;
   }),
+});
+
+sample({
+  clock: authLoginFx.doneData,
+  fn: () => `/${PAGES_PATH.WEB}/`,
+  target: $pathnameUrl,
 });

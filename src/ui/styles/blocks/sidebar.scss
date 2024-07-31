@@ -170,6 +170,19 @@
         }
       }
     }
+
+    &_create-project {
+      &:not([data-disabled="true"]):hover {
+        background-color: var($create-project-button-hover);
+        color: var($bg-general);
+
+        svg {
+          path {
+            fill: var($bg-general);
+          }
+        }
+      }
+    }
   }
 
   .bottom-side {

@@ -2,7 +2,9 @@ import { combine } from 'effector';
 import { USER_FIELDS } from 'src/dict/fields/models/user';
 import { allDomain } from '../App';
 
-const { EMAIL, USERNAME, AVATAR } = USER_FIELDS;
+const {
+  EMAIL, USERNAME, AVATAR,
+} = USER_FIELDS;
 
 const userDomain = allDomain.createDomain('User');
 

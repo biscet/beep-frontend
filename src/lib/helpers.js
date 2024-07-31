@@ -8,3 +8,7 @@ export const getLang = () => (isEmpty(storage.get(LANG_FIELD)) ? crossLang : sto
 export const getTheme = () => (isEmpty(storage.get(THEME_FIELD)) ? crossTheme : storage.get(THEME_FIELD));
 
 export const getBrowserTheme = () => (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+export const prependFn = (fn, state) => { fn(state); };
+
+export const prependObstacleFn = (fn, state) => () => { fn(state); };

@@ -20,5 +20,6 @@ export const $itemsRoutesWeb = combine(() => [
   },
 ].filter(({ [ACTIVE]: active }) => active));
 
-export const $isWebPage = combine($pathnameUrl,
-  (path) => isCurrentPath(path, PAGES_PATH.WEB));
+export const $isWebPage = $pathnameUrl.map(
+  (path) => isCurrentPath(path, PAGES_PATH.WEB),
+);
