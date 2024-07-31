@@ -34,4 +34,9 @@ export const en = {
   32: 'The project name must be unique and contain from 1 to 255 characters.',
   33: 'Project name',
   34: 'Next',
+  35: 'beep - Upload file',
+  36: 'Download file',
+  37: 'Video Processing',
+  38: 'Project creation failed. Try again.',
+  39: 'The project has been created successfully. You are redirected to the video upload page.',
 };

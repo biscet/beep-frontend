@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
 import { I18nContext } from 'src/ui/components/Helpers';
 import { Button, Input, ModalForm } from 'src/ui/components/Form';
-import { CloseSVG } from 'src/ui/media/images';
+import { CloseSVG, LoaderSpinnerSVG } from 'src/ui/media/images';
 import { CREATE_PROJECT_FIELDS } from 'src/dict/fields/models/projects';
 import { getPropsField } from 'src/lib/form';
 import { useForm } from 'effector-forms';
-import { $disabledCreateProjectCombineData, createProjectForm } from 'src/models/Web/Projects';
+import {
+  $createProjectDone, $disabledCreateProjectCombineData, createProjectForm,
+} from 'src/models/Web/Projects';
 import { BUTTON_TYPES } from 'src/dict/fields/button';
 import { useUnit } from 'effector-react';
 import { cx } from 'src/lib/lodash';
@@ -13,7 +15,9 @@ import { cx } from 'src/lib/lodash';
 export const CreateProject = ({ closeModalFn }) => {
   const t = useContext(I18nContext);
   const { submit, ...restProps } = useForm(createProjectForm);
-  const [disabledCreateProjectCombineData] = useUnit([$disabledCreateProjectCombineData]);
+  const [disabledCreateProjectCombineData, createProjectDone] = useUnit(
+    [$disabledCreateProjectCombineData, $createProjectDone],
+  );
 
   return (
     <ModalForm
@@ -46,7 +50,7 @@ export const CreateProject = ({ closeModalFn }) => {
         disabled={disabledCreateProjectCombineData}
         nonActiveClass="create-project__button button_full"
       >
-        {t('Далее')}
+        {!createProjectDone ? t('Далее') : <LoaderSpinnerSVG />}
       </Button>
 
       <div className="form__close" onClick={closeModalFn}>

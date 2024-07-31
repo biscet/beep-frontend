@@ -1,5 +1,7 @@
 import './App/init';
 
+import './Blocks/init';
+
 import './Helpers/Helmet/init';
 import './Helpers/i18n/init';
 import './Helpers/Theme/init';
@@ -13,6 +15,6 @@ import './Registration/init';
 import './User/init';
 
 import './Web/init';
-import './Web/Projects/createProjectInit';
-
-import './Blocks/init';
+import './Web/Projects/init';
+import './Web/Projects/Catalog/init';
+import './Web/Projects/Uploading/init';

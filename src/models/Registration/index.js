@@ -14,8 +14,9 @@ const registrationDomain = allDomain.createDomain('Registration');
 
 export const authRegistrationFx = registrationDomain.createEffect(authRegistrationSign);
 
-export const $isRegistrationPage = combine($pathnameUrl,
-  (path) => isCurrentPath(path, PAGES_PATH.REGISTRATION));
+export const $isRegistrationPage = $pathnameUrl.map(
+  (path) => isCurrentPath(path, PAGES_PATH.REGISTRATION),
+);
 
 export const registrationForm = createForm({
   fields: {

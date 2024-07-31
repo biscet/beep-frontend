@@ -25,8 +25,9 @@ export const $isAuthenticated = combine($tokenData, (
     !isEmpty(accessToken) || !isEmpty(refreshToken)
   )));
 
-export const $isLoginPage = combine($pathnameUrl,
-  (path) => isCurrentPath(path, PAGES_PATH.LOGIN));
+export const $isLoginPage = $pathnameUrl.map(
+  (path) => isCurrentPath(path, PAGES_PATH.LOGIN),
+);
 
 export const loginForm = createForm({
   fields: {

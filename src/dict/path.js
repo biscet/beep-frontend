@@ -11,10 +11,9 @@ export const WEB_PATH = {
 };
 
 export const CRUD_PATH = {
-  LIST: 'list',
-  ADD: 'add',
-  EDIT: 'edit',
-  VIEW: 'view',
+  CATALOG: 'catalog',
+  VIEWING: 'viewing',
+  UPLOADING: 'uploading',
 };
 
 export const ROUTES_FIELDS = {

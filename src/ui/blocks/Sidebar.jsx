@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useUnit } from 'effector-react';
 import { NavLink } from 'react-router-dom';
 import { $userCombineData } from 'src/models/User';
@@ -11,7 +11,7 @@ import { getUserInfoFx } from 'src/models/Login';
 import { PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH } from 'src/dict/path';
 import { $modalIsOpen, closeModalFn, openModalFn } from 'src/models/Helpers/Modal';
 import { MODAL_FIELDS } from 'src/dict/modal';
-import { CreateProject } from 'src/pages/children/Web/children/Projects/children/CreateProject';
+import { CreateProject } from 'src/ui/components/modals';
 import {
   $isHovereLogout, $sidebarRoutes, setIsHovereLogoutFn, triggerLogoutFn,
 } from 'src/models/Blocks';
@@ -19,11 +19,14 @@ import { $pathnameUrl } from 'src/models/App';
 import { isEmpty } from 'src/lib/lodash';
 import { AnimatePresence, motion } from 'framer-motion';
 import { USER_INFO_LOGOUT_ANIMATE, USER_INFO_SPAN_ANIMATE, USER_INFO_WRAPPER_ANIMATE } from 'src/dict/animate';
+import { prependObstacleFn } from 'src/lib/helpers';
 
 const { EMAIL, USERNAME, AVATAR } = USER_FIELDS;
 const {
-  NAME, PATH, ICON,
+  NAME, PATH, ICON, VALIDATE, GENERAL_PAGE,
 } = SIDEBAR_ROUTES_FIELDS;
+
+const sidebarRoutesShimmerStyle = (length) => ({ height: (54 * length) + (8 * (length - 2)) });
 
 export const Sidebar = () => {
   const t = useContext(I18nContext);
@@ -37,6 +40,10 @@ export const Sidebar = () => {
       $sidebarRoutes, $pathnameUrl, $isHovereLogout],
   );
 
+  useEffect(() => () => {
+    setIsHovereLogoutFn(false);
+  }, []);
+
   return (
     <div className="sidebar">
       <NavLink
@@ -47,45 +54,62 @@ export const Sidebar = () => {
         beep
       </NavLink>
 
-      <Button
-        type={BUTTON_TYPES.BUTTON}
-        variant={BUTTON_VARIATION.TEXT}
-        activeClass="bottom-side__link link link_active-create-project"
-        nonActiveClass="bottom-side__link link"
-        onClick={
-          modalIsOpen ? closeModalFn : openModalFn.prepend(() => ({
-            [MODAL_FIELDS.CHILDREN]: CreateProject,
-          }))
-        }
-        conditionClass={modalIsOpen}
-        data-disabled={modalIsOpen}
-      >
-        <AddSVG />
-        {t('Создать проект')}
-      </Button>
+      {userInfoPending
+        ? <div className="shimmer shimmer_side-bar-link" />
+        : (
+          <Button
+            type={BUTTON_TYPES.BUTTON}
+            variant={BUTTON_VARIATION.TEXT}
+            activeClass="bottom-side__link link link_active-create-project"
+            nonActiveClass="bottom-side__link link link_create-project "
+            onClick={() => {
+              if (modalIsOpen) {
+                closeModalFn();
+              } else {
+                openModalFn({ [MODAL_FIELDS.CHILDREN]: CreateProject });
+              }
+            }}
+            conditionClass={modalIsOpen}
+            data-disabled={modalIsOpen}
+          >
+            <AddSVG />
+            {t('Создать проект')}
+          </Button>
+        )}
 
       <div className="sidebar__divider" />
 
       <div className="sidebar__routes">
-        {sidebarRoutes.map(({ [NAME]: name, [PATH]: path, [ICON]: Icon }) => {
-          const conditionClass = pathnameUrl.includes(path);
+        {userInfoPending
+          ? <div className="shimmer shimmer_side-bar-link" style={sidebarRoutesShimmerStyle(sidebarRoutes.length)} />
+          : sidebarRoutes.map(({
+            [NAME]: name,
+            [PATH]: path,
+            [ICON]: Icon,
+            [VALIDATE]: validate,
+            [GENERAL_PAGE]: page,
+          }) => {
+            const urls = pathnameUrl.split('/');
+            const conditionClass = urls.filter(
+              (url) => (url === page) || (validate.includes(url)),
+            ).length > 1;
 
-          return (
-            <Button
-              type={BUTTON_TYPES.LINK}
-              variant={BUTTON_VARIATION.TEXT}
-              key={path}
-              path={path}
-              nonActiveClass="bottom-side__link link"
-              activeClass="bottom-side__link link link_active"
-              conditionClass={conditionClass}
-              data-disabled={conditionClass}
-            >
-              {!isEmpty(Icon) ? <Icon /> : null}
-              {t(name)}
-            </Button>
-          );
-        })}
+            return (
+              <Button
+                type={BUTTON_TYPES.LINK}
+                variant={BUTTON_VARIATION.TEXT}
+                key={path}
+                path={path}
+                nonActiveClass="bottom-side__link link"
+                activeClass="bottom-side__link link link_active"
+                conditionClass={conditionClass}
+                data-disabled={conditionClass}
+              >
+                {!isEmpty(Icon) ? <Icon /> : null}
+                {t(name)}
+              </Button>
+            );
+          })}
       </div>
 
       <div className="sidebar__bottom-side bottom-side">
@@ -114,8 +138,8 @@ export const Sidebar = () => {
             <motion.div
               key="user-info__logout"
               className="user-info__logout"
-              onHoverStart={setIsHovereLogoutFn.prepend(() => true)}
-              onHoverEnd={setIsHovereLogoutFn.prepend(() => false)}
+              onHoverStart={prependObstacleFn(setIsHovereLogoutFn, true)}
+              onHoverEnd={prependObstacleFn(setIsHovereLogoutFn, false)}
               onClick={triggerLogoutFn}
               initial={USER_INFO_LOGOUT_ANIMATE.initial}
               animate={USER_INFO_LOGOUT_ANIMATE.animate(isHovered)}

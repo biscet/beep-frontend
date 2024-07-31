@@ -1,3 +1,9 @@
 export const CREATE_PROJECT_FIELDS = {
-  NAME: 'name',
+  NAME: 'projectName',
+  TYPE: 'projectType',
+  UUID: 'localUploadId',
+};
+
+export const PROJECT_FIELDS = {
+  ID: 'projectId ',
 };

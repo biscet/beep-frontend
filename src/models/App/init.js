@@ -1,17 +1,28 @@
 import { sample } from 'effector';
 import { spread } from 'patronum/spread';
-import { isEmpty } from 'src/lib/lodash';
 import { debounce } from 'patronum';
+import { isCurrentPath } from 'src/lib/url';
+import { PAGES_PATH } from 'src/dict/path';
+import { isEmpty } from 'src/lib/lodash';
 import {
-  AppGate, RouteGate, $pathnameUrl, $pathParams,
+  AppGate, $pathnameUrl, $pathParams,
   $fullyLoadApplication,
   setLoadAppliactionStateFn,
+  $initGateCombineData,
+  RouteGate,
+  $initApp,
 } from './index';
 import { $enqueueSnackbar } from '../Helpers/Notify';
 import { $history } from '../Helpers/History';
 
 sample({
   clock: AppGate.state,
+  fn: (state) => ({
+    ...state,
+    pathname: isCurrentPath(state.pathname, PAGES_PATH.WEB)
+      ? `/${PAGES_PATH.WEB}/`
+      : state.pathname,
+  }),
   target: spread({
     targets: {
       pathname: $pathnameUrl,
@@ -22,13 +33,27 @@ sample({
 });
 
 sample({
-  clock: RouteGate.state,
-  filter: ({ pathname }) => !isEmpty(pathname),
+  clock: $initGateCombineData,
+  filter: ({ pathname, initApp }) => initApp && !isEmpty(pathname),
   target: spread({
     targets: {
       pathname: $pathnameUrl,
       pathParams: $pathParams,
       history: $history,
+    },
+  }),
+});
+
+sample({
+  clock: RouteGate.state,
+  filter: ({ pathname }) => !isEmpty(pathname),
+  fn: (state) => ({ ...state, initApp: false }),
+  target: spread({
+    targets: {
+      pathname: $pathnameUrl,
+      pathParams: $pathParams,
+      history: $history,
+      initApp: $initApp,
     },
   }),
 });

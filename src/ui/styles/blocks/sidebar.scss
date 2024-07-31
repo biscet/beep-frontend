@@ -123,6 +123,7 @@
     @include flex-centered;
 
     width: 100%;
+    height: $sidebar-link-height;
     padding: 16px;
     background-color: none;
     border-radius: $sidebar-radius;
@@ -166,6 +167,19 @@
       svg {
         path {
           fill: var($bg-general);
+        }
+      }
+    }
+
+    &_create-project {
+      &:not([data-disabled="true"]):hover {
+        background-color: var($create-project-button-hover);
+        color: var($bg-general);
+
+        svg {
+          path {
+            fill: var($bg-general);
+          }
         }
       }
     }

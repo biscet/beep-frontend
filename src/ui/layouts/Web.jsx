@@ -2,13 +2,14 @@ import React, { useRef } from 'react';
 import { useGate } from 'effector-react';
 import { useHistory } from 'react-router-dom';
 import { get } from 'src/lib/lodash';
-import { RouteGate } from 'src/models/App';
-import { LayoutGroup } from 'framer-motion';
+import { WebGate } from 'src/models/App';
+import { LayoutGroup, motion } from 'framer-motion';
 import { SidebarHeader } from 'src/ui/blocks/SidebarHeader';
+import { DEFAULT_LAYOUT_ANIMATION } from 'src/dict/animate';
 import { ScrollToTop } from '../components/ScrollToTop';
 
 const WebLayout = ({ children }) => {
-  useGate(RouteGate, {
+  useGate(WebGate, {
     pathname: get(window, 'location.pathname', ''),
     pathParams: get(window, 'location.search', ''),
     history: useHistory(),
@@ -18,12 +19,21 @@ const WebLayout = ({ children }) => {
 
   return (
     <LayoutGroup id="web">
-      <div className="web-content">
+      <div
+        className="web-content"
+      >
         <SidebarHeader />
 
-        <div className="web-content__wrapper" ref={wrapperRef}>
-          {children}
-        </div>
+        <motion.div
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={DEFAULT_LAYOUT_ANIMATION}
+        >
+          <div className="web-content__wrapper" ref={wrapperRef}>
+            {children}
+          </div>
+        </motion.div>
       </div>
 
       <ScrollToTop container={wrapperRef} />
