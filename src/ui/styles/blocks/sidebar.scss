@@ -123,6 +123,7 @@
     @include flex-centered;
 
     width: 100%;
+    height: $sidebar-link-height;
     padding: 16px;
     background-color: none;
     border-radius: $sidebar-radius;

@@ -11,7 +11,7 @@ import { getUserInfoFx } from 'src/models/Login';
 import { PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH } from 'src/dict/path';
 import { $modalIsOpen, closeModalFn, openModalFn } from 'src/models/Helpers/Modal';
 import { MODAL_FIELDS } from 'src/dict/modal';
-import { CreateProject } from 'src/pages/children/Web/children/Projects/children/CreateProject';
+import { CreateProject } from 'src/ui/components/modals';
 import {
   $isHovereLogout, $sidebarRoutes, setIsHovereLogoutFn, triggerLogoutFn,
 } from 'src/models/Blocks';
@@ -24,6 +24,8 @@ const { EMAIL, USERNAME, AVATAR } = USER_FIELDS;
 const {
   NAME, PATH, ICON,
 } = SIDEBAR_ROUTES_FIELDS;
+
+const sidebarRoutesShimmerStyle = (length) => ({ height: (54 * length) + (8 * (length - 2)) });
 
 export const Sidebar = () => {
   const t = useContext(I18nContext);
@@ -47,45 +49,51 @@ export const Sidebar = () => {
         beep
       </NavLink>
 
-      <Button
-        type={BUTTON_TYPES.BUTTON}
-        variant={BUTTON_VARIATION.TEXT}
-        activeClass="bottom-side__link link link_active-create-project"
-        nonActiveClass="bottom-side__link link"
-        onClick={
+      {userInfoPending
+        ? <div className="shimmer shimmer_side-bar-link" />
+        : (
+          <Button
+            type={BUTTON_TYPES.BUTTON}
+            variant={BUTTON_VARIATION.TEXT}
+            activeClass="bottom-side__link link link_active-create-project"
+            nonActiveClass="bottom-side__link link"
+            onClick={
           modalIsOpen ? closeModalFn : openModalFn.prepend(() => ({
             [MODAL_FIELDS.CHILDREN]: CreateProject,
           }))
         }
-        conditionClass={modalIsOpen}
-        data-disabled={modalIsOpen}
-      >
-        <AddSVG />
-        {t('Создать проект')}
-      </Button>
+            conditionClass={modalIsOpen}
+            data-disabled={modalIsOpen}
+          >
+            <AddSVG />
+            {t('Создать проект')}
+          </Button>
+        )}
 
       <div className="sidebar__divider" />
 
       <div className="sidebar__routes">
-        {sidebarRoutes.map(({ [NAME]: name, [PATH]: path, [ICON]: Icon }) => {
-          const conditionClass = pathnameUrl.includes(path);
+        { userInfoPending
+          ? <div className="shimmer shimmer_side-bar-link" style={sidebarRoutesShimmerStyle(sidebarRoutes.length)} />
+          : sidebarRoutes.map(({ [NAME]: name, [PATH]: path, [ICON]: Icon }) => {
+            const conditionClass = pathnameUrl.includes(path);
 
-          return (
-            <Button
-              type={BUTTON_TYPES.LINK}
-              variant={BUTTON_VARIATION.TEXT}
-              key={path}
-              path={path}
-              nonActiveClass="bottom-side__link link"
-              activeClass="bottom-side__link link link_active"
-              conditionClass={conditionClass}
-              data-disabled={conditionClass}
-            >
-              {!isEmpty(Icon) ? <Icon /> : null}
-              {t(name)}
-            </Button>
-          );
-        })}
+            return (
+              <Button
+                type={BUTTON_TYPES.LINK}
+                variant={BUTTON_VARIATION.TEXT}
+                key={path}
+                path={path}
+                nonActiveClass="bottom-side__link link"
+                activeClass="bottom-side__link link link_active"
+                conditionClass={conditionClass}
+                data-disabled={conditionClass}
+              >
+                {!isEmpty(Icon) ? <Icon /> : null}
+                {t(name)}
+              </Button>
+            );
+          })}
       </div>
 
       <div className="sidebar__bottom-side bottom-side">

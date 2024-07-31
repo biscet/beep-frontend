@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "env-cmd farm start --mode development --config config/farm.dev.js",
+    "start:ssh": "ssh -R 80:localhost:3005 localhost.run",
     "start:prod": "yarn build && serve -s build",
     "build": "env-cmd farm build --mode production --config config/farm.prod.js && yarn build:clear",
     "build:vercel": "farm build --mode production --config config/farm.prod.js",

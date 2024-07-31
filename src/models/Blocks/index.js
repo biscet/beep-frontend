@@ -1,5 +1,7 @@
 import { combine } from 'effector';
-import { PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH } from 'src/dict/path';
+import {
+  CRUD_PATH, PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH,
+} from 'src/dict/path';
 import { ProjectsSVG, DashboardSVG } from 'src/ui/media/images';
 import { allDomain } from '../App';
 
@@ -25,7 +27,7 @@ export const $sidebarRoutes = combine(() => [
     [ACTIVE]: true,
     [VALIDATE]: [],
     [ICON]: ProjectsSVG,
-    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}`,
+    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}`,
     [GENERAL_PAGE]: PAGES_PATH.WEB,
   },
   {
@@ -33,7 +35,7 @@ export const $sidebarRoutes = combine(() => [
     [ACTIVE]: true,
     [VALIDATE]: [],
     [ICON]: DashboardSVG,
-    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.DASHBOARD}`,
+    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.DASHBOARD}/${CRUD_PATH.CATALOG}`,
     [GENERAL_PAGE]: PAGES_PATH.WEB,
   },
 ].filter(({ [ACTIVE]: active }) => active));

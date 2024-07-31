@@ -13,6 +13,6 @@ import './Registration/init';
 import './User/init';
 
 import './Web/init';
-import './Web/Projects/createProjectInit';
+import './Web/Projects/init';
 
 import './Blocks/init';

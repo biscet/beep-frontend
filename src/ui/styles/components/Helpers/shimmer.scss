@@ -21,6 +21,7 @@
 
   $shimmers: (
     'user-info' 100% $sidebar-info-height $sidebar-radius,
+    'side-bar-link' 100% $sidebar-link-height $sidebar-radius,
   );
 
   @each $name, $width, $height, $border-radius in $shimmers {

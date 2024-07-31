@@ -49,6 +49,8 @@ const refreshTokens = async () => {
 };
 
 const handleRetryRequestErrors = (errorFromSecondRequest) => {
+  console.log(errorFromSecondRequest);
+
   const isRetryRequestUnauthorized = errorFromSecondRequest.response?.status === 401;
   const isRefreshTokenRequestFailed = errorFromSecondRequest instanceof RefreshTokenError;
   const isFailedToRefreshTokens = isRefreshTokenRequestFailed || isRetryRequestUnauthorized;

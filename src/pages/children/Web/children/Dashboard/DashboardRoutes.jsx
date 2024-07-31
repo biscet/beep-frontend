@@ -4,25 +4,23 @@ import {
   Redirect, Route, Switch, withRouter, useLocation,
 } from 'react-router-dom';
 import { get, isEmpty } from 'src/lib/lodash';
-import { ROUTES_FIELDS, WEB_PATH } from 'src/dict/path';
-import { $itemsRoutesWeb } from 'src/models/Web';
+import { CRUD_PATH, ROUTES_FIELDS } from 'src/dict/path';
+import { $itemsRoutesDashboard } from 'src/models/Web/Dashboard';
 
-import { ProjectsRoutes } from './children/Projects/ProjectsRoutes';
-import { DashboardRoutes } from './children/Dashboard/DashboardRoutes';
+import { Catalog } from './children/Catalog';
 
 const { PATH } = ROUTES_FIELDS;
-const { DASHBOARD, PROJECTS } = WEB_PATH;
+const { CATALOG } = CRUD_PATH;
 
 const pathMap = {
-  [DASHBOARD]: DashboardRoutes,
-  [PROJECTS]: ProjectsRoutes,
+  [CATALOG]: Catalog,
 };
 
-export const WebRoutes = withRouter(({ match: { url } }) => {
+export const DashboardRoutes = withRouter(({ match: { url } }) => {
   const location = useLocation();
-  const routes = useUnit($itemsRoutesWeb).filter((route) => !isEmpty(route[PATH]));
+  const routes = useUnit($itemsRoutesDashboard).filter((route) => !isEmpty(route[PATH]));
   const baseUrl = url.slice(-1) === '/' ? url.slice(0, Math.max(0, url.length - 1)) : url;
-  const defaultPath = PROJECTS;
+  const defaultPath = CATALOG;
 
   return (
     <Switch location={location} key={location.pathname}>
