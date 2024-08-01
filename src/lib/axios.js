@@ -41,7 +41,6 @@ const refreshTokens = async () => {
 
     const refreshedTokens = await refreshPromise;
 
-    storage.set(REFRESH, saltString(refreshedTokens?.refresh_token, true));
     storage.set(ACCESS, saltString(refreshedTokens?.access_token, true));
   } finally {
     refreshPromise = undefined;
@@ -49,8 +48,6 @@ const refreshTokens = async () => {
 };
 
 const handleRetryRequestErrors = (errorFromSecondRequest) => {
-  console.log(errorFromSecondRequest);
-
   const isRetryRequestUnauthorized = errorFromSecondRequest.response?.status === 401;
   const isRefreshTokenRequestFailed = errorFromSecondRequest instanceof RefreshTokenError;
   const isFailedToRefreshTokens = isRefreshTokenRequestFailed || isRetryRequestUnauthorized;
