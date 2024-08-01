@@ -60,7 +60,7 @@ export const $webDashboardBC = combine($pathnameUUID, (pathnameUUID) => ([{
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
     {
       [PATH]: CRUD_PATH.CATALOG,
-      [NAME]: `${pathnameUUID}123123`,
+      [NAME]: pathnameUUID,
       [ACTIVE]: true,
       [LINK]: '',
       [VISIBLE]: true,
@@ -72,22 +72,6 @@ export const $webDashboardBC = combine($pathnameUUID, (pathnameUUID) => ([{
       [ACTIVE]: true,
       [LINK]: '',
       [VISIBLE]: true,
-      [TRANSLATE]: true,
-    },
-    {
-      [PATH]: CRUD_PATH.UPLOADING,
-      [NAME]: 'Обработка видео',
-      [ACTIVE]: false,
-      [LINK]: '',
-      [VISIBLE]: true,
-      [TRANSLATE]: true,
-    },
-    {
-      [PATH]: CRUD_PATH.UPLOADING,
-      [NAME]: 'Скачивание файла',
-      [ACTIVE]: true,
-      [LINK]: '',
-      [VISIBLE]: false,
       [TRANSLATE]: true,
     },
   ].filter(({ [VISIBLE]: visible }) => visible),

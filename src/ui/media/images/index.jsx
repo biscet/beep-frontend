@@ -7,6 +7,7 @@ export { AddSVG } from './AddSVG';
 
 export { EyeSVG } from './Form/EyeSVG';
 export { LoaderSpinnerSVG } from './Form/LoaderSpinnerSVG';
+export { UploaderSVG } from './Form/UploaderSVG';
 
 export { LogoutSVG } from './Sidebar/LogoutSVG';
 export { ProjectsSVG } from './Sidebar/ProjectsSVG';

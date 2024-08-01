@@ -5,7 +5,7 @@ import { get } from 'src/lib/lodash';
 import { WebGate } from 'src/models/App';
 import { LayoutGroup, motion } from 'framer-motion';
 import { SidebarHeader } from 'src/ui/blocks/SidebarHeader';
-import { DEFAULT_LAYOUT_ANIMATION } from 'src/dict/animate';
+import { WEB_LAYOUT_ANIMATION } from 'src/dict/animate';
 import { ScrollToTop } from '../components/ScrollToTop';
 
 const WebLayout = ({ children }) => {
@@ -28,11 +28,11 @@ const WebLayout = ({ children }) => {
           initial="initial"
           animate="animate"
           exit="exit"
-          variants={DEFAULT_LAYOUT_ANIMATION}
+          className="web-content__wrapper"
+          ref={wrapperRef}
+          variants={WEB_LAYOUT_ANIMATION}
         >
-          <div className="web-content__wrapper" ref={wrapperRef}>
-            {children}
-          </div>
+          {children}
         </motion.div>
       </div>
 

@@ -16,6 +16,7 @@
   #{$create-project-button}: #342237;
   #{$create-project-button-text}: #dc95e7;
   #{$create-project-button-hover}: #dc95e7;
+  #{$rainbow-button-gradient}: linear-gradient(to right, #7d288b, #a282ef, #a282ef);
 
   .header {
     &_scrolled {
@@ -48,6 +49,7 @@
   #{$create-project-button}: #ffedfd;
   #{$create-project-button-text}: #dc95e7;
   #{$create-project-button-hover}: #e362f8;
+  #{$rainbow-button-gradient}: linear-gradient(to right, #e362f8, #8d62f8, #8d62f8);
 
   .header {
     &_scrolled {

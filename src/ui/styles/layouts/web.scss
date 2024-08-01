@@ -5,6 +5,13 @@
   height: 100%;
 
   &__wrapper {
-    height: calc(100% - $sidebar-header-height);
+    @include flex-centered;
+
+    height: calc(calc(var(--vh, 1vh) * 100) - $sidebar-header-height);
+    height: calc(100svh - $sidebar-header-height);
+    flex-shrink: 0;
+    justify-content: center;
+    padding: 40px;
+    overflow-x: hidden;
   }
 }

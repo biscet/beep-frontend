@@ -38,7 +38,7 @@ export const BreadCrumbs = () => {
               </div>
 
               {i < breadcrumbs.length - 1
-                ? <div className="breadcrumbs__item item item_divider">{'>'}</div>
+                ? <div className="breadcrumbs__item item item_divider">·</div>
                 : null}
             </React.Fragment>
           );

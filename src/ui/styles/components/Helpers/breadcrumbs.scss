@@ -18,6 +18,9 @@
 
     &_divider {
       flex-shrink: 0;
+      color: var($text-general);
+      font-size: 32px;
+      font-weight: 900;
     }
 
     &:first-child {

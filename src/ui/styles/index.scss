@@ -17,11 +17,13 @@
 @import './components/Form/button.scss';
 @import './components/Form/input.scss';
 @import './components/Form/loader-spinner.scss';
+@import './components/Form/file-uploader.scss';
 @import './components/Helpers/i18n.scss';
 @import './components/Helpers/theme.scss';
 @import './components/Helpers/shimmer.scss';
 @import './components/Helpers/breadcrumbs.scss';
 @import './components/Helpers/modal.scss';
+@import './components/progress-bar.scss';
 
 // Blocks
 @import './blocks/header.scss';
@@ -32,3 +34,4 @@
 @import './pages/default-page.scss';
 @import './pages/login-page.scss';
 @import './pages/registration-page.scss';
+@import './pages/Projects/uploading-page.scss';

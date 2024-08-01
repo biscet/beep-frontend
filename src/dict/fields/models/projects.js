@@ -5,5 +5,9 @@ export const CREATE_PROJECT_FIELDS = {
 };
 
 export const PROJECT_FIELDS = {
-  ID: 'projectId ',
+  ID: 'projectId',
+};
+
+export const UPLOADING_FIELDS = {
+  FILE: 'file',
 };

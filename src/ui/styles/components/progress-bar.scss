@@ -1,0 +1,34 @@
+.progress-bar {
+  @include flex-centered;
+
+  width: 100%;
+  max-width: 406px;
+  color: var($text-general);
+  gap: 8px;
+
+  &__container {
+    @include theme-transition-base(background-color);
+
+    overflow: hidden;
+    min-width: 360px;
+    height: 16px;
+    background-color: var($buttons-hover);
+    border-radius: 8px;
+  }
+
+  &__fill {
+    @include theme-transition-base(transform);
+
+    width: 100%;
+    height: 100%;
+    background-color: var($accent-color-general);
+    border-radius: 8px;
+    transform: translateX(-100%);
+  }
+
+  &__percent {
+    @extend .inter-medium;
+
+    width: 40px;
+  }
+}

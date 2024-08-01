@@ -39,6 +39,30 @@ export const DEFAULT_LAYOUT_ANIMATION = {
   },
 };
 
+export const WEB_LAYOUT_ANIMATION = {
+  initial: {
+    opacity: 0,
+    transition: {
+      duration: 0.1,
+    },
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      type: 'spring',
+      stiffness: 50,
+      duration: 0.1,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      ease: 'easeInOut',
+      duration: 0.1,
+    },
+  },
+};
+
 export const DEFAULT_MODAL_FORM_ANIMATION = {
   initial: {
     scale: 0.95,
@@ -74,6 +98,46 @@ export const DEFAULT_MODAL_ANIMATION = {
   },
   exit: {
     opacity: 0,
+    transition: {
+      ease: 'easeInOut',
+      duration: 0.2,
+    },
+  },
+};
+
+export const DEFAULT_PROGRESS_ANIMATION = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  exit: {
+    opacity: 0,
+    delay: 0.1,
+    transition: {
+      ease: 'easeInOut',
+      duration: 0.2,
+    },
+  },
+};
+
+export const DEFAULT_FILE_UPLOADER_ANIMATION = {
+  initial: {
+    opacity: 0,
+  },
+  animate: {
+    opacity: 1,
+    transition: {
+      duration: 0.2,
+    },
+  },
+  exit: {
+    opacity: 0,
+    delay: 0.1,
     transition: {
       ease: 'easeInOut',
       duration: 0.2,

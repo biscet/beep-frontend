@@ -1,6 +1,6 @@
 .default-page {
   @include page-creator('none', 'auto', 'auto') {
-    height: calc(100vh - $header-height - 32px);
+    height: calc(calc(var(--vh, 1vh) * 100) - $header-height - 32px);
     height: calc(100svh - $header-height - 32px);
     margin-bottom: 32px;
   }
