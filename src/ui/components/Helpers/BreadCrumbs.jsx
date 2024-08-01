@@ -12,11 +12,14 @@ const {
 
 export const BreadCrumbs = () => {
   const t = useContext(I18nContext);
-  const [{ [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: breadcrumbs }, initApp] = useUnit([$currentBreadCrumbs, $initApp]);
+  const [{
+    [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: breadcrumbs,
+    [BREAD_CRUMBS_ROUTE.LOADING]: loading,
+  }, initApp] = useUnit([$currentBreadCrumbs, $initApp]);
 
   return (
     <div className="breadcrumbs">
-      {!initApp
+      {!initApp || loading
         ? <div className="shimmer shimmer_side-bar-breadcrumbs" />
         : breadcrumbs.map((breadcrumb, i) => {
           const translated = get(breadcrumb, TRANSLATE, true);

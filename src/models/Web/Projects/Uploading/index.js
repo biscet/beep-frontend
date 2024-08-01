@@ -7,6 +7,8 @@ import { $pathnameUrl } from 'src/models/App';
 import { UPLOADING_FIELDS } from 'src/dict/fields/models/projects';
 import { rules } from 'src/lib/rules';
 import { createForm } from 'effector-forms';
+import { combine } from 'effector';
+import { isEmpty } from 'src/lib/lodash';
 import { projectsDomain } from '..';
 
 const { UPLOADING } = CRUD_PATH;
@@ -35,4 +37,10 @@ export const uploadingForm = createForm({
   domain: projectsDomain,
 });
 
-uploadingForm.$values.watch(console.log);
+export const $disabledUploadingProjectCombineData = combine(uploadingForm.$values, (values) => {
+  const {
+    [UPLOADING_FIELDS.FILE]: file,
+  } = values;
+
+  return [file].some((field) => isEmpty(field));
+});

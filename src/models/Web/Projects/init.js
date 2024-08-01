@@ -2,7 +2,7 @@ import { sample } from 'effector';
 import { debounce } from 'patronum';
 import { closeModalFn } from 'src/models/Helpers/Modal';
 import { get } from 'src/lib/lodash';
-import { CREATE_PROJECT_FIELDS } from 'src/dict/fields/models/projects';
+import { CREATE_PROJECT_FIELDS, PROJECT_FIELDS } from 'src/dict/fields/models/projects';
 import { notifyErrorFn, notifySuccessFn } from 'src/models/Helpers/Notify';
 import {
   $createProjectDone,
@@ -10,7 +10,7 @@ import {
   createProjectFx,
   setCreateProjectFn,
 } from '.';
-import { goToProjectUploadFn } from './Uploading';
+import { $isProjectUploadPage, getProjectFn, goToProjectUploadFn } from './Uploading';
 
 $createProjectDone.on(setCreateProjectFn, (_, done) => done);
 
@@ -23,11 +23,22 @@ sample({
 
 sample({
   clock: createProjectFx.doneData,
-  fn: (data) => get(data, CREATE_PROJECT_FIELDS.UUID, ''),
+  source: createProjectForm.$values,
+  fn: (values, data) => ({
+    [PROJECT_FIELDS.ID]: get(data, CREATE_PROJECT_FIELDS.UUID, ''),
+    [PROJECT_FIELDS.NAME]: get(values, CREATE_PROJECT_FIELDS.NAME, ''),
+  }),
   target: [
-    goToProjectUploadFn,
+    goToProjectUploadFn.prepend(({ [PROJECT_FIELDS.ID]: uuid }) => uuid),
     notifySuccessFn.prepend(() => 'Проект успешно создан. Вы перенаправлены на страницу загрузки видео.'),
   ],
+});
+
+sample({
+  clock: createProjectFx.doneData,
+  filter: $isProjectUploadPage,
+  fn: (data) => data[CREATE_PROJECT_FIELDS.UUID],
+  target: getProjectFn,
 });
 
 sample({

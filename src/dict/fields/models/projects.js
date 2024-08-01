@@ -6,6 +6,7 @@ export const CREATE_PROJECT_FIELDS = {
 
 export const PROJECT_FIELDS = {
   ID: 'projectId',
+  NAME: 'projectName',
 };
 
 export const UPLOADING_FIELDS = {

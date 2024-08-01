@@ -12,3 +12,15 @@ export const getBrowserTheme = () => (window.matchMedia && window.matchMedia('(p
 export const prependFn = (fn, state) => { fn(state); };
 
 export const prependObstacleFn = (fn, state) => () => { fn(state); };
+
+export const formatFileSize = (bytes) => {
+  const units = ['B', 'KB', 'MB', 'GB'];
+  let unitIndex = 0;
+
+  while (bytes >= 1024 && unitIndex < units.length - 1) {
+    bytes /= 1024;
+    unitIndex += 1;
+  }
+
+  return `${bytes.toFixed(2)} ${units[unitIndex]}`;
+};

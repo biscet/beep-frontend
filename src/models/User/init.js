@@ -44,3 +44,10 @@ sample({
     },
   }),
 });
+
+sample({
+  clock: getUserInfoFx.fail,
+  fn: (data) => {
+    console.log(data);
+  },
+});

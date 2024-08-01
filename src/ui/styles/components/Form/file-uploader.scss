@@ -16,6 +16,7 @@
     flex-direction: column;
     justify-content: center;
     border-radius: 32px;
+    outline: none;
   }
 
   .container {
@@ -30,12 +31,6 @@
 
     &__icon {
       margin-bottom: 16px;
-
-      svg {
-        path {
-          @include theme-transition-base(fill);
-        }
-      }
     }
 
     .icon {
@@ -48,6 +43,22 @@
 
     &__text {
       margin-bottom: 64px;
+      text-align: center;
+    }
+
+    &__text-upload {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    &__file-name {
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    &__file-size {
+      margin-bottom: 40px;
+      color: var($gray);
       text-align: center;
     }
 

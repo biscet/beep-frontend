@@ -1,7 +1,10 @@
 import { combine } from 'effector';
 import { BREAD_CRUMBS_FIELD, BREAD_CRUMBS_ROUTE } from 'src/dict/breadcrumbs';
+import { PROJECT_FIELDS } from 'src/dict/fields/models/projects';
 import { CRUD_PATH, PAGES_PATH, WEB_PATH } from 'src/dict/path';
-import { $pathnameUUID, allDomain } from 'src/models/App';
+import { isEmpty } from 'src/lib/lodash';
+import { allDomain } from 'src/models/App';
+import { $detailProject } from 'src/models/Web/Projects/Uploading';
 
 const {
   PATH, NAME, ACTIVE, VISIBLE, LINK, TRANSLATE,
@@ -26,9 +29,10 @@ export const $currentBreadCrumbs = breadCrumbsDomain.createStore({
   }],
 });
 
-export const $webDashboardBC = combine($pathnameUUID, (pathnameUUID) => ([{
+export const $webDashboardBC = combine($detailProject, (detailProject) => ([{
   [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.DASHBOARD, CRUD_PATH.CATALOG],
   [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
+  [BREAD_CRUMBS_ROUTE.LOADING]: false,
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
     {
       [PATH]: CRUD_PATH.CATALOG,
@@ -43,6 +47,7 @@ export const $webDashboardBC = combine($pathnameUUID, (pathnameUUID) => ([{
 {
   [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.CATALOG],
   [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
+  [BREAD_CRUMBS_ROUTE.LOADING]: false,
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
     {
       [PATH]: CRUD_PATH.CATALOG,
@@ -57,14 +62,15 @@ export const $webDashboardBC = combine($pathnameUUID, (pathnameUUID) => ([{
 {
   [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.UPLOADING],
   [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
+  [BREAD_CRUMBS_ROUTE.LOADING]: isEmpty(detailProject[PROJECT_FIELDS.NAME]),
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
     {
       [PATH]: CRUD_PATH.CATALOG,
-      [NAME]: pathnameUUID,
+      [NAME]: detailProject[PROJECT_FIELDS.NAME],
       [ACTIVE]: true,
       [LINK]: '',
       [VISIBLE]: true,
-      [TRANSLATE]: true,
+      [TRANSLATE]: false,
     },
     {
       [PATH]: CRUD_PATH.UPLOADING,

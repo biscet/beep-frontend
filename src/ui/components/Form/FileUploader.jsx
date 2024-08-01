@@ -1,10 +1,11 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { FILE_UPLOADER_DEFAULT_SETTINGS, FILE_UPLOADER_FIELDS, FILE_UPLOADER_VARIATION } from 'src/dict/fields/file-uploader';
-import { cx } from 'src/lib/lodash';
+import { cx, isEmpty } from 'src/lib/lodash';
 import { useDropzone } from 'react-dropzone';
 import { AnimatePresence, motion } from 'framer-motion';
 import { DEFAULT_FILE_UPLOADER_ANIMATION, DEFAULT_PROGRESS_ANIMATION } from 'src/dict/animate';
-import { UploaderSVG } from 'src/ui/media/images';
+import { DoneUploaderSVG, UploaderSVG } from 'src/ui/media/images';
+import { formatFileSize } from 'src/lib/helpers';
 import { I18nContext } from '../Helpers';
 
 const {
@@ -74,18 +75,23 @@ export const FileUploader = ({
         {uploadProgress > 0 && uploadProgress < 100
           ? (
             <motion.div
-              className="progress-bar"
               initial="initial"
               animate="animate"
               exit="exit"
               variants={DEFAULT_PROGRESS_ANIMATION}
               key="progress"
             >
-              <div className="progress-bar__container">
-                <div className="progress-bar__fill" style={progressFillStyle(uploadProgress)} />
-              </div>
+              <p className="container__text-upload">
+                {t('Файл загружается...')}
+              </p>
 
-              <p className="progress-bar__percent">{`${uploadProgress}%`}</p>
+              <div className="progress-bar">
+                <div className="progress-bar__container">
+                  <div className="progress-bar__fill" style={progressFillStyle(uploadProgress)} />
+                </div>
+
+                <p className="progress-bar__percent">{`${uploadProgress}%`}</p>
+              </div>
             </motion.div>
           ) : (
             <motion.div
@@ -97,18 +103,39 @@ export const FileUploader = ({
               key="file-uploader-container"
             >
               <div className="container__icon icon">
-                <UploaderSVG
-                  className={cx({
-                    defaultClass: [''],
-                    activeClass: 'icon icon_drag',
-                    condition: isDragActive,
-                  })}
-                />
+                {isEmpty(rest.value) || isDragActive ? (
+                  <UploaderSVG
+                    className={cx({
+                      defaultClass: [''],
+                      activeClass: 'icon icon_drag',
+                      condition: isDragActive,
+                    })}
+                  />
+                ) : (
+                  <DoneUploaderSVG
+                    className={cx({
+                      defaultClass: [''],
+                      activeClass: 'icon icon_drag',
+                      condition: isDragActive,
+                    })}
+                  />
+                )}
               </div>
 
-              <p className="container__text">
-                {t('Перетащите файл сюда или нажмите кнопку ниже, чтобы выбрать его на компьютере')}
-              </p>
+              {isEmpty(rest.value) || isDragActive ? (
+                <p className="container__text">
+                  {t(isDragActive ? 'Перетащите файл сюда' : 'Перетащите файл сюда или нажмите кнопку ниже, чтобы выбрать его на компьютере')}
+                </p>
+              ) : (
+                <>
+                  <p className="container__text-upload">
+                    {t('Файл успешно загружен. Чтобы выбрать другой файл, перетащите сюда или нажмите кнопку ниже, чтобы выбрать его на компьютере')}
+                  </p>
+
+                  <p className="container__file-name">{rest.value[FILE].name}</p>
+                  <p className="container__file-size">{formatFileSize(rest.value[FILE].size)}</p>
+                </>
+              )}
 
               {isDragActive ? null : (
                 <button
@@ -117,7 +144,7 @@ export const FileUploader = ({
                   onKeyDown={onKeyDown}
                   className="button button_secondary button_large"
                 >
-                  {t('Выбрать файл')}
+                  {t(isEmpty(rest.value) ? 'Выбрать файл' : 'Выбрать другой файл')}
                 </button>
               )}
 
