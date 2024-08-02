@@ -1,25 +1,22 @@
-import { split } from 'effector';
+import { get } from 'src/lib/lodash';
 import {
   $catalogProjects, $countCatalogProjects,
   $isProjectCatalogPage, getCatalogProjectsFx,
   resetCatalogProjectsFn,
 } from '.';
+import { crudStoreBehaviorPageFb } from '../..';
 
 $catalogProjects
-  .reset(resetCatalogProjectsFn);
+  .reset(resetCatalogProjectsFn)
+  .on(getCatalogProjectsFx.doneData, (_, data) => get(data, 'projects', []));
 
 $countCatalogProjects
-  .reset(resetCatalogProjectsFn);
+  .reset(resetCatalogProjectsFn)
+  .on(getCatalogProjectsFx.doneData, (_, data) => get(data, 'total_projects', 0));
 
 // Запрашиваем список проектов на странице каталога
-split({
-  source: $isProjectCatalogPage,
-  match: {
-    isPage: (isProjectCatalogPage) => isProjectCatalogPage,
-    isNotPage: (isProjectCatalogPage) => !isProjectCatalogPage,
-  },
-  cases: {
-    isPage: getCatalogProjectsFx,
-    isNotPage: resetCatalogProjectsFn,
-  },
+crudStoreBehaviorPageFb({
+  $page: $isProjectCatalogPage,
+  isPageLogic: getCatalogProjectsFx,
+  isNotPageLogic: resetCatalogProjectsFn,
 });

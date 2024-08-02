@@ -45,6 +45,8 @@ export const FileUploader = ({
       reader.addEventListener('load', () => {
         onChange({ [FILE]: file, [BINARY]: reader.result });
         setUploadProgress(0);
+        if (errorText && hasError) { return null; }
+        return null;
       });
 
       reader.readAsArrayBuffer(file);
@@ -151,8 +153,6 @@ export const FileUploader = ({
               <p className="container__formats">
                 {`${t('Поддерживаемые форматы:')} ${supportFormats}`}
               </p>
-
-              {hasError ? <>{errorText}</> : null}
             </motion.div>
           )}
       </AnimatePresence>

@@ -34,7 +34,7 @@ export const $sidebarRoutes = combine(() => [
   },
   {
     [NAME]: 'Дашборд',
-    [ACTIVE]: true,
+    [ACTIVE]: false,
     [VALIDATE]: [CATALOG],
     [ICON]: DashboardSVG,
     [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.DASHBOARD}/${CATALOG}`,

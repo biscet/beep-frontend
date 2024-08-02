@@ -1,4 +1,4 @@
-import { sample, split } from 'effector';
+import { sample } from 'effector';
 import { pushHistoryFn } from 'src/models/Helpers/History';
 import { CRUD_PATH, PAGES_PATH, WEB_PATH } from 'src/dict/path';
 import { $pathnameUUID } from 'src/models/App';
@@ -12,6 +12,7 @@ import {
   goToProjectUploadFn,
   resetDetailProjectFn,
 } from '.';
+import { crudStoreBehaviorPageFb } from '../..';
 
 $detailProject
   .reset(resetDetailProjectFn)
@@ -24,16 +25,10 @@ sample({
 });
 
 // Запрашиваем информацию о проекте
-split({
-  source: $isProjectUploadPage,
-  match: {
-    isPage: (page) => page,
-    isNotPage: (page) => !page,
-  },
-  cases: {
-    isPage: getProjectFn,
-    isNotPage: resetDetailProjectFn,
-  },
+crudStoreBehaviorPageFb({
+  $page: $isProjectUploadPage,
+  isPageLogic: getProjectFn,
+  isNotPageLogic: resetDetailProjectFn,
 });
 
 sample({

@@ -38,7 +38,7 @@ export const createProjectForm = createForm({
       init: '',
     },
     [CREATE_PROJECT_FIELDS.TYPE]: {
-      init: 'beep_mp4',
+      init: 'beep-video',
     },
   },
   validateOn: ['submit'],

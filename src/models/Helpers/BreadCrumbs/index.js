@@ -62,10 +62,18 @@ export const $webDashboardBC = combine($detailProject, (detailProject) => ([{
 {
   [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.UPLOADING],
   [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
-  [BREAD_CRUMBS_ROUTE.LOADING]: isEmpty(detailProject[PROJECT_FIELDS.NAME]),
+  [BREAD_CRUMBS_ROUTE.LOADING]: !isEmpty(detailProject[PROJECT_FIELDS.NAME]),
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
     {
       [PATH]: CRUD_PATH.CATALOG,
+      [NAME]: 'Проекты',
+      [ACTIVE]: true,
+      [LINK]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}`,
+      [VISIBLE]: true,
+      [TRANSLATE]: true,
+    },
+    {
+      [PATH]: CRUD_PATH.UPLOADING,
       [NAME]: detailProject[PROJECT_FIELDS.NAME],
       [ACTIVE]: true,
       [LINK]: '',
