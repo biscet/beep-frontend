@@ -1,9 +1,14 @@
 import { crossLang, LANG_FIELD } from 'src/dict/translates';
 import { crossTheme, THEME_FIELD } from 'src/dict/theme';
+import { crossPagination, PAGINATION_FIELD } from 'src/dict/pagination';
 import { isEmpty } from './lodash';
 import { storage } from './storage';
 
 export const getLang = () => (isEmpty(storage.get(LANG_FIELD)) ? crossLang : storage.get(LANG_FIELD));
+
+export const getPagination = () => (
+  isEmpty(storage.get(PAGINATION_FIELD.STORAGE)) ? crossPagination : storage.get(PAGINATION_FIELD.STORAGE)
+);
 
 export const getTheme = () => (isEmpty(storage.get(THEME_FIELD)) ? crossTheme : storage.get(THEME_FIELD));
 

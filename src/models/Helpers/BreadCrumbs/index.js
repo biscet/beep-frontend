@@ -19,6 +19,7 @@ export const triggerSplitBCLogicFn = breadCrumbsDomain.createEvent();
 export const $currentBreadCrumbs = breadCrumbsDomain.createStore({
   [BREAD_CRUMBS_ROUTE.PATH]: '/',
   [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
+  [BREAD_CRUMBS_ROUTE.LOADING]: false,
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [{
     [PATH]: '/',
     [NAME]: '-',
@@ -29,7 +30,7 @@ export const $currentBreadCrumbs = breadCrumbsDomain.createStore({
   }],
 });
 
-export const $webDashboardBC = combine($detailProject, (detailProject) => ([{
+export const $webDashboardBC = combine($detailProject, (detailProject) => [{
   [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.DASHBOARD, CRUD_PATH.CATALOG],
   [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
   [BREAD_CRUMBS_ROUTE.LOADING]: false,
@@ -62,7 +63,7 @@ export const $webDashboardBC = combine($detailProject, (detailProject) => ([{
 {
   [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.UPLOADING],
   [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
-  [BREAD_CRUMBS_ROUTE.LOADING]: !isEmpty(detailProject[PROJECT_FIELDS.NAME]),
+  [BREAD_CRUMBS_ROUTE.LOADING]: isEmpty(detailProject),
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
     {
       [PATH]: CRUD_PATH.CATALOG,
@@ -89,7 +90,7 @@ export const $webDashboardBC = combine($detailProject, (detailProject) => ([{
       [TRANSLATE]: true,
     },
   ].filter(({ [VISIBLE]: visible }) => visible),
-}].filter(({ [BREAD_CRUMBS_ROUTE.VISIBLE]: visible }) => visible)));
+}].filter(({ [BREAD_CRUMBS_ROUTE.VISIBLE]: visible }) => visible));
 
 export const $allBreadCrumbsCombineData = combine(
   $webDashboardBC,

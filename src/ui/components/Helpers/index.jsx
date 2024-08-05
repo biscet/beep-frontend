@@ -4,3 +4,4 @@ export { Theme, ThemePicker } from './Theme';
 export { ShimmerUserInfo } from './Shimmer';
 export { BreadCrumbs } from './BreadCrumbs';
 export { Modal } from './Modal';
+export { Pagination } from './Pagination';

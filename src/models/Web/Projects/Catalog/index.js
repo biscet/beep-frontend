@@ -9,6 +9,9 @@ import { projectsDomain } from '..';
 
 const { CATALOG } = CRUD_PATH;
 
+export const goToProjectsCatalogFn = projectsDomain.createEvent();
+
+export const getCatalogProjectsFn = projectsDomain.createEvent();
 export const resetCatalogProjectsFn = projectsDomain.createEvent();
 
 export const $catalogProjects = projectsDomain.createStore([]);

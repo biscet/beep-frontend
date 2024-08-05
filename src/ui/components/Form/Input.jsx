@@ -15,8 +15,8 @@ const handlerClick = ({ onChange, value }) => () => {
 };
 
 export const Input = ({
-  type, placeholder, conditionClass, onChange, errorText,
-  activeClass, nonActiveClass, variant, value, hasError,
+  type, placeholder, conditionClass, onChange, errorText, hasError,
+  activeClass, nonActiveClass, variant, value, firstError,
   onBlur, name, disabled, caption, ...restProps
 }) => {
   const t = useContext(I18nContext);
@@ -27,7 +27,7 @@ export const Input = ({
       'input',
       `input_${variant}`,
       INPUT_TYPES.PASSWORD === type ? 'input_password' : null,
-      hasError ? 'input_error' : null,
+      hasError(firstError) ? 'input_error' : null,
     ],
     activeClass,
     nonActiveClass,
@@ -73,13 +73,13 @@ export const Input = ({
         ) : null}
       </div>
 
-      {hasError && !isEmpty(errorText) ? (
+      {hasError(firstError) && !isEmpty(errorText) ? (
         <p className="input-group__error">
           {t(errorText)}
         </p>
       ) : null}
 
-      {!hasError && !isEmpty(caption) ? (
+      {!hasError(firstError) && !isEmpty(caption) ? (
         <p>{t(caption)}</p>
       ) : null}
     </div>
@@ -97,7 +97,8 @@ Input.defaultProps = {
   value: '',
   onBlur: () => {},
   errorText: '',
-  hasError: false,
+  hasError: (error) => error !== null,
+  firstError: null,
   caption: '',
   disabled: false,
 };

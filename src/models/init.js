@@ -9,6 +9,7 @@ import './Helpers/Notify/init';
 import './Helpers/History/init';
 import './Helpers/BreadCrumbs/init';
 import './Helpers/Modal/init';
+import './Helpers/Pagination/init';
 
 import './Login/init';
 import './Registration/init';

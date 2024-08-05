@@ -29,7 +29,7 @@ export const $sidebarRoutes = combine(() => [
     [ACTIVE]: true,
     [VALIDATE]: [CATALOG, UPLOADING],
     [ICON]: ProjectsSVG,
-    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CATALOG}`,
+    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CATALOG}?page=1`,
     [GENERAL_PAGE]: WEB_PATH.PROJECTS,
   },
   {

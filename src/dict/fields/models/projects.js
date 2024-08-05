@@ -1,12 +1,13 @@
 export const CREATE_PROJECT_FIELDS = {
-  NAME: 'projectName',
-  TYPE: 'projectType',
-  UUID: 'projectId',
+  NAME: 'project_name',
+  TYPE: 'project_type',
+  UUID: 'project_id',
 };
 
 export const PROJECT_FIELDS = {
-  ID: 'projectId',
-  NAME: 'projectName',
+  ID: 'project_id',
+  NAME: 'project_name',
+  PROJECT: 'project_details',
 };
 
 export const UPLOADING_FIELDS = {

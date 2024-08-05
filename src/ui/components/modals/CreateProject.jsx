@@ -3,7 +3,7 @@ import { I18nContext } from 'src/ui/components/Helpers';
 import { Button, Input, ModalForm } from 'src/ui/components/Form';
 import { CloseSVG, LoaderSpinnerSVG } from 'src/ui/media/images';
 import { CREATE_PROJECT_FIELDS } from 'src/dict/fields/models/projects';
-import { getPropsField } from 'src/lib/form';
+import { getReflectPropsField } from 'src/lib/form';
 import { useForm } from 'effector-forms';
 import {
   $createProjectDone, $disabledCreateProjectCombineData, createProjectForm,
@@ -11,10 +11,21 @@ import {
 import { BUTTON_TYPES } from 'src/dict/fields/button';
 import { useUnit } from 'effector-react';
 import { cx } from 'src/lib/lodash';
+import { reflect } from '@effector/reflect';
+
+const ProjectNameField = reflect({
+  view: Input,
+  bind: {
+    ...getReflectPropsField(CREATE_PROJECT_FIELDS.NAME, createProjectForm),
+    placeholder: 'Название проекта',
+    name: CREATE_PROJECT_FIELDS.NAME,
+    nonActiveClass: 'create-project__input input_full',
+  },
+});
 
 export const CreateProject = ({ closeModalFn }) => {
   const t = useContext(I18nContext);
-  const { submit, ...restProps } = useForm(createProjectForm);
+  const { hasError } = useForm(createProjectForm);
   const [disabledCreateProjectCombineData, createProjectDone] = useUnit(
     [$disabledCreateProjectCombineData, $createProjectDone],
   );
@@ -22,7 +33,7 @@ export const CreateProject = ({ closeModalFn }) => {
   return (
     <ModalForm
       className="modal__form form form_create-project create-project"
-      submit={submit}
+      submit={createProjectForm.submit}
     >
       <h1 className="form__heading">{t('Создание проекта')}</h1>
 
@@ -30,20 +41,13 @@ export const CreateProject = ({ closeModalFn }) => {
         className={cx({
           defaultClass: ['form__caption', 'caption'],
           activeClass: 'caption_error',
-          condition: restProps.hasError(),
+          condition: hasError(),
         })}
       >
         {t('Название проекта должно быть уникальным и содержать от 1 до 255 символов.')}
       </p>
 
-      <Input
-        placeholder="Название проекта"
-        name={CREATE_PROJECT_FIELDS.NAME}
-        {...getPropsField({
-          fieldName: CREATE_PROJECT_FIELDS.NAME, props: restProps,
-        })}
-        nonActiveClass="create-project__input input_full"
-      />
+      <ProjectNameField />
 
       <Button
         type={BUTTON_TYPES.SUBMIT}

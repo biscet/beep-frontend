@@ -3,7 +3,7 @@ import { pushHistoryFn } from 'src/models/Helpers/History';
 import { CRUD_PATH, PAGES_PATH, WEB_PATH } from 'src/dict/path';
 import { $pathnameUUID } from 'src/models/App';
 import { PROJECT_FIELDS } from 'src/dict/fields/models/projects';
-import { isEmpty } from 'src/lib/lodash';
+import { get, isEmpty } from 'src/lib/lodash';
 import {
   $detailProject,
   $isProjectUploadPage,
@@ -16,7 +16,7 @@ import { crudStoreBehaviorPageFb } from '../..';
 
 $detailProject
   .reset(resetDetailProjectFn)
-  .on(getProjectFx.doneData, (_, project) => project);
+  .on(getProjectFx.doneData, (_, data) => get(data, PROJECT_FIELDS.PROJECT, {}));
 
 // Перенаправление на загрузку видео / аудио
 sample({
