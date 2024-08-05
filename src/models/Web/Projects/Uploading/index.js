@@ -29,8 +29,9 @@ export const $isProjectUploadPage = $pathnameUrl.map(
 export const uploadingForm = createForm({
   fields: {
     [UPLOADING_FIELDS.FILE]: {
-      rules: [rules.required()],
+      rules: [rules.required(), rules.fileVideoSize(), rules.fileAudioSize()],
       init: '',
+      validateOn: ['change'],
     },
   },
   validateOn: ['submit'],

@@ -26,7 +26,8 @@ const getAllFormats = (accept) => {
 
 export const FileUploader = ({
   conditionClass, activeClass, nonActiveClass, onChange, variant,
-  maxFiles, accept, errorText, hasError, ...rest
+  maxFiles, accept, ...rest
+  // errorText, hasError, firstError,
 }) => {
   const t = useContext(I18nContext);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -45,7 +46,7 @@ export const FileUploader = ({
       reader.addEventListener('load', () => {
         onChange({ [FILE]: file, [BINARY]: reader.result });
         setUploadProgress(0);
-        if (errorText && hasError) { return null; }
+
         return null;
       });
 
@@ -170,5 +171,6 @@ FileUploader.defaultProps = {
   accept: FILE_UPLOADER_DEFAULT_SETTINGS[ACCEPT],
   errorText: '',
   name: '',
-  hasError: false,
+  hasError: (error) => error !== null,
+  firstError: null,
 };
