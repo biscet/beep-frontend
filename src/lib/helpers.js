@@ -1,18 +1,27 @@
-import { crossLang, LANG_FIELD } from 'src/dict/translates';
-import { crossTheme, THEME_FIELD } from 'src/dict/theme';
-import { crossPagination, PAGINATION_FIELD } from 'src/dict/pagination';
-import { isEmpty } from './lodash';
+import { crossLang, LANG_FIELD, LANGUAGES } from 'src/dict/translates';
+import { THEMES } from 'src/dict/theme';
+import { crossPagination, PAGINATION_FIELDS } from 'src/dict/pagination';
+import {
+  get, isArray, isEmpty, strTrim,
+} from './lodash';
 import { storage } from './storage';
 
-export const getLang = () => (isEmpty(storage.get(LANG_FIELD)) ? crossLang : storage.get(LANG_FIELD));
-
 export const getPagination = () => (
-  isEmpty(storage.get(PAGINATION_FIELD.STORAGE)) ? crossPagination : storage.get(PAGINATION_FIELD.STORAGE)
+  isEmpty(storage.get(PAGINATION_FIELDS.STORAGE)) ? crossPagination : storage.get(PAGINATION_FIELDS.STORAGE)
 );
 
-export const getTheme = () => (isEmpty(storage.get(THEME_FIELD)) ? crossTheme : storage.get(THEME_FIELD));
+export const getBrowserTheme = (matches) => {
+  const windowMatches = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  return isEmpty(matches) ? windowMatches : matches;
+};
 
-export const getBrowserTheme = () => (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+export const getLang = (language) => {
+  const windowLanguage = get(window, 'navigator.languages.0', 'ru');
+  return ['ru-RU', 'ru'].includes(isEmpty(language) ? windowLanguage : language)
+    ? LANGUAGES.RU : LANGUAGES.EN;
+};
+
+export const getTheme = () => (getBrowserTheme() ? THEMES.DARK : THEMES.LIGHT);
 
 export const prependFn = (fn, state) => { fn(state); };
 
@@ -28,4 +37,35 @@ export const formatFileSize = (bytes) => {
   }
 
   return `${bytes.toFixed(2)} ${units[unitIndex]}`;
+};
+
+const getValueLang = (value, param) => {
+  if (!isEmpty(param)) {
+    if (isArray(param)) {
+      let str = '';
+      param.forEach((val, index) => {
+        const key = index + 1;
+        str = isEmpty(str) ? value.replace(`{{value${key}}}`, val)
+          : str.replace(`{{value${key}}}`, val);
+      });
+      return str;
+    }
+    return value.replace('{{value}}', param);
+  }
+  return value;
+};
+
+export const translate = ({ dictTranslates, lang }) => (value, param) => {
+  if (isEmpty(lang) || isEmpty(value)) {
+    return '';
+  }
+
+  if (lang === crossLang) {
+    return getValueLang(value, param);
+  }
+
+  const val = `${strTrim(value.trim())}`;
+
+  return isEmpty(dictTranslates[val])
+    ? getValueLang(value, param) : getValueLang(dictTranslates[val], param);
 };

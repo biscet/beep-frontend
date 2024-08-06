@@ -4,7 +4,7 @@ import { debounce } from 'patronum';
 import { isCurrentPath } from 'src/lib/url';
 import { PAGES_PATH } from 'src/dict/path';
 import { isEmpty } from 'src/lib/lodash';
-import { TOKENS } from 'src/dict/config';
+import { rootContainer, TOKENS } from 'src/dict/config';
 import { storage } from 'src/lib/storage';
 import {
   AppGate, $pathnameUrl, $pathParams,
@@ -80,5 +80,22 @@ sample({
     if (loaderAppContainer) {
       loaderAppContainer.remove();
     }
+  },
+});
+
+sample({
+  clock: debounce({
+    source: $pathnameUrl,
+    timeout: 150,
+  }),
+  fn: (pathnameUrl) => {
+    const webContainer = document.getElementsByClassName('web-content__wrapper')[0];
+
+    if (isCurrentPath(pathnameUrl, PAGES_PATH.WEB) && !isEmpty(webContainer)) {
+      webContainer.scrollTo(0, 0);
+    } else {
+      rootContainer.scrollTo(0, 0);
+    }
+    return null;
   },
 });

@@ -1,13 +1,12 @@
 import { FILE_UPLOADER_FIELDS } from 'src/dict/fields/file-uploader';
 import { isEmpty } from 'src/lib/lodash';
+import { fileContract } from './contracts';
 
 export const emailPattern = /\S+@\S+\.\S+/;
 export const passwordPattern = /^.{8,}$/;
 export const userNamePattern = /^[\dA-Za-z]{4,30}$/;
 export const projectNamePattern = /^.{1,255}$/;
 export const uuidPattern = /[\da-f]{8}-[\da-f]{4}-[1-5][\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}/i;
-
-export const gbInBytes = 1024 * 1024 * 1024;
 
 export const rules = {
   required: () => ({
@@ -48,15 +47,15 @@ export const rules = {
   fileVideoSize: () => ({
     name: 'fileVideoSize',
     validator: ({ [FILE_UPLOADER_FIELDS.FILE]: file }) => ({
-      isValid: (file.size <= 30 * gbInBytes) || !file.type.includes('video'),
-      errorText: '',
+      isValid: fileContract(file, 30, 'video'),
+      errorText: 'Размер видео файла не должен привышать 30ГБ.',
     }),
   }),
   fileAudioSize: () => ({
     name: 'fileAudioSize',
     validator: ({ [FILE_UPLOADER_FIELDS.FILE]: file }) => ({
-      isValid: (file.size <= 10 * gbInBytes) || !file.type.includes('audio'),
-      errorText: '',
+      isValid: fileContract(file, 10, 'audio'),
+      errorText: 'Размер аудио файла не должен привышать 10ГБ.',
     }),
   }),
 };

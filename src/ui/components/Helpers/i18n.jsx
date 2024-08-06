@@ -1,10 +1,11 @@
 import React, { createContext } from 'react';
 import { useUnit } from 'effector-react';
 import {
-  $i18nCombineData, $lang, changeLangFn, translate,
+  $i18nCombineData, $lang, changeLangFn,
 } from 'src/models/Helpers/i18n';
 import { LANGUAGES, LANGUAGES_NAMES_ABRV } from 'src/dict/translates';
 import { LanguageSVG } from 'src/ui/media/images';
+import { translate } from 'src/lib/helpers';
 
 export const I18nContext = createContext();
 

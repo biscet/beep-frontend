@@ -1,18 +1,16 @@
-import { THEME_FIELD } from 'src/dict/theme';
-import { getTheme } from 'src/lib/helpers';
-import { storage } from 'src/lib/storage';
-import { allDomain } from 'src/models/App';
+import { crossTheme, THEME_FIELD } from 'src/dict/theme';
+import { allDomain, AppGate } from 'src/models/App';
+import { persist } from 'effector-storage/local';
+import { themeContract } from 'src/lib/contracts';
+import { trackMediaQuery } from '@withease/web-api';
 
 const themeDomain = allDomain.createDomain('Theme');
 
-export const getThemeFn = themeDomain.createEvent();
 export const changeThemeFn = themeDomain.createEvent();
 
-export const $theme = themeDomain.createStore(getTheme());
+export const $theme = themeDomain.createStore(crossTheme, { name: THEME_FIELD });
 
-export const getThemeFx = themeDomain.createEffect(() => getTheme());
+persist({ store: $theme, key: THEME_FIELD, contract: themeContract() });
 
-export const changeThemeFx = themeDomain.createEffect((theme) => {
-  storage.set(THEME_FIELD, theme);
-  return theme;
-});
+const { $matches: $matchesTheme } = trackMediaQuery('(prefers-color-scheme: dark)', { setup: AppGate.open });
+export { $matchesTheme };

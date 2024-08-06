@@ -26,8 +26,7 @@ const getAllFormats = (accept) => {
 
 export const FileUploader = ({
   conditionClass, activeClass, nonActiveClass, onChange, variant,
-  maxFiles, accept, ...rest
-  // errorText, hasError, firstError,
+  maxFiles, accept, errorText, hasError, firstError, ...rest
 }) => {
   const t = useContext(I18nContext);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -46,8 +45,6 @@ export const FileUploader = ({
       reader.addEventListener('load', () => {
         onChange({ [FILE]: file, [BINARY]: reader.result });
         setUploadProgress(0);
-
-        return null;
       });
 
       reader.readAsArrayBuffer(file);
@@ -65,6 +62,8 @@ export const FileUploader = ({
   });
 
   const supportFormats = getAllFormats(accept).join(', ');
+
+  console.log(errorText, hasError, firstError);
 
   return (
     <div

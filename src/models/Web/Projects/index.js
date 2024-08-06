@@ -37,9 +37,6 @@ export const createProjectForm = createForm({
       rules: [rules.required(), rules.projectName()],
       init: '',
     },
-    [CREATE_PROJECT_FIELDS.TYPE]: {
-      init: 'beep_mp4',
-    },
   },
   validateOn: ['submit'],
   domain: projectsDomain,

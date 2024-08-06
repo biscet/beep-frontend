@@ -1,14 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useUnit } from 'effector-react';
 import { NavLink } from 'react-router-dom';
 import { $userCombineData } from 'src/models/User';
 import { USER_FIELDS } from 'src/dict/fields/models/user';
 import { Button } from 'src/ui/components/Form';
-import { I18nContext, ShimmerUserInfo } from 'src/ui/components/Helpers';
+import {
+  I18nContext, ShimmerSideBarCreateBtn, ShimmerSideBarLink, ShimmerUserInfo,
+} from 'src/ui/components/Helpers';
 import { BUTTON_TYPES, BUTTON_VARIATION } from 'src/dict/fields/button';
 import { LogoutSVG, AddSVG } from 'src/ui/media/images';
 import { getUserInfoFx } from 'src/models/Login';
-import { PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH } from 'src/dict/path';
+import {
+  CRUD_PATH, PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH,
+} from 'src/dict/path';
 import { $modalIsOpen, closeModalFn, openModalFn } from 'src/models/Helpers/Modal';
 import { MODAL_FIELDS } from 'src/dict/modal';
 import { CreateProject } from 'src/ui/components/modals';
@@ -26,7 +30,13 @@ const {
   NAME, PATH, ICON, VALIDATE, GENERAL_PAGE,
 } = SIDEBAR_ROUTES_FIELDS;
 
-const sidebarRoutesShimmerStyle = (length) => ({ height: (54 * length) + (8 * (length - 2)) });
+const isModal = (modalIsOpen) => () => {
+  if (modalIsOpen) {
+    closeModalFn();
+  } else {
+    openModalFn({ [MODAL_FIELDS.CHILDREN]: CreateProject });
+  }
+};
 
 export const Sidebar = () => {
   const t = useContext(I18nContext);
@@ -40,14 +50,10 @@ export const Sidebar = () => {
       $sidebarRoutes, $pathnameUrl, $isHovereLogout],
   );
 
-  useEffect(() => () => {
-    setIsHovereLogoutFn(false);
-  }, []);
-
   return (
     <div className="sidebar">
       <NavLink
-        to={`/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}`}
+        to={`/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}?page=1`}
         className="sidebar__logo"
         activeClassName=""
       >
@@ -55,20 +61,14 @@ export const Sidebar = () => {
       </NavLink>
 
       {userInfoPending
-        ? <div className="shimmer shimmer_side-bar-link" />
+        ? <ShimmerSideBarCreateBtn />
         : (
           <Button
             type={BUTTON_TYPES.BUTTON}
             variant={BUTTON_VARIATION.TEXT}
             activeClass="bottom-side__link link link_active-create-project"
             nonActiveClass="bottom-side__link link link_create-project "
-            onClick={() => {
-              if (modalIsOpen) {
-                closeModalFn();
-              } else {
-                openModalFn({ [MODAL_FIELDS.CHILDREN]: CreateProject });
-              }
-            }}
+            onClick={isModal(modalIsOpen)}
             conditionClass={modalIsOpen}
             data-disabled={modalIsOpen}
           >
@@ -81,7 +81,7 @@ export const Sidebar = () => {
 
       <div className="sidebar__routes">
         {userInfoPending
-          ? <div className="shimmer shimmer_side-bar-link" style={sidebarRoutesShimmerStyle(sidebarRoutes.length)} />
+          ? <ShimmerSideBarLink length={sidebarRoutes.length} />
           : sidebarRoutes.map(({
             [NAME]: name,
             [PATH]: path,

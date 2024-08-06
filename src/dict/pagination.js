@@ -1,4 +1,4 @@
-export const PAGINATION_FIELD = {
+export const PAGINATION_FIELDS = {
   STORAGE: 'pagination',
   ACTION: 'action',
   DATA_NUMBER: 'dataNumber',

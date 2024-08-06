@@ -3,23 +3,19 @@ import { isEmpty } from 'src/lib/lodash';
 import { storage } from 'src/lib/storage';
 import { $pathnameUrl, $pathParams, AppGate } from 'src/models/App';
 import {
-  crossPagination, PAGINATION_ACTIONS, PAGINATION_FIELD, PAGINATION_QUERY_FIELDS,
+  crossPagination, PAGINATION_ACTIONS, PAGINATION_FIELDS, PAGINATION_QUERY_FIELDS,
 } from 'src/dict/pagination';
 import { getPagination } from 'src/lib/helpers';
 import { getAllQueryParamsFromUrl, getQueryParamFromUrl } from 'src/lib/url';
 import {
   $pagination, resetPaginationQueryFn,
-  getPaginationFx, changePaginationQueryFn,
+  changePaginationQueryFn,
   changePaginationFn, goToPageByPaginationFn,
-  changePaginationFx,
-  getPaginationFn,
   $paginationQuery,
 } from './index';
 import { pushHistoryFn } from '../History';
 
-$pagination
-  .on(changePaginationFn, (_, val) => val)
-  .on(getPaginationFx.doneData, (_, val) => val);
+$pagination.on(changePaginationFn, (_, pagination) => pagination);
 
 $paginationQuery
   .on(changePaginationQueryFn, (_, query) => query)
@@ -30,7 +26,7 @@ $paginationQuery
 
 sample({
   clock: AppGate.state,
-  filter: () => isEmpty(storage.get(PAGINATION_FIELD.STORAGE)),
+  filter: () => isEmpty(storage.get(PAGINATION_FIELDS.STORAGE)),
   fn: () => crossPagination,
   target: changePaginationFn,
 });
@@ -41,9 +37,9 @@ sample({
   fn: (pathnameUrl, event) => {
     const params = getAllQueryParamsFromUrl();
     const {
-      [PAGINATION_FIELD.DATA_NUMBER]: dataNumber,
-      [PAGINATION_FIELD.ACTION]: action,
-      [PAGINATION_FIELD.DATA_LAST]: dataLastPage,
+      [PAGINATION_FIELDS.DATA_NUMBER]: dataNumber,
+      [PAGINATION_FIELDS.ACTION]: action,
+      [PAGINATION_FIELDS.DATA_LAST]: dataLastPage,
     } = event;
 
     switch (action) {
@@ -100,14 +96,4 @@ split({
     }),
     isNotPageQuery: resetPaginationQueryFn,
   },
-});
-
-sample({
-  clock: changePaginationFn,
-  target: changePaginationFx,
-});
-
-sample({
-  clock: getPaginationFn,
-  target: getPaginationFx,
 });

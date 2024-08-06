@@ -7,6 +7,7 @@ import {
 } from 'src/models/Helpers/Pagination';
 import { $pathParams } from 'src/models/App';
 import { getAllQueryParamsFromUrl, getQueryParamFromUrl } from 'src/lib/url';
+import { invoke } from '@withease/factories';
 import {
   $catalogProjects, $countCatalogProjects,
   $isProjectCatalogPage, getCatalogProjectsFx,
@@ -28,14 +29,14 @@ sample({
   target: pushHistoryFn.prepend((params) => `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}?${params}`),
 });
 
-catalogPaginationFb({
+invoke(catalogPaginationFb, {
   $page: $isProjectCatalogPage,
   goToPage: goToProjectsCatalogFn,
   fxByUndefinedPage: getCatalogProjectsFx,
 });
 
 // Запрашиваем список проектов на странице каталога
-crudStoreBehaviorPageFb({
+invoke(crudStoreBehaviorPageFb, {
   $page: combine($isProjectCatalogPage, $pathParams),
   isPageLogic: getCatalogProjectsFn,
   isNotPageLogic: resetCatalogProjectsFn,

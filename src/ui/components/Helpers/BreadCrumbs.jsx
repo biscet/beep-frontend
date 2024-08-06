@@ -6,6 +6,7 @@ import { cx, get, isEmpty } from 'src/lib/lodash';
 import { $initApp } from 'src/models/App';
 import { pushHistoryFn } from 'src/models/Helpers/History';
 import { I18nContext } from './i18n';
+import { ShimmerBreadCrumbs } from './Shimmer';
 
 const {
   NAME, ACTIVE, TRANSLATE, LINK,
@@ -21,7 +22,7 @@ export const BreadCrumbs = () => {
   return (
     <div className="breadcrumbs">
       {!initApp || loading
-        ? <div className="shimmer shimmer_side-bar-breadcrumbs" />
+        ? <ShimmerBreadCrumbs />
         : breadcrumbs.map((breadcrumb, i) => {
           const translated = get(breadcrumb, TRANSLATE, true);
           const name = get(breadcrumb, NAME, '-');

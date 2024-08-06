@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { useUnit } from 'effector-react';
 import { isEmpty } from 'src/lib/lodash';
 import { $pagination, $paginationCurrentPage, goToPageByPaginationFn } from 'src/models/Helpers/Pagination';
-import { PAGINATION_ACTIONS, PAGINATION_FIELD } from 'src/dict/pagination';
+import { PAGINATION_ACTIONS, PAGINATION_FIELDS } from 'src/dict/pagination';
 import { I18nContext } from './i18n';
 
 const changePaginationUnit = (unit, currentPage, total) => () => {
@@ -61,8 +61,8 @@ export const Pagination = React.memo(({ total }) => {
         className={`pagination__item ${number === currentPage ? 'pagination__active' : ''}`}
         data-active={number === currentPage ? 'true' : 'false'}
         onClick={() => goToPageByPaginationFn({
-          [PAGINATION_FIELD.ACTION]: PAGINATION_ACTIONS.FROM,
-          [PAGINATION_FIELD.DATA_NUMBER]: number,
+          [PAGINATION_FIELDS.ACTION]: PAGINATION_ACTIONS.FROM,
+          [PAGINATION_FIELDS.DATA_NUMBER]: number,
         })}
       >
         {number}

@@ -8,7 +8,7 @@ import { PAGES_PATH } from 'src/dict/path';
 import { AppGate } from 'src/models/App';
 import { PrivateRoute, BasicRoute as Route } from 'src/ui/components/Routes';
 import {
-  Helmet, I18nProvider, Modal, Theme,
+  Helmet, I18nProvider, Modal,
 } from 'src/ui/components/Helpers';
 import { AnimatePresence } from 'framer-motion';
 import { toast, ToastContainer } from 'react-toastify';
@@ -61,7 +61,6 @@ export const App = () => {
     <I18nProvider>
       <BrowserRouter>
         <Helmet />
-        <Theme />
         <ToastContainer />
 
         <Routes />

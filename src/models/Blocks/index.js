@@ -3,6 +3,7 @@ import {
   CRUD_PATH, PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH,
 } from 'src/dict/path';
 import { ProjectsSVG, DashboardSVG } from 'src/ui/media/images';
+import { rootContainer } from 'src/dict/config';
 import { allDomain } from '../App';
 
 const {
@@ -17,7 +18,11 @@ export const triggerLogoutFn = blocksDomain.createEvent();
 
 export const setHeaderAnimationStateFn = blocksDomain.createEvent();
 
+export const setScrolledRootFn = blocksDomain.createEvent();
+
 export const setIsHovereLogoutFn = blocksDomain.createEvent();
+
+export const $scrolledRoot = blocksDomain.createStore(false);
 
 export const $headerAnimationComplete = blocksDomain.createStore(false);
 
@@ -41,3 +46,13 @@ export const $sidebarRoutes = combine(() => [
     [GENERAL_PAGE]: WEB_PATH.DASHBOARD,
   },
 ].filter(({ [ACTIVE]: active }) => active));
+
+export const rootScrolledEvent = () => {
+  if (rootContainer.scrollTop > 0) {
+    setScrolledRootFn(true);
+  }
+
+  if (rootContainer.scrollTop === 0) {
+    setScrolledRootFn(false);
+  }
+};

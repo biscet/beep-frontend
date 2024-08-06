@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { BUTTON_TYPES, BUTTON_VARIATION } from 'src/dict/fields/button';
 import { PAGES_PATH } from 'src/dict/path';
 import { Button } from 'src/ui/components/Form';
@@ -6,9 +6,8 @@ import { I18nContext, LanguagePicker, ThemePicker } from 'src/ui/components/Help
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HEADER_ANIMATION, HEADER_TEXT_BUTTON_ANIMATION } from 'src/dict/animate';
-import { $headerAnimationComplete, setHeaderAnimationStateFn } from 'src/models/Blocks';
+import { $headerAnimationComplete, $scrolledRoot, setHeaderAnimationStateFn } from 'src/models/Blocks';
 import { useUnit } from 'effector-react';
-import { rootContainer } from 'src/dict/config';
 import { cx } from 'src/lib/lodash';
 import { $isLoginPage } from 'src/models/Login';
 import { $isRegistrationPage } from 'src/models/Registration';
@@ -19,22 +18,9 @@ const onAnimationComplete = () => {
 
 export const Header = () => {
   const t = useContext(I18nContext);
-  const [headerAnimationComplete, isLoginPage, isRegistrationPage] = useUnit(
-    [$headerAnimationComplete, $isLoginPage, $isRegistrationPage],
+  const [headerAnimationComplete, isLoginPage, isRegistrationPage, scrolledRoot] = useUnit(
+    [$headerAnimationComplete, $isLoginPage, $isRegistrationPage, $scrolledRoot],
   );
-  const [scrolledRoot, setScrolledRoot] = useState(false);
-
-  useEffect(() => {
-    rootContainer.addEventListener('scroll', () => {
-      if (rootContainer.scrollTop > 0) {
-        setScrolledRoot(true);
-      }
-
-      if (rootContainer.scrollTop === 0) {
-        setScrolledRoot(false);
-      }
-    });
-  }, []);
 
   const authPage = isLoginPage || isRegistrationPage;
 
