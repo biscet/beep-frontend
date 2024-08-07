@@ -3,9 +3,9 @@ import { createComponent } from 'effector-react';
 import { $catalogProjects, $countCatalogProjects } from 'src/models/Web/Projects/Catalog';
 import { get, isEmpty } from 'src/lib/lodash';
 import { CATALOG_FIELDS } from 'src/dict/fields/models/projects';
-import { goToProjectUploadFn } from 'src/models/Web/Projects/Uploading';
 import { Pagination } from 'src/ui/components/Helpers';
 import { prependObstacleFn } from 'src/lib/helpers';
+import { goToProjectFn } from 'src/models/Web/Projects/Viewing';
 
 const { NAME, ID } = CATALOG_FIELDS;
 
@@ -20,7 +20,7 @@ const ProjectList = createComponent(
         return (
           <div
             key={i}
-            onClick={prependObstacleFn(goToProjectUploadFn, id)}
+            onClick={prependObstacleFn(goToProjectFn, id)}
           >
             {name}
           </div>

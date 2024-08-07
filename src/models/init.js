@@ -18,4 +18,5 @@ import './User/init';
 import './Web/init';
 import './Web/Projects/init';
 import './Web/Projects/Catalog/init';
+import './Web/Projects/Viewing/init';
 import './Web/Projects/Uploading/init';

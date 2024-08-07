@@ -13,6 +13,7 @@ export const HELMET_ROUTES = [
   REGISTRATION,
   [WEB, PRESETS],
   [WEB, PROJECTS],
+  [WEB, PROJECTS, CRUD_PATH.VIEWING],
   [WEB, PROJECTS, CRUD_PATH.UPLOADING],
 ];
 
@@ -33,14 +34,19 @@ export const HELMET_DICT = {
     [HELMET_FIELDS.KEYWORDS]: 'логин, регистрация, загрузка видео, обработка видео, AI обработка, удаление мата, аудиодорожка без мата, beep, video, login',
   },
   [[WEB, PRESETS].join('/')]: {
-    [HELMET_FIELDS.TITLE]: 'beep - Предустановки',
-    [HELMET_FIELDS.DESCRIPTION]: 'Предустановки.',
-    [HELMET_FIELDS.KEYWORDS]: 'обработка видео, предустановки, Presets, beep, video',
+    [HELMET_FIELDS.TITLE]: 'beep - Шаблоны',
+    [HELMET_FIELDS.DESCRIPTION]: 'Шаблоны.',
+    [HELMET_FIELDS.KEYWORDS]: 'обработка видео, шаблоны, Presets, beep, video',
   },
   [[WEB, PROJECTS].join('/')]: {
-    [HELMET_FIELDS.TITLE]: 'beep - Проекты',
+    [HELMET_FIELDS.TITLE]: 'beep - Все проекты',
     [HELMET_FIELDS.DESCRIPTION]: 'Список ваших проектов.',
     [HELMET_FIELDS.KEYWORDS]: 'обработка видео, проекты, projects, beep, video',
+  },
+  [[WEB, PROJECTS, CRUD_PATH.VIEWING].join('/')]: {
+    [HELMET_FIELDS.TITLE]: 'beep - Ваш проект',
+    [HELMET_FIELDS.DESCRIPTION]: 'Ваш проект.',
+    [HELMET_FIELDS.KEYWORDS]: 'обработка видео, проекты, projects, upload, загрузка, beep, video',
   },
   [[WEB, PROJECTS, CRUD_PATH.UPLOADING].join('/')]: {
     [HELMET_FIELDS.TITLE]: 'beep - Загрузка файла',

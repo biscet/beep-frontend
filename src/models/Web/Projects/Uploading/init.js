@@ -1,40 +1,23 @@
 import { createEffect, sample, split } from 'effector';
 import { pushHistoryFn } from 'src/models/Helpers/History';
 import { CRUD_PATH, PAGES_PATH, WEB_PATH } from 'src/dict/path';
-import { $pathnameUUID } from 'src/models/App';
 import {
   CHUNK_UPLOAD_FIELDS, DEFAULT_CHUNK_SIZE, PROJECT_FIELDS, UPLOADING_FIELDS,
 } from 'src/dict/fields/models/projects';
-import { get, isEmpty } from 'src/lib/lodash';
-import { invoke } from '@withease/factories';
+import { get } from 'src/lib/lodash';
 import { notifyErrorFn } from 'src/models/Helpers/Notify';
 import { FILE_UPLOADER_FIELDS } from 'src/dict/fields/file-uploader';
 import { chunkUploadContract, chunkUploadResponseContract } from 'src/lib/contracts';
 import { spread } from 'patronum';
 import { getMediaDuration, createSlicedFile } from 'src/lib/helpers';
 import {
-  $detailChunks,
-  $detailProject,
-  $etagsChunks,
-  $isProjectUploadPage,
-  chunkVideoUploadFx,
-  completeChunkVideoUploadFx,
-  confirmSTTFx,
-  continueUploadVideoChunksFn,
-  getProjectFn,
-  getProjectFx,
-  goToProjectUploadFn,
-  resetChunksFn,
-  resetDetailProjectFn,
-  setDetailChunksFn,
-  setEtagChunksFn,
+  $detailChunks, $etagsChunks, chunkVideoUploadFx,
+  completeChunkVideoUploadFx, confirmSTTFx,
+  continueUploadVideoChunksFn, goToProjectUploadFn,
+  resetChunksFn, setDetailChunksFn, setEtagChunksFn,
   uploadingForm,
 } from '.';
-import { crudStoreBehaviorPageFb } from '../..';
-
-$detailProject
-  .reset(resetDetailProjectFn)
-  .on(getProjectFx.doneData, (_, data) => get(data, PROJECT_FIELDS.PROJECT, {}));
+import { $detailProject, resetDetailProjectFn } from '../Viewing';
 
 $detailChunks
   .reset(resetChunksFn)
@@ -48,20 +31,6 @@ $etagsChunks
 sample({
   clock: goToProjectUploadFn,
   target: pushHistoryFn.prepend((id) => `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${id}/${CRUD_PATH.UPLOADING}`),
-});
-
-// Запрашиваем информацию о проекте
-invoke(crudStoreBehaviorPageFb, {
-  $page: $isProjectUploadPage,
-  isPageLogic: getProjectFn,
-  isNotPageLogic: resetDetailProjectFn,
-});
-
-sample({
-  clock: getProjectFn,
-  source: $pathnameUUID,
-  fn: (uuid, prepend) => ({ [PROJECT_FIELDS.ID]: isEmpty(uuid) ? prepend : uuid }),
-  target: getProjectFx,
 });
 
 // Очищая проект, очищаем информацию о чанках и форму

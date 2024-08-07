@@ -27,5 +27,3 @@ export const $initGateCombineData = combine(
   $initApp, WebGate.state,
   (initApp, state) => ({ ...state, initApp }),
 );
-
-$pathnameUrl.watch(console.log);

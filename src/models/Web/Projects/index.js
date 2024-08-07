@@ -10,7 +10,7 @@ import { postCreateProjectSign } from 'src/api/projects';
 import { webDomain } from '..';
 
 const { PATH, ACTIVE } = ROUTES_FIELDS;
-const { CATALOG, UPLOADING } = CRUD_PATH;
+const { CATALOG, UPLOADING, VIEWING } = CRUD_PATH;
 
 export const projectsDomain = webDomain.createDomain('Projects');
 
@@ -27,6 +27,10 @@ export const $itemsRoutesProjects = combine(() => [
   },
   {
     [PATH]: UPLOADING,
+    [ACTIVE]: true,
+  },
+  {
+    [PATH]: VIEWING,
     [ACTIVE]: true,
   },
 ].filter(({ [ACTIVE]: active }) => active));

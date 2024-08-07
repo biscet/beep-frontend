@@ -9,13 +9,15 @@ import { $itemsRoutesProjects } from 'src/models/Web/Projects';
 
 import { Catalog } from './children/Catalog';
 import { Uploading } from './children/Uploading';
+import { Viewing } from './children/Viewing';
 
 const { PATH } = ROUTES_FIELDS;
-const { CATALOG, UPLOADING } = CRUD_PATH;
+const { CATALOG, UPLOADING, VIEWING } = CRUD_PATH;
 
 const pathMap = {
   [CATALOG]: Catalog,
   [UPLOADING]: Uploading,
+  [VIEWING]: Viewing,
 };
 
 export const ProjectsRoutes = withRouter(({ match: { url } }) => {
@@ -28,7 +30,7 @@ export const ProjectsRoutes = withRouter(({ match: { url } }) => {
     <Switch location={location} key={location.pathname}>
       {routes.map(
         ({ [PATH]: path }) => {
-          const crud = [UPLOADING].includes(path) ? `:id/${path}` : path;
+          const crud = [UPLOADING, VIEWING].includes(path) ? `:id/${path}` : path;
 
           return (
             <Route

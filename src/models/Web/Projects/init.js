@@ -11,8 +11,9 @@ import {
   setCreateProjectFn,
 } from '.';
 import {
-  $isProjectUploadPage, getProjectFn, goToProjectUploadFn, resetChunksFn, uploadingForm,
+  resetChunksFn, uploadingForm,
 } from './Uploading';
+import { $isProjectPage, getProjectFn, goToProjectFn } from './Viewing';
 
 $createProjectDone.on(setCreateProjectFn, (_, done) => done);
 
@@ -31,14 +32,14 @@ sample({
     [PROJECT_FIELDS.NAME]: get(values, CREATE_PROJECT_FIELDS.NAME, ''),
   }),
   target: [
-    goToProjectUploadFn.prepend(({ [PROJECT_FIELDS.ID]: uuid }) => uuid),
+    goToProjectFn.prepend(({ [PROJECT_FIELDS.ID]: uuid }) => uuid),
     notifySuccessFn.prepend(() => 'Проект успешно создан. Вы перенаправлены на страницу загрузки видео.'),
   ],
 });
 
 sample({
   clock: createProjectFx.doneData,
-  filter: $isProjectUploadPage,
+  filter: $isProjectPage,
   fn: (data) => data[CREATE_PROJECT_FIELDS.UUID],
   target: [getProjectFn, resetChunksFn, uploadingForm.reset],
 });

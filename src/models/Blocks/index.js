@@ -10,7 +10,7 @@ const {
   NAME, ACTIVE, PATH, GENERAL_PAGE, VALIDATE, ICON,
 } = SIDEBAR_ROUTES_FIELDS;
 
-const { CATALOG, UPLOADING } = CRUD_PATH;
+const { CATALOG, UPLOADING, VIEWING } = CRUD_PATH;
 
 const blocksDomain = allDomain.createDomain('Blocks');
 
@@ -32,13 +32,13 @@ export const $sidebarRoutes = combine(() => [
   {
     [NAME]: 'Проекты',
     [ACTIVE]: true,
-    [VALIDATE]: [CATALOG, UPLOADING],
+    [VALIDATE]: [CATALOG, UPLOADING, VIEWING],
     [ICON]: ProjectsSVG,
     [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CATALOG}?page=1`,
     [GENERAL_PAGE]: WEB_PATH.PROJECTS,
   },
   {
-    [NAME]: 'Предустановки',
+    [NAME]: 'Шаблоны',
     [ACTIVE]: true,
     [VALIDATE]: [CATALOG],
     [ICON]: PresetsSVG,
