@@ -6,7 +6,7 @@ export const PAGES_PATH = {
 };
 
 export const WEB_PATH = {
-  DASHBOARD: 'dashboard',
+  PRESETS: 'presets',
   PROJECTS: 'projects',
 };
 

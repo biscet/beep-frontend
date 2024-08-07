@@ -11,3 +11,9 @@ export const getProjectSign = (data) => {
 };
 
 export const postCreateProjectSign = (data) => axios.post('/create-project', data);
+
+export const postUploadChunkSign = (data) => axios.postForm('/upload-chunk', data);
+
+export const postCompleteUploadChunkSign = async (data) => axios.post('/complete-chunk-upload', await data);
+
+export const postConfirmSTTSign = async (data) => axios.post('/confirm-stt', await data);

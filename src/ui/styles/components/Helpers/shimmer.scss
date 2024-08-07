@@ -39,8 +39,6 @@
   }
 
   &_user-info {
-    @include theme-transition-base(border-color);
-
     border: $sidebar-info-border;
     margin-bottom: $sidebar-info-mb;
   }

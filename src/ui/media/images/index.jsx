@@ -12,4 +12,4 @@ export { DoneUploaderSVG } from './Form/DoneUploaderSVG';
 
 export { LogoutSVG } from './Sidebar/LogoutSVG';
 export { ProjectsSVG } from './Sidebar/ProjectsSVG';
-export { DashboardSVG } from './Sidebar/DashboardSVG';
+export { PresetsSVG } from './Sidebar/PresetsSVG';

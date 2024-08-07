@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { get, isEmpty } from 'src/lib/lodash';
 import { CRUD_PATH, ROUTES_FIELDS } from 'src/dict/path';
-import { $itemsRoutesDashboard } from 'src/models/Web/Dashboard';
+import { $itemsRoutesPresets } from 'src/models/Web/Presets';
 
 import { Catalog } from './children/Catalog';
 
@@ -16,9 +16,9 @@ const pathMap = {
   [CATALOG]: Catalog,
 };
 
-export const DashboardRoutes = withRouter(({ match: { url } }) => {
+export const PresetsRoutes = withRouter(({ match: { url } }) => {
   const location = useLocation();
-  const routes = useUnit($itemsRoutesDashboard).filter((route) => !isEmpty(route[PATH]));
+  const routes = useUnit($itemsRoutesPresets).filter((route) => !isEmpty(route[PATH]));
   const baseUrl = url.slice(-1) === '/' ? url.slice(0, Math.max(0, url.length - 1)) : url;
   const defaultPath = CATALOG;
 

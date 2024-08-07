@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FILE_UPLOADER_DEFAULT_SETTINGS, FILE_UPLOADER_FIELDS, FILE_UPLOADER_VARIATION } from 'src/dict/fields/file-uploader';
 import { cx, isEmpty } from 'src/lib/lodash';
 import { useDropzone } from 'react-dropzone';
@@ -24,34 +24,35 @@ const getAllFormats = (accept) => {
   return allFormats;
 };
 
+const onDropFile = (onChange, setUploadProgress) => (acceptedFiles) => {
+  acceptedFiles.forEach((file) => {
+    const reader = new FileReader();
+
+    reader.addEventListener('progress', (data) => {
+      if (data.lengthComputable) {
+        const percentLoaded = Math.round((data.loaded / data.total) * 100);
+        setUploadProgress(percentLoaded);
+      }
+    });
+
+    reader.addEventListener('load', () => {
+      onChange({ [FILE]: file, [BINARY]: reader.result });
+      setUploadProgress(0);
+    });
+
+    reader.readAsArrayBuffer(file);
+  });
+};
+
 export const FileUploader = ({
   conditionClass, activeClass, nonActiveClass, onChange, variant,
   maxFiles, accept, errorText, hasError, firstError, ...rest
 }) => {
   const t = useContext(I18nContext);
   const [uploadProgress, setUploadProgress] = useState(0);
-
-  const onDrop = useCallback((acceptedFiles) => {
-    acceptedFiles.forEach((file) => {
-      const reader = new FileReader();
-
-      reader.addEventListener('progress', (data) => {
-        if (data.lengthComputable) {
-          const percentLoaded = Math.round((data.loaded / data.total) * 100);
-          setUploadProgress(percentLoaded);
-        }
-      });
-
-      reader.addEventListener('load', () => {
-        onChange({ [FILE]: file, [BINARY]: reader.result });
-        setUploadProgress(0);
-      });
-
-      reader.readAsArrayBuffer(file);
-    });
-  }, []);
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, maxFiles, accept });
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: onDropFile(onChange, setUploadProgress), maxFiles, accept,
+  });
   const { onClick, onKeyDown, ...restRootProps } = getRootProps();
 
   const className = cx({
@@ -63,8 +64,6 @@ export const FileUploader = ({
 
   const supportFormats = getAllFormats(accept).join(', ');
 
-  console.log(errorText, hasError, firstError);
-
   return (
     <div
       className={className}
@@ -72,6 +71,8 @@ export const FileUploader = ({
       {...rest}
     >
       <input {...getInputProps()} />
+
+      {hasError(firstError) ? errorText : null}
 
       <AnimatePresence exitBeforeEnter>
         {uploadProgress > 0 && uploadProgress < 100

@@ -1,6 +1,6 @@
 import { FILE_UPLOADER_FIELDS } from 'src/dict/fields/file-uploader';
 import { isEmpty } from 'src/lib/lodash';
-import { fileContract } from './contracts';
+import { rulesFileContract } from './contracts';
 
 export const emailPattern = /\S+@\S+\.\S+/;
 export const passwordPattern = /^.{8,}$/;
@@ -47,14 +47,14 @@ export const rules = {
   fileVideoSize: () => ({
     name: 'fileVideoSize',
     validator: ({ [FILE_UPLOADER_FIELDS.FILE]: file }) => ({
-      isValid: fileContract(file, 30, 'video'),
+      isValid: rulesFileContract(file, 30, 'video'),
       errorText: 'Размер видео файла не должен привышать 30ГБ.',
     }),
   }),
   fileAudioSize: () => ({
     name: 'fileAudioSize',
     validator: ({ [FILE_UPLOADER_FIELDS.FILE]: file }) => ({
-      isValid: fileContract(file, 10, 'audio'),
+      isValid: rulesFileContract(file, 10, 'audio'),
       errorText: 'Размер аудио файла не должен привышать 10ГБ.',
     }),
   }),

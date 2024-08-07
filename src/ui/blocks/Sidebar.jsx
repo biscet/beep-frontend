@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { useUnit } from 'effector-react';
+import { useUnit, createComponent } from 'effector-react';
 import { NavLink } from 'react-router-dom';
 import { $userCombineData } from 'src/models/User';
 import { USER_FIELDS } from 'src/dict/fields/models/user';
@@ -17,7 +17,7 @@ import { $modalIsOpen, closeModalFn, openModalFn } from 'src/models/Helpers/Moda
 import { MODAL_FIELDS } from 'src/dict/modal';
 import { CreateProject } from 'src/ui/components/modals';
 import {
-  $isHovereLogout, $sidebarRoutes, setIsHovereLogoutFn, triggerLogoutFn,
+  $isHoveredLogout, $sidebarRoutes, setIsHoveredLogoutFn, triggerLogoutFn,
 } from 'src/models/Blocks';
 import { $pathnameUrl } from 'src/models/App';
 import { isEmpty } from 'src/lib/lodash';
@@ -38,47 +38,69 @@ const isModal = (modalIsOpen) => () => {
   }
 };
 
-export const Sidebar = () => {
-  const t = useContext(I18nContext);
-  const [{
-    [EMAIL]: email,
-    [USERNAME]: username,
-    [AVATAR]: avatarChar,
-  }, userInfoPending, modalIsOpen,
-  sidebarRoutes, pathnameUrl, isHovered] = useUnit(
-    [$userCombineData, getUserInfoFx.pending, $modalIsOpen,
-      $sidebarRoutes, $pathnameUrl, $isHovereLogout],
-  );
+const UserUnfo = createComponent(
+  [$userCombineData, $isHoveredLogout], ({ userInfoPending }, units) => {
+    const t = useContext(I18nContext);
+    const [{ [EMAIL]: email, [USERNAME]: username, [AVATAR]: avatarChar }, isHovered] = units;
 
-  return (
-    <div className="sidebar">
-      <NavLink
-        to={`/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}?page=1`}
-        className="sidebar__logo"
-        activeClassName=""
-      >
-        beep
-      </NavLink>
+    return userInfoPending ? <ShimmerUserInfo /> : (
+      <div className="sidebar__user-info user-info">
+        <div className="user-info__box">
+          <p className="user-info__avatar">{avatarChar}</p>
 
-      {userInfoPending
-        ? <ShimmerSideBarCreateBtn />
-        : (
-          <Button
-            type={BUTTON_TYPES.BUTTON}
-            variant={BUTTON_VARIATION.TEXT}
-            activeClass="bottom-side__link link link_active-create-project"
-            nonActiveClass="bottom-side__link link link_create-project "
-            onClick={isModal(modalIsOpen)}
-            conditionClass={modalIsOpen}
-            data-disabled={modalIsOpen}
-          >
-            <AddSVG />
-            {t('Создать проект')}
-          </Button>
-        )}
+          <AnimatePresence>
+            {!isHovered && (
+            <motion.div
+              key="user-info__wrapper"
+              className="user-info__wrapper"
+              initial={USER_INFO_WRAPPER_ANIMATE.initial}
+              animate={USER_INFO_WRAPPER_ANIMATE.animate}
+              exit={USER_INFO_WRAPPER_ANIMATE.exit}
+              transition={USER_INFO_WRAPPER_ANIMATE.transition}
+            >
+              <div title={email}>{email}</div>
+              <div title={username}>{username}</div>
+            </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-      <div className="sidebar__divider" />
+        <motion.div
+          key="user-info__logout"
+          className="user-info__logout"
+          onHoverStart={prependObstacleFn(setIsHoveredLogoutFn, true)}
+          onHoverEnd={prependObstacleFn(setIsHoveredLogoutFn, false)}
+          onClick={triggerLogoutFn}
+          initial={USER_INFO_LOGOUT_ANIMATE.initial}
+          animate={USER_INFO_LOGOUT_ANIMATE.animate(isHovered)}
+          transition={USER_INFO_LOGOUT_ANIMATE.transition}
+        >
+          <LogoutSVG />
 
+          <AnimatePresence>
+            {isHovered && (
+            <motion.span
+              initial={USER_INFO_SPAN_ANIMATE.initial}
+              animate={USER_INFO_SPAN_ANIMATE.animate}
+              exit={USER_INFO_SPAN_ANIMATE.exit}
+              transition={USER_INFO_SPAN_ANIMATE.transition}
+            >
+              {t('Выйти')}
+            </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.div>
+      </div>
+    );
+  },
+);
+
+const SidebarRoutes = createComponent(
+  [$sidebarRoutes, $pathnameUrl], ({ userInfoPending }, units) => {
+    const t = useContext(I18nContext);
+    const [sidebarRoutes, pathnameUrl] = units;
+
+    return (
       <div className="sidebar__routes">
         {userInfoPending
           ? <ShimmerSideBarLink length={sidebarRoutes.length} />
@@ -111,65 +133,70 @@ export const Sidebar = () => {
             );
           })}
       </div>
+    );
+  },
+);
+
+const CreateProjectComponent = createComponent(
+  $modalIsOpen,
+  ({ userInfoPending }, modalIsOpen) => {
+    const t = useContext(I18nContext);
+
+    return userInfoPending
+      ? <ShimmerSideBarCreateBtn />
+      : (
+        <Button
+          type={BUTTON_TYPES.BUTTON}
+          variant={BUTTON_VARIATION.TEXT}
+          activeClass="bottom-side__link link link_active-create-project"
+          nonActiveClass="bottom-side__link link link_create-project "
+          onClick={isModal(modalIsOpen)}
+          conditionClass={modalIsOpen}
+          data-disabled={modalIsOpen}
+        >
+          <AddSVG />
+          {t('Создать проект')}
+        </Button>
+      );
+  },
+);
+
+const PolicyLink = React.memo(() => {
+  const t = useContext(I18nContext);
+
+  return (
+    <a
+      className="bottom-side__policy"
+      href="#"
+      download
+    >
+      {t('Политика конфиденциальности')}
+    </a>
+  );
+});
+
+export const Sidebar = () => {
+  const userInfoPending = useUnit(getUserInfoFx.pending);
+
+  return (
+    <div className="sidebar">
+      <NavLink
+        to={`/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}?page=1`}
+        className="sidebar__logo"
+        activeClassName=""
+      >
+        beep
+      </NavLink>
+
+      <CreateProjectComponent userInfoPending={userInfoPending} />
+
+      <div className="sidebar__divider" />
+
+      <SidebarRoutes userInfoPending={userInfoPending} />
 
       <div className="sidebar__bottom-side bottom-side">
-        {userInfoPending ? <ShimmerUserInfo /> : (
-          <div className="sidebar__user-info user-info">
-            <div className="user-info__box">
-              <p className="user-info__avatar">{avatarChar}</p>
-
-              <AnimatePresence>
-                {!isHovered && (
-                  <motion.div
-                    key="user-info__wrapper"
-                    className="user-info__wrapper"
-                    initial={USER_INFO_WRAPPER_ANIMATE.initial}
-                    animate={USER_INFO_WRAPPER_ANIMATE.animate}
-                    exit={USER_INFO_WRAPPER_ANIMATE.exit}
-                    transition={USER_INFO_WRAPPER_ANIMATE.transition}
-                  >
-                    <div title={email}>{email}</div>
-                    <div title={username}>{username}</div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            <motion.div
-              key="user-info__logout"
-              className="user-info__logout"
-              onHoverStart={prependObstacleFn(setIsHovereLogoutFn, true)}
-              onHoverEnd={prependObstacleFn(setIsHovereLogoutFn, false)}
-              onClick={triggerLogoutFn}
-              initial={USER_INFO_LOGOUT_ANIMATE.initial}
-              animate={USER_INFO_LOGOUT_ANIMATE.animate(isHovered)}
-              transition={USER_INFO_LOGOUT_ANIMATE.transition}
-            >
-              <LogoutSVG />
-
-              <AnimatePresence>
-                {isHovered && (
-                  <motion.span
-                    initial={USER_INFO_SPAN_ANIMATE.initial}
-                    animate={USER_INFO_SPAN_ANIMATE.animate}
-                    exit={USER_INFO_SPAN_ANIMATE.exit}
-                    transition={USER_INFO_SPAN_ANIMATE.transition}
-                  >
-                    {t('Выйти')}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </motion.div>
-          </div>
-        )}
-
-        <a
-          className="bottom-side__policy"
-          href="#"
-          download
-        >
-          {t('Политика конфиденциальности')}
-        </a>
+        <UserUnfo userInfoPending={userInfoPending} />
+        <PolicyLink />
       </div>
     </div>
   );

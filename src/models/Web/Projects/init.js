@@ -10,7 +10,9 @@ import {
   createProjectFx,
   setCreateProjectFn,
 } from '.';
-import { $isProjectUploadPage, getProjectFn, goToProjectUploadFn } from './Uploading';
+import {
+  $isProjectUploadPage, getProjectFn, goToProjectUploadFn, resetChunksFn, uploadingForm,
+} from './Uploading';
 
 $createProjectDone.on(setCreateProjectFn, (_, done) => done);
 
@@ -38,7 +40,7 @@ sample({
   clock: createProjectFx.doneData,
   filter: $isProjectUploadPage,
   fn: (data) => data[CREATE_PROJECT_FIELDS.UUID],
-  target: getProjectFn,
+  target: [getProjectFn, resetChunksFn, uploadingForm.reset],
 });
 
 sample({

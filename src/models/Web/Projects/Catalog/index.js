@@ -4,7 +4,6 @@ import {
 import { getCatalogProjectsSign } from 'src/api/projects';
 import { isCurrentPath } from 'src/lib/url';
 import { $pathnameUrl } from 'src/models/App';
-import { combine } from 'effector';
 import { projectsDomain } from '..';
 
 const { CATALOG } = CRUD_PATH;
@@ -22,5 +21,3 @@ export const getCatalogProjectsFx = projectsDomain.createEffect(getCatalogProjec
 export const $isProjectCatalogPage = $pathnameUrl.map(
   (path) => isCurrentPath(path, [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CATALOG]),
 );
-
-export const $catalogProjectsCombineData = combine($catalogProjects, $countCatalogProjects);

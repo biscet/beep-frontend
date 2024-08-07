@@ -1,5 +1,5 @@
 import { reflect } from '@effector/reflect';
-import { useUnit } from 'effector-react';
+import { createComponent } from 'effector-react';
 import React, { useContext } from 'react';
 import { BUTTON_TYPES } from 'src/dict/fields/button';
 import { INPUT_TYPES } from 'src/dict/fields/input';
@@ -48,16 +48,31 @@ const PasswordField = reflect({
   },
 });
 
+const FormButton = createComponent(
+  [$disabledRegistrationCombineData, $registrationPending], (_, units) => {
+    const t = useContext(I18nContext);
+    const [disabledRegistrationButton, registrationPending] = units;
+
+    return (
+      <Button
+        disabled={disabledRegistrationButton || registrationPending}
+        type={BUTTON_TYPES.SUBMIT}
+        nonActiveClass="button_full"
+        id="registration"
+      >
+        {registrationPending === false ? t('Зарегистрироваться') : <LoaderSpinnerSVG />}
+      </Button>
+    );
+  },
+);
+
 export const Registration = () => {
   const t = useContext(I18nContext);
-  const [disabledRegistrationButton, registrationPending] = useUnit(
-    [$disabledRegistrationCombineData, $registrationPending],
-  );
 
   return (
     <div className="registration-page">
       <div className="registration-page__wrapper">
-        <Form className="registration-page__window window" submit={registrationForm.submit}>
+        <Form className="registration-page__window window" id="registration" submit={registrationForm.submit}>
           <h1>{t('Создать аккаунт')}</h1>
 
           <div className="window__box">
@@ -66,13 +81,7 @@ export const Registration = () => {
             <PasswordField />
           </div>
 
-          <Button
-            disabled={disabledRegistrationButton || registrationPending}
-            type={BUTTON_TYPES.SUBMIT}
-            nonActiveClass="button_full"
-          >
-            {registrationPending === false ? t('Зарегистрироваться') : <LoaderSpinnerSVG />}
-          </Button>
+          <FormButton />
         </Form>
 
         <div className="registration-page__shape shape shape_one" />

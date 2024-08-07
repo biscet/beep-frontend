@@ -5,13 +5,13 @@ const {
   DEFAULT, LOGIN, REGISTRATION, WEB,
 } = PAGES_PATH;
 
-const { DASHBOARD, PROJECTS } = WEB_PATH;
+const { PRESETS, PROJECTS } = WEB_PATH;
 
 export const HELMET_ROUTES = [
   DEFAULT,
   LOGIN,
   REGISTRATION,
-  [WEB, DASHBOARD],
+  [WEB, PRESETS],
   [WEB, PROJECTS],
   [WEB, PROJECTS, CRUD_PATH.UPLOADING],
 ];
@@ -32,10 +32,10 @@ export const HELMET_DICT = {
     [HELMET_FIELDS.DESCRIPTION]: 'Зарегистрируйте аккаунт, чтобы загружать видео для AI обработки и скачивать очищенные аудиодорожки. Быстрая и удобная регистрация.',
     [HELMET_FIELDS.KEYWORDS]: 'логин, регистрация, загрузка видео, обработка видео, AI обработка, удаление мата, аудиодорожка без мата, beep, video, login',
   },
-  [[WEB, DASHBOARD].join('/')]: {
-    [HELMET_FIELDS.TITLE]: 'beep - Дашборд',
-    [HELMET_FIELDS.DESCRIPTION]: 'Дашборд.',
-    [HELMET_FIELDS.KEYWORDS]: 'обработка видео, дашборд, dashboard, beep, video',
+  [[WEB, PRESETS].join('/')]: {
+    [HELMET_FIELDS.TITLE]: 'beep - Предустановки',
+    [HELMET_FIELDS.DESCRIPTION]: 'Предустановки.',
+    [HELMET_FIELDS.KEYWORDS]: 'обработка видео, предустановки, Presets, beep, video',
   },
   [[WEB, PROJECTS].join('/')]: {
     [HELMET_FIELDS.TITLE]: 'beep - Проекты',

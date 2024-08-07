@@ -1,5 +1,5 @@
 import { reflect } from '@effector/reflect';
-import { useUnit } from 'effector-react';
+import { createComponent } from 'effector-react';
 import React, { useContext } from 'react';
 import { BUTTON_TYPES, BUTTON_VARIATION } from 'src/dict/fields/button';
 import { UPLOADING_FIELDS } from 'src/dict/fields/models/projects';
@@ -17,30 +17,36 @@ const FileUploaderField = reflect({
   },
 });
 
-export const Uploading = () => {
-  const t = useContext(I18nContext);
-  const [disabledUploadingProjectCombineData] = useUnit([$disabledUploadingProjectCombineData]);
+const FormButton = createComponent(
+  $disabledUploadingProjectCombineData, (_, disabledUploadingProjectCombineData) => {
+    const t = useContext(I18nContext);
 
-  return (
-    <Form className="projects-uploading" submit={uploadingForm.submit}>
-      <div className="projects-uploading__wrapper">
-        <FileUploaderField />
+    return (
+      <Button
+        type={BUTTON_TYPES.SUBMIT}
+        variant={BUTTON_VARIATION.RAINBOW}
+        disabled={disabledUploadingProjectCombineData}
+        id="uploadFileWithProject"
+      >
+        {t('Начать обработку')}
+        <ArrowSVG />
+      </Button>
+    );
+  },
+);
 
-        <div className="projects-uploading__shape shape shape_one" />
-        <div className="projects-uploading__shape shape shape_two" />
-        <div className="projects-uploading__shape shape shape_three" />
-      </div>
+export const Uploading = () => (
+  <Form className="projects-uploading" id="uploadFileWithProject" submit={uploadingForm.submit}>
+    <div className="projects-uploading__wrapper">
+      <FileUploaderField />
 
-      <div className="projects-uploading__bottom-side">
-        <Button
-          type={BUTTON_TYPES.SUBMIT}
-          variant={BUTTON_VARIATION.RAINBOW}
-          disabled={disabledUploadingProjectCombineData}
-        >
-          {t('Начать обработку')}
-          <ArrowSVG />
-        </Button>
-      </div>
-    </Form>
-  );
-};
+      <div className="projects-uploading__shape shape shape_one" />
+      <div className="projects-uploading__shape shape shape_two" />
+      <div className="projects-uploading__shape shape shape_three" />
+    </div>
+
+    <div className="projects-uploading__bottom-side">
+      <FormButton />
+    </div>
+  </Form>
+);

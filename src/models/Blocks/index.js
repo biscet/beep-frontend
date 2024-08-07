@@ -2,7 +2,7 @@ import { combine } from 'effector';
 import {
   CRUD_PATH, PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH,
 } from 'src/dict/path';
-import { ProjectsSVG, DashboardSVG } from 'src/ui/media/images';
+import { ProjectsSVG, PresetsSVG } from 'src/ui/media/images';
 import { rootContainer } from 'src/dict/config';
 import { allDomain } from '../App';
 
@@ -20,13 +20,13 @@ export const setHeaderAnimationStateFn = blocksDomain.createEvent();
 
 export const setScrolledRootFn = blocksDomain.createEvent();
 
-export const setIsHovereLogoutFn = blocksDomain.createEvent();
+export const setIsHoveredLogoutFn = blocksDomain.createEvent();
 
 export const $scrolledRoot = blocksDomain.createStore(false);
 
 export const $headerAnimationComplete = blocksDomain.createStore(false);
 
-export const $isHovereLogout = blocksDomain.createStore(false);
+export const $isHoveredLogout = blocksDomain.createStore(false);
 
 export const $sidebarRoutes = combine(() => [
   {
@@ -38,12 +38,12 @@ export const $sidebarRoutes = combine(() => [
     [GENERAL_PAGE]: WEB_PATH.PROJECTS,
   },
   {
-    [NAME]: 'Дашборд',
-    [ACTIVE]: false,
+    [NAME]: 'Предустановки',
+    [ACTIVE]: true,
     [VALIDATE]: [CATALOG],
-    [ICON]: DashboardSVG,
-    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.DASHBOARD}/${CATALOG}`,
-    [GENERAL_PAGE]: WEB_PATH.DASHBOARD,
+    [ICON]: PresetsSVG,
+    [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PRESETS}/${CATALOG}?page=1`,
+    [GENERAL_PAGE]: WEB_PATH.PRESETS,
   },
 ].filter(({ [ACTIVE]: active }) => active));
 

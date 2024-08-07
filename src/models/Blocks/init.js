@@ -2,8 +2,8 @@ import { sample } from 'effector';
 import { debounce } from 'patronum';
 import { rootContainer } from 'src/dict/config';
 import {
-  $headerAnimationComplete, $isHovereLogout, setHeaderAnimationStateFn,
-  setIsHovereLogoutFn, triggerLogoutFn, $scrolledRoot,
+  $headerAnimationComplete, $isHoveredLogout, setHeaderAnimationStateFn,
+  setIsHoveredLogoutFn, triggerLogoutFn, $scrolledRoot,
   setScrolledRootFn, rootScrolledEvent,
 } from '.';
 import { closeModalFn } from '../Helpers/Modal';
@@ -12,7 +12,7 @@ import { RouteGate, WebGate } from '../App';
 
 $headerAnimationComplete.on(setHeaderAnimationStateFn, (_, complete) => complete);
 
-$isHovereLogout.on(setIsHovereLogoutFn, (_, isHovered) => isHovered);
+$isHoveredLogout.on(setIsHoveredLogoutFn, (_, isHovered) => isHovered);
 
 $scrolledRoot.on(setScrolledRootFn, (_, isScrolled) => isScrolled);
 
@@ -49,5 +49,5 @@ sample({
 sample({
   clock: WebGate.close,
   fn: () => false,
-  target: setIsHovereLogoutFn,
+  target: setIsHoveredLogoutFn,
 });

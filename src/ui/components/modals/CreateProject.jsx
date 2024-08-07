@@ -9,7 +9,7 @@ import {
   $createProjectDone, $disabledCreateProjectCombineData, createProjectForm,
 } from 'src/models/Web/Projects';
 import { BUTTON_TYPES } from 'src/dict/fields/button';
-import { useUnit } from 'effector-react';
+import { createComponent } from 'effector-react';
 import { cx } from 'src/lib/lodash';
 import { reflect } from '@effector/reflect';
 
@@ -23,17 +23,33 @@ const ProjectNameField = reflect({
   },
 });
 
+const FormButton = createComponent(
+  [$disabledCreateProjectCombineData, $createProjectDone], (_, units) => {
+    const t = useContext(I18nContext);
+    const [disabledCreateProjectCombineData, createProjectDone] = units;
+
+    return (
+      <Button
+        type={BUTTON_TYPES.SUBMIT}
+        disabled={disabledCreateProjectCombineData}
+        nonActiveClass="create-project__button button_full"
+        id="createProject"
+      >
+        {!createProjectDone ? t('Далее') : <LoaderSpinnerSVG />}
+      </Button>
+    );
+  },
+);
+
 export const CreateProject = ({ closeModalFn }) => {
   const t = useContext(I18nContext);
   const { hasError } = useForm(createProjectForm);
-  const [disabledCreateProjectCombineData, createProjectDone] = useUnit(
-    [$disabledCreateProjectCombineData, $createProjectDone],
-  );
 
   return (
     <ModalForm
       className="modal__form form form_create-project create-project"
       submit={createProjectForm.submit}
+      id="createProject"
     >
       <h1 className="form__heading">{t('Создание проекта')}</h1>
 
@@ -48,14 +64,7 @@ export const CreateProject = ({ closeModalFn }) => {
       </p>
 
       <ProjectNameField />
-
-      <Button
-        type={BUTTON_TYPES.SUBMIT}
-        disabled={disabledCreateProjectCombineData}
-        nonActiveClass="create-project__button button_full"
-      >
-        {!createProjectDone ? t('Далее') : <LoaderSpinnerSVG />}
-      </Button>
+      <FormButton />
 
       <div className="form__close" onClick={closeModalFn}>
         <CloseSVG />

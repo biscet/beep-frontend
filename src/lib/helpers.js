@@ -1,6 +1,7 @@
 import { crossLang, LANG_FIELD, LANGUAGES } from 'src/dict/translates';
 import { THEMES } from 'src/dict/theme';
 import { crossPagination, PAGINATION_FIELDS } from 'src/dict/pagination';
+import { DEFAULT_CHUNK_SIZE } from 'src/dict/fields/models/projects';
 import {
   get, isArray, isEmpty, strTrim,
 } from './lodash';
@@ -69,3 +70,27 @@ export const translate = ({ dictTranslates, lang }) => (value, param) => {
   return isEmpty(dictTranslates[val])
     ? getValueLang(value, param) : getValueLang(dictTranslates[val], param);
 };
+
+export const getMediaDuration = (file) => new Promise((resolve) => {
+  const url = URL.createObjectURL(file);
+  const mediaElement = document.createElement(
+    file.type.startsWith('video/') ? 'video' : 'audio',
+  );
+
+  mediaElement.src = url;
+  mediaElement.addEventListener('loadedmetadata', () => {
+    const duration = Math.round(mediaElement.duration);
+    URL.revokeObjectURL(url);
+    resolve(duration);
+  });
+
+  mediaElement.addEventListener('error', () => {
+    URL.revokeObjectURL(url);
+  });
+
+  mediaElement.load();
+});
+
+export const createSlicedFile = (file, startChunk) => new File([file.slice(
+  startChunk, Math.min(startChunk + DEFAULT_CHUNK_SIZE, file.size),
+)], file.name, { type: file.type });

@@ -7,7 +7,7 @@ import { allDomain } from 'src/models/App';
 import { $detailProject } from 'src/models/Web/Projects/Uploading';
 
 const {
-  PATH, NAME, ACTIVE, VISIBLE, LINK, TRANSLATE,
+  PATH, NAME, ACTIVE, VISIBLE, LINK, TRANSLATE, LOADING,
 } = BREAD_CRUMBS_FIELD;
 
 const breadCrumbsDomain = allDomain.createDomain('BreadCrumbs');
@@ -30,25 +30,24 @@ export const $currentBreadCrumbs = breadCrumbsDomain.createStore({
   }],
 });
 
-export const $webDashboardBC = combine($detailProject, (detailProject) => [{
-  [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.DASHBOARD, CRUD_PATH.CATALOG],
+export const $webPresetsBC = combine($detailProject, (detailProject) => [{
+  [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PRESETS, CRUD_PATH.CATALOG],
   [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
-  [BREAD_CRUMBS_ROUTE.LOADING]: false,
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
     {
       [PATH]: CRUD_PATH.CATALOG,
-      [NAME]: 'Дашборд',
+      [NAME]: 'Предустановки',
       [ACTIVE]: true,
       [LINK]: '',
       [VISIBLE]: true,
       [TRANSLATE]: true,
+      [LOADING]: false,
     },
   ].filter(({ [VISIBLE]: visible }) => visible),
 },
 {
   [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.CATALOG],
   [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
-  [BREAD_CRUMBS_ROUTE.LOADING]: false,
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
     {
       [PATH]: CRUD_PATH.CATALOG,
@@ -57,13 +56,13 @@ export const $webDashboardBC = combine($detailProject, (detailProject) => [{
       [LINK]: '',
       [VISIBLE]: true,
       [TRANSLATE]: true,
+      [LOADING]: false,
     },
   ].filter(({ [VISIBLE]: visible }) => visible),
 },
 {
   [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.UPLOADING],
   [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
-  [BREAD_CRUMBS_ROUTE.LOADING]: isEmpty(detailProject),
   [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
     {
       [PATH]: CRUD_PATH.CATALOG,
@@ -72,6 +71,7 @@ export const $webDashboardBC = combine($detailProject, (detailProject) => [{
       [LINK]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}`,
       [VISIBLE]: true,
       [TRANSLATE]: true,
+      [LOADING]: false,
     },
     {
       [PATH]: CRUD_PATH.UPLOADING,
@@ -80,6 +80,7 @@ export const $webDashboardBC = combine($detailProject, (detailProject) => [{
       [LINK]: '',
       [VISIBLE]: true,
       [TRANSLATE]: false,
+      [LOADING]: isEmpty(detailProject),
     },
     {
       [PATH]: CRUD_PATH.UPLOADING,
@@ -88,11 +89,12 @@ export const $webDashboardBC = combine($detailProject, (detailProject) => [{
       [LINK]: '',
       [VISIBLE]: true,
       [TRANSLATE]: true,
+      [LOADING]: false,
     },
   ].filter(({ [VISIBLE]: visible }) => visible),
 }].filter(({ [BREAD_CRUMBS_ROUTE.VISIBLE]: visible }) => visible));
 
 export const $allBreadCrumbsCombineData = combine(
-  $webDashboardBC,
-  (webDashboardBC) => [...webDashboardBC],
+  $webPresetsBC,
+  (webPresetsBC) => [...webPresetsBC],
 );

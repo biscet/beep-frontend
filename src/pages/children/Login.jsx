@@ -6,7 +6,7 @@ import { Button, Form, Input } from 'src/ui/components/Form';
 import { I18nContext } from 'src/ui/components/Helpers';
 import { getReflectPropsField } from 'src/lib/form';
 import { $disabledLoginCombineData, authLoginFx, loginForm } from 'src/models/Login';
-import { useUnit } from 'effector-react';
+import { createComponent } from 'effector-react';
 import { LoaderSpinnerSVG } from 'src/ui/media/images';
 import { reflect } from '@effector/reflect';
 
@@ -32,14 +32,30 @@ const PasswordField = reflect({
   },
 });
 
+const FormButton = createComponent(
+  [$disabledLoginCombineData, authLoginFx.pending], (_, units) => {
+    const t = useContext(I18nContext);
+    const [disabledLoginButton, loginPending] = units;
+    return (
+      <Button
+        type={BUTTON_TYPES.SUBMIT}
+        disabled={disabledLoginButton || loginPending}
+        nonActiveClass="button_full"
+        id="login"
+      >
+        {loginPending === false ? t('Войти') : <LoaderSpinnerSVG />}
+      </Button>
+    );
+  },
+);
+
 export const Login = () => {
   const t = useContext(I18nContext);
-  const [disabledLoginButton, loginPending] = useUnit([$disabledLoginCombineData, authLoginFx.pending]);
 
   return (
     <div className="login-page">
       <div className="login-page__wrapper">
-        <Form className="login-page__window window" submit={loginForm.submit}>
+        <Form className="login-page__window window" id="login" submit={loginForm.submit}>
           <h1>{t('Вход')}</h1>
 
           <div className="window__box">
@@ -47,13 +63,7 @@ export const Login = () => {
             <PasswordField />
           </div>
 
-          <Button
-            type={BUTTON_TYPES.SUBMIT}
-            disabled={disabledLoginButton || loginPending}
-            nonActiveClass="button_full"
-          >
-            {loginPending === false ? t('Войти') : <LoaderSpinnerSVG />}
-          </Button>
+          <FormButton />
         </Form>
 
         <div className="login-page__shape shape shape_one" />

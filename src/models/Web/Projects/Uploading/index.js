@@ -1,7 +1,9 @@
 import {
   CRUD_PATH, PAGES_PATH, WEB_PATH,
 } from 'src/dict/path';
-import { getProjectSign } from 'src/api/projects';
+import {
+  getProjectSign, postCompleteUploadChunkSign, postConfirmSTTSign, postUploadChunkSign,
+} from 'src/api/projects';
 import { isCurrentPath } from 'src/lib/url';
 import { $pathnameUrl } from 'src/models/App';
 import { UPLOADING_FIELDS } from 'src/dict/fields/models/projects';
@@ -18,9 +20,21 @@ export const goToProjectUploadFn = projectsDomain.createEvent();
 export const resetDetailProjectFn = projectsDomain.createEvent();
 export const getProjectFn = projectsDomain.createEvent();
 
+export const resetChunksFn = projectsDomain.createEvent();
+export const setEtagChunksFn = projectsDomain.createEvent();
+export const setDetailChunksFn = projectsDomain.createEvent();
+export const continueUploadVideoChunksFn = projectsDomain.createEvent();
+
 export const $detailProject = projectsDomain.createStore({});
 
+export const $etagsChunks = projectsDomain.createStore([]);
+export const $detailChunks = projectsDomain.createStore({});
+
 export const getProjectFx = projectsDomain.createEffect(getProjectSign);
+
+export const chunkVideoUploadFx = projectsDomain.createEffect(postUploadChunkSign);
+export const completeChunkVideoUploadFx = projectsDomain.createEffect(postCompleteUploadChunkSign);
+export const confirmSTTFx = projectsDomain.createEffect(postConfirmSTTSign);
 
 export const $isProjectUploadPage = $pathnameUrl.map(
   (path) => isCurrentPath(path, [PAGES_PATH.WEB, WEB_PATH.PROJECTS, UPLOADING]),
