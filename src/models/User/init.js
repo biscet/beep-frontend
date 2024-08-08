@@ -1,10 +1,13 @@
-import { sample } from 'effector';
+import { sample, split } from 'effector';
 import { get, isEmpty } from 'src/lib/lodash';
 import { USER_BACKEND_FIELDS, USER_FIELDS } from 'src/dict/fields/models/user';
-import { spread } from 'patronum';
+import { debounce, spread } from 'patronum';
+import { yandexContainerErrorContract } from 'src/lib/contracts';
 import { $isWebPage } from '../Web';
 import { getUserInfoFx } from '../Login';
-import { $userAvatar, $userEmail, $userName } from '.';
+import {
+  $userAvatar, $userEmail, $userName, logoutFn, refreshUserDataFn,
+} from '.';
 import { $initApp } from '../App';
 
 const {
@@ -22,16 +25,11 @@ sample({
   fn: (data) => {
     const userEmail = get(data, USER_BACKEND_FIELDS.EMAIL, '-');
     const userName = get(data, USER_BACKEND_FIELDS.USERNAME, '-');
-    let userAvatar = '-';
-
-    if (!isEmpty(get(data, USER_BACKEND_FIELDS.USERNAME, ''))) {
-      userAvatar = userName[0].toUpperCase();
-    }
 
     return ({
       [EMAIL]: userEmail,
       [USERNAME]: userName,
-      [AVATAR]: userAvatar,
+      [AVATAR]: !isEmpty(userName) ? userName[0].toUpperCase() : '-',
       [LOADED]: true,
     });
   },
@@ -45,9 +43,18 @@ sample({
   }),
 });
 
-sample({
-  clock: getUserInfoFx.fail,
-  fn: (data) => {
-    console.log(data);
+split({
+  source: getUserInfoFx.fail,
+  match: {
+    retry: (data) => yandexContainerErrorContract(data),
   },
+  cases: {
+    retry: refreshUserDataFn,
+    __: logoutFn,
+  },
+});
+
+sample({
+  clock: debounce({ source: refreshUserDataFn, timeout: 500 }),
+  target: getUserInfoFx,
 });

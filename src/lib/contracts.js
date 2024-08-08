@@ -6,8 +6,12 @@ import { getLang, getTheme } from 'src/lib/helpers';
 import { THEME_FIELD, THEMES } from 'src/dict/theme';
 import { crossPagination, PAGINATION_FIELDS, PAGINATION_UNITS } from 'src/dict/pagination';
 import { LANG_FIELD, LANGUAGES } from 'src/dict/translates';
-import { CHUNK_UPLOAD_FIELDS, ETAGS_FIELDS } from 'src/dict/fields/models/projects';
-import { isEmpty } from './lodash';
+import {
+  BACKEND_PROJECT_STATUS_FIELDS, CHUNK_UPLOAD_FIELDS, ETAGS_FIELDS, PROJECT_FIELDS,
+} from 'src/dict/fields/models/projects';
+import { get, isEmpty } from './lodash';
+
+const { CREATED, ERROR } = BACKEND_PROJECT_STATUS_FIELDS;
 
 export const themeContract = () => and(str, {
   isData: (data) => or(val(THEMES.DARK), val(THEMES.LIGHT)).isData(data),
@@ -58,12 +62,31 @@ export const chunkUploadContract = (data) => {
 };
 
 export const chunkUploadResponseContract = (data) => obj({
-  [CHUNK_UPLOAD_FIELDS.STT_ID]: or(str, num),
-  [CHUNK_UPLOAD_FIELDS.WAV_ID]: or(str, num),
-  [CHUNK_UPLOAD_FIELDS.USER_ID]: or(str, num),
-  [CHUNK_UPLOAD_FIELDS.ETAGS]: obj({
-    [ETAGS_FIELDS.STT]: or(str, num),
-    [ETAGS_FIELDS.USER]: or(str, num),
-    [ETAGS_FIELDS.WAV]: or(str, num),
+  [CHUNK_UPLOAD_FIELDS.USER_ID]: str,
+  [CHUNK_UPLOAD_FIELDS.ETAGS]: str,
+}).isData(data);
+
+export const validProjectContract = (data) => !obj({
+  [PROJECT_FIELDS.PROJECT]: obj({
+    [PROJECT_FIELDS.NAME]: str,
+    [PROJECT_FIELDS.ID]: str,
   }),
 }).isData(data);
+
+export const yandexContainerErrorContract = (data) => obj({
+  error: obj({
+    code: and(str, {
+      isData: ({
+        error: {
+          code,
+        },
+      }) => code === 'ERR_BAD_RESPONSE',
+    }),
+  }),
+}).isData(data);
+
+export const canBeUploadPageContract = (states) => and(
+  { isData: ({ page }) => page },
+  { isData: ({ data }) => ![CREATED, ERROR].includes(get(data, PROJECT_FIELDS.STATUS, '')) },
+)
+  .isData(states);

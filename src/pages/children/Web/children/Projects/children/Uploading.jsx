@@ -38,15 +38,17 @@ const FormButton = createComponent(
 export const Uploading = () => (
   <Form className="projects-uploading" id="uploadFileWithProject" submit={uploadingForm.submit}>
     <div className="projects-uploading__wrapper">
-      <FileUploaderField />
+      <div className="projects-uploading__file">
+        <FileUploaderField />
+      </div>
 
       <div className="projects-uploading__shape shape shape_one" />
       <div className="projects-uploading__shape shape shape_two" />
       <div className="projects-uploading__shape shape shape_three" />
-    </div>
 
-    <div className="projects-uploading__bottom-side">
-      <FormButton />
+      <div className="projects-uploading__bottom-side">
+        <FormButton />
+      </div>
     </div>
   </Form>
 );

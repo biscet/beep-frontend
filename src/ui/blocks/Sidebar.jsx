@@ -19,7 +19,7 @@ import { CreateProject } from 'src/ui/components/modals';
 import {
   $isHoveredLogout, $sidebarRoutes, setIsHoveredLogoutFn, triggerLogoutFn,
 } from 'src/models/Blocks';
-import { $pathnameUrl } from 'src/models/App';
+import { $initApp, $pathnameUrl } from 'src/models/App';
 import { isEmpty } from 'src/lib/lodash';
 import { AnimatePresence, motion } from 'framer-motion';
 import { USER_INFO_LOGOUT_ANIMATE, USER_INFO_SPAN_ANIMATE, USER_INFO_WRAPPER_ANIMATE } from 'src/dict/animate';
@@ -39,11 +39,11 @@ const isModal = (modalIsOpen) => () => {
 };
 
 const UserUnfo = createComponent(
-  [$userCombineData, $isHoveredLogout], ({ userInfoPending }, units) => {
+  [$userCombineData, $isHoveredLogout], ({ loading }, units) => {
     const t = useContext(I18nContext);
     const [{ [EMAIL]: email, [USERNAME]: username, [AVATAR]: avatarChar }, isHovered] = units;
 
-    return userInfoPending ? <ShimmerUserInfo /> : (
+    return loading ? <ShimmerUserInfo /> : (
       <div className="sidebar__user-info user-info">
         <div className="user-info__box">
           <p className="user-info__avatar">{avatarChar}</p>
@@ -96,13 +96,13 @@ const UserUnfo = createComponent(
 );
 
 const SidebarRoutes = createComponent(
-  [$sidebarRoutes, $pathnameUrl], ({ userInfoPending }, units) => {
+  [$sidebarRoutes, $pathnameUrl], ({ loading }, units) => {
     const t = useContext(I18nContext);
     const [sidebarRoutes, pathnameUrl] = units;
 
     return (
       <div className="sidebar__routes">
-        {userInfoPending
+        {loading
           ? <ShimmerSideBarLink length={sidebarRoutes.length} />
           : sidebarRoutes.map(({
             [NAME]: name,
@@ -139,10 +139,10 @@ const SidebarRoutes = createComponent(
 
 const CreateProjectComponent = createComponent(
   $modalIsOpen,
-  ({ userInfoPending }, modalIsOpen) => {
+  ({ loading }, modalIsOpen) => {
     const t = useContext(I18nContext);
 
-    return userInfoPending
+    return loading
       ? <ShimmerSideBarCreateBtn />
       : (
         <Button
@@ -176,7 +176,7 @@ const PolicyLink = React.memo(() => {
 });
 
 export const Sidebar = () => {
-  const userInfoPending = useUnit(getUserInfoFx.pending);
+  const [userInfoPending, initApp] = useUnit([getUserInfoFx.pending, $initApp]);
 
   return (
     <div className="sidebar">
@@ -188,14 +188,14 @@ export const Sidebar = () => {
         beep
       </NavLink>
 
-      <CreateProjectComponent userInfoPending={userInfoPending} />
+      <CreateProjectComponent loading={userInfoPending || !initApp} />
 
       <div className="sidebar__divider" />
 
-      <SidebarRoutes userInfoPending={userInfoPending} />
+      <SidebarRoutes loading={userInfoPending || !initApp} />
 
       <div className="sidebar__bottom-side bottom-side">
-        <UserUnfo userInfoPending={userInfoPending} />
+        <UserUnfo loading={userInfoPending || !initApp} />
         <PolicyLink />
       </div>
     </div>

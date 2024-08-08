@@ -20,8 +20,8 @@
   }
 
   $shimmers: (
-    'user-info' 100% $sidebar-info-height $sidebar-radius,
-    'side-bar-link' 100% $sidebar-link-height $sidebar-radius,
+    'user-info' calc(100% - 32px) $sidebar-info-height $sidebar-radius,
+    'side-bar-link' calc(100% - 32px) $sidebar-link-height $sidebar-radius,
     'side-bar-breadcrumbs' 50% 25px,
   );
 
@@ -35,6 +35,21 @@
 
     &_side-bar-breadcrumbs {
       max-width: 500px;
+    }
+  }
+
+  &_side-bar-link,
+  &_user-info {
+    margin: 0 16px;
+  }
+
+  &_side-bar-link {
+    margin-bottom: 32px;
+
+    &:first-child {
+      width: 100%;
+      margin-right: 0;
+      margin-left: 0;
     }
   }
 

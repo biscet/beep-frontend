@@ -10,6 +10,8 @@ const userDomain = allDomain.createDomain('User');
 
 export const logoutFn = userDomain.createEvent();
 
+export const refreshUserDataFn = userDomain.createEvent();
+
 export const $userName = userDomain.createStore('-');
 export const $userEmail = userDomain.createStore('-');
 export const $userAvatar = userDomain.createStore('-');

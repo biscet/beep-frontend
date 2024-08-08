@@ -21,13 +21,13 @@ export const goToProjectUploadFn = projectsDomain.createEvent();
 export const resetChunksFn = projectsDomain.createEvent();
 export const setEtagChunksFn = projectsDomain.createEvent();
 export const setDetailChunksFn = projectsDomain.createEvent();
-export const continueUploadVideoChunksFn = projectsDomain.createEvent();
+export const continueUploadChunksFn = projectsDomain.createEvent();
 
 export const $etagsChunks = projectsDomain.createStore([]);
 export const $detailChunks = projectsDomain.createStore({});
 
-export const chunkVideoUploadFx = projectsDomain.createEffect(postUploadChunkSign);
-export const completeChunkVideoUploadFx = projectsDomain.createEffect(postCompleteUploadChunkSign);
+export const chunkUploadFx = projectsDomain.createEffect(postUploadChunkSign);
+export const completeChunkUploadFx = projectsDomain.createEffect(postCompleteUploadChunkSign);
 export const confirmSTTFx = projectsDomain.createEffect(postConfirmSTTSign);
 
 export const $isProjectUploadPage = $pathnameUrl.map(

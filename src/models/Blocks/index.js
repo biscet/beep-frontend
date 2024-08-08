@@ -2,7 +2,7 @@ import { combine } from 'effector';
 import {
   CRUD_PATH, PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH,
 } from 'src/dict/path';
-import { ProjectsSVG, PresetsSVG } from 'src/ui/media/images';
+import { ProjectsSVG, StaffSVG } from 'src/ui/media/images';
 import { rootContainer } from 'src/dict/config';
 import { allDomain } from '../App';
 
@@ -41,7 +41,7 @@ export const $sidebarRoutes = combine(() => [
     [NAME]: 'Шаблоны',
     [ACTIVE]: true,
     [VALIDATE]: [CATALOG],
-    [ICON]: PresetsSVG,
+    [ICON]: StaffSVG,
     [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PRESETS}/${CATALOG}?page=1`,
     [GENERAL_PAGE]: WEB_PATH.PRESETS,
   },

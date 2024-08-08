@@ -79,7 +79,7 @@ export const getMediaDuration = (file) => new Promise((resolve) => {
 
   mediaElement.src = url;
   mediaElement.addEventListener('loadedmetadata', () => {
-    const duration = Math.round(mediaElement.duration);
+    const { duration } = mediaElement;
     URL.revokeObjectURL(url);
     resolve(duration);
   });
@@ -94,3 +94,20 @@ export const getMediaDuration = (file) => new Promise((resolve) => {
 export const createSlicedFile = (file, startChunk) => new File([file.slice(
   startChunk, Math.min(startChunk + DEFAULT_CHUNK_SIZE, file.size),
 )], file.name, { type: file.type });
+
+export const getFileExtension = (filename) => {
+  const parts = filename.split('.');
+  const ext = parts.pop();
+  const name = parts.join('.');
+  return { name, ext };
+};
+
+export const convertMinutesToHoursAndMinutes = (minutes) => {
+  const totalMinutes = Math.floor(minutes);
+  const remainingMinutes = Math.round((minutes - totalMinutes) * 60);
+
+  const hours = Math.floor(totalMinutes / 60);
+  const mins = totalMinutes % 60 + remainingMinutes;
+
+  return { hours, mins };
+};

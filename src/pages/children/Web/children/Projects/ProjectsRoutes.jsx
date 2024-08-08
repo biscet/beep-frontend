@@ -9,7 +9,7 @@ import { $itemsRoutesProjects } from 'src/models/Web/Projects';
 
 import { Catalog } from './children/Catalog';
 import { Uploading } from './children/Uploading';
-import { Viewing } from './children/Viewing';
+import { Viewing } from './children/Viewing/Viewing';
 
 const { PATH } = ROUTES_FIELDS;
 const { CATALOG, UPLOADING, VIEWING } = CRUD_PATH;

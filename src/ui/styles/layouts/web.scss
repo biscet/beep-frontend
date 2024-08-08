@@ -7,8 +7,11 @@
   &__wrapper {
     @include flex-centered;
 
+    position: relative;
+    width: 100%;
     height: calc(calc(var(--vh, 1vh) * 100) - $sidebar-header-height);
     height: calc(100svh - $sidebar-header-height);
+    flex-direction: column;
     flex-shrink: 0;
     justify-content: center;
     padding: 40px;

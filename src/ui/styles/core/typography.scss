@@ -16,6 +16,15 @@
   line-height: 120%;
 }
 
+.inter-h3 {
+  @include theme-transition-base(color);
+
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+}
+
 .inter-regular {
   @include theme-transition-base(color);
 

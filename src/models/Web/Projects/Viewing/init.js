@@ -5,10 +5,12 @@ import { $pathnameUUID } from 'src/models/App';
 import { sample } from 'effector';
 import { pushHistoryFn } from 'src/models/Helpers/History';
 import { CRUD_PATH, PAGES_PATH, WEB_PATH } from 'src/dict/path';
+import { validProjectContract } from 'src/lib/contracts';
 import {
   $detailProject, $isProjectPage, getProjectFn, getProjectFx, goToProjectFn, resetDetailProjectFn,
 } from '.';
 import { crudStoreBehaviorPageFb } from '../..';
+import { goToProjectsCatalogFn } from '../Catalog';
 
 $detailProject
   .reset(resetDetailProjectFn)
@@ -32,4 +34,11 @@ sample({
 sample({
   clock: goToProjectFn,
   target: pushHistoryFn.prepend((id) => `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${id}/${CRUD_PATH.VIEWING}`),
+});
+
+// Редирект с несущестующего проекта
+sample({
+  clock: getProjectFx.doneData,
+  filter: (data) => validProjectContract(data),
+  target: goToProjectsCatalogFn,
 });
