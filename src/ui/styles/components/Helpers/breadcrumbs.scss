@@ -5,26 +5,46 @@
   margin-right: 48px;
   gap: 16px;
 
+  @media (max-width: 1280px) {
+    margin-right: 16px;
+  }
+
   .item {
     @extend .inter-regular;
 
-    width: fit-content;
+    @include truncate-text;
+
+    max-width: 20vw;
+    flex-shrink: 1;
     color: var($gray);
-    white-space: nowrap;
+    cursor: default;
+
+    @media (max-width: 1400px) {
+      max-width: 13vw;
+    }
+
+    @media (max-width: 1280px) {
+      max-width: 100%;
+    }
 
     &_active {
       color: var($text-general);
     }
 
-    &_divider {
-      flex-shrink: 0;
+    &_link {
+      cursor: pointer;
+
+      @include default-hover;
     }
 
-    &:first-child {
-      @include truncate-text(1);
+    &_divider {
+      @include flex-centered;
 
-      width: auto;
-      white-space: wrap;
+      height: 10px;
+      flex-shrink: 0;
+      color: var($text-general);
+      font-size: 32px;
+      font-weight: 900;
     }
   }
 }

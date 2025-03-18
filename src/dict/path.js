@@ -3,17 +3,24 @@ export const PAGES_PATH = {
   REGISTRATION: 'registration',
   LOGIN: 'login',
   WEB: 'web',
+  OFFER: 'offer',
+  PRIVACY: 'privacy',
+  PRICES: 'prices',
 };
 
 export const WEB_PATH = {
-  DASHBOARD: 'dashboard',
+  PRESETS: 'presets',
   PROJECTS: 'projects',
+  PAYMENT: 'payment',
 };
 
 export const CRUD_PATH = {
   CATALOG: 'catalog',
   VIEWING: 'viewing',
   UPLOADING: 'uploading',
+  CONTENT: 'content',
+  PACKS: 'packs',
+  BUY_PACKS: 'buy-packs',
 };
 
 export const ROUTES_FIELDS = {

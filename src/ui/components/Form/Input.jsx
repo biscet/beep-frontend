@@ -4,7 +4,7 @@ import {
   cx, get, isEmpty, isObject,
 } from 'src/lib/lodash';
 import { I18nContext } from 'src/ui/components/Helpers';
-import { EyeSVG } from 'src/ui/media/images';
+import { EyeSVG, SearchSVG } from 'src/ui/media/images';
 
 const handlerChange = ({ onChange }) => (e) => {
   onChange(isObject(e) ? get(e, 'target.value', '') : e);
@@ -15,8 +15,8 @@ const handlerClick = ({ onChange, value }) => () => {
 };
 
 export const Input = ({
-  type, placeholder, conditionClass, onChange, errorText,
-  activeClass, nonActiveClass, variant, value, hasError,
+  type, placeholder, conditionClass, onChange, errorText, hasError,
+  activeClass, nonActiveClass, variant, value, firstError,
   onBlur, name, disabled, caption, ...restProps
 }) => {
   const t = useContext(I18nContext);
@@ -27,7 +27,7 @@ export const Input = ({
       'input',
       `input_${variant}`,
       INPUT_TYPES.PASSWORD === type ? 'input_password' : null,
-      hasError ? 'input_error' : null,
+      hasError(firstError) ? 'input_error' : null,
     ],
     activeClass,
     nonActiveClass,
@@ -37,14 +37,24 @@ export const Input = ({
   const currentValue = isObject(value) ? get(value, 'target.value', '') : value;
 
   return (
-    <div className="input-group">
+    <div className={cx({
+      defaultClass: ['input-group'],
+      activeClass: 'input-group_search',
+      condition: INPUT_VARIATION.SEARCH === variant,
+    })}
+    >
       <input type={type} name={name} className="autocomplete-input" autoComplete="off" />
 
       <div
-        className="input-group__box"
+        className={cx({
+          defaultClass: ['input-group__box', 'box'],
+          activeClass: 'box_search',
+          condition: INPUT_VARIATION.SEARCH === variant,
+        })}
         aria-disabled={disabled}
         aria-valuetext={type}
       >
+
         <input
           {...restProps}
           type={viewPass ? 'text' : type}
@@ -57,6 +67,8 @@ export const Input = ({
           className={className}
           placeholder={t(placeholder)}
         />
+
+        {INPUT_VARIATION.SEARCH === variant ? <SearchSVG /> : null}
 
         {INPUT_TYPES.PASSWORD === type ? (
           <div
@@ -73,13 +85,13 @@ export const Input = ({
         ) : null}
       </div>
 
-      {hasError && !isEmpty(errorText) ? (
+      {hasError(firstError) && !isEmpty(errorText) ? (
         <p className="input-group__error">
           {t(errorText)}
         </p>
       ) : null}
 
-      {!hasError && !isEmpty(caption) ? (
+      {!hasError(firstError) && !isEmpty(caption) ? (
         <p>{t(caption)}</p>
       ) : null}
     </div>
@@ -97,7 +109,8 @@ Input.defaultProps = {
   value: '',
   onBlur: () => {},
   errorText: '',
-  hasError: false,
+  hasError: (error) => error !== null,
+  firstError: null,
   caption: '',
   disabled: false,
 };

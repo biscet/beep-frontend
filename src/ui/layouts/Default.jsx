@@ -2,19 +2,20 @@ import React from 'react';
 import { useGate, useUnit } from 'effector-react';
 import { get } from 'src/lib/lodash';
 import { $fullyLoadApplication, RouteGate } from 'src/models/App';
-import { motion, LayoutGroup } from 'framer-motion';
 import { DEFAULT_LAYOUT_ANIMATION } from 'src/dict/animate';
 import { MouseParallaxContainer } from 'react-parallax-mouse';
 import { MOUSE_PARALLAX_CONTAINER_STYLE } from 'src/dict/config';
 import { $isLoginPage } from 'src/models/Login';
 import { $isRegistrationPage } from 'src/models/Registration';
 import { useHistory } from 'react-router-dom';
-import { ScrollToTop } from '../components/ScrollToTop';
+import { SupportButton } from '../components/Helpers';
+import { performanceMotionLayoutHook } from '../hooks';
 
 const DefaultLayout = ({ children }) => {
   const [fullyLoadApplication, isLoginPage, isRegistrationPage] = useUnit(
     [$fullyLoadApplication, $isLoginPage, $isRegistrationPage],
   );
+  const { LayoutGroup, motion } = performanceMotionLayoutHook();
 
   useGate(RouteGate, {
     pathname: get(window, 'location.pathname', ''),
@@ -50,7 +51,7 @@ const DefaultLayout = ({ children }) => {
         )}
       </motion.div>
 
-      <ScrollToTop />
+      <SupportButton />
     </LayoutGroup>
   ) : null;
 };

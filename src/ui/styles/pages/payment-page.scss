@@ -1,0 +1,29 @@
+.payment-page {
+  width: 100%;
+  max-width: 1280px;
+  flex-shrink: 0;
+
+  @media (max-height: 920px) {
+    height: 100%;
+  }
+
+  .lawyer-footer {
+    padding-bottom: 32px;
+  }
+
+  .button_primary {
+    width: 100%;
+    height: 54px;
+  }
+
+  &__content {
+    display: grid;
+    margin-bottom: 40px;
+    gap: 32px;
+    grid-template-columns: 1fr 1fr 1fr;
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}

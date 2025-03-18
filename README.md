@@ -7,7 +7,7 @@
 
 #### Установка
 
-1. Клонируйте репозиторий с помощью команды `git clone git@github.com:biscet/beep-frontend.git`
+1. Клонируйте репозиторий с помощью команды `git clone https://github.com/get-beeped/beep-frontend.git`
 2. Перейдите в папку проекта с помощью команды `cd beep-frontend/`
 3. Переключите git ветку на dev `git checkout dev`
 4. Установите зависимости с помощью команды `yarn OR yarn install`
@@ -23,7 +23,7 @@
 
 #### Описание зависимостей ENV
 
-- `FARM_BACKEND_API` - Ссылка для Backend API.
+- `FARM_GATEWAY_HOST` - Ссылка для Backend API.
 - `FARM_SITEMAP_HOST` - Ссылка на домен Frontend приложения для Sitemap.
 
 #### Линтеры

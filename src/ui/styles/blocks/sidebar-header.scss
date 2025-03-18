@@ -1,19 +1,121 @@
 .sidebar-header {
   @include flex-centered;
-  @include theme-transition-base(border-color);
 
   width: 100%;
   height: $sidebar-header-height;
   flex-shrink: 0;
   justify-content: space-between;
-  padding: 19px 36px;
-  padding-right: 80px;
+  padding: 19px 32px;
   border-bottom: 1px var($border-sidebar) solid;
+  background-color: var($bg-general);
+  transition: background-color 0.1s linear, border-color 0.1s linear;
+
+  @media (max-width: 1280px) {
+    height: $sidebar-header-height-mobile;
+    flex-direction: column;
+  }
+
+  &__bottom-side,
+  &__top-side {
+    @include flex-centered;
+
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  &__mobile-row {
+    @include flex-centered;
+
+    margin-bottom: 8px;
+    gap: 28px;
+  }
+
+  &__burger {
+    display: flex;
+    flex-direction: column;
+    margin-right: 32px;
+    cursor: pointer;
+    gap: 8px;
+
+    span {
+      width: 32px;
+      height: 2px;
+      background-color: var($text-general);
+      border-radius: 12px;
+    }
+  }
 
   &__right-side {
     @include flex-centered;
 
     flex-shrink: 0;
     gap: 48px;
+  }
+
+  &__balance {
+    @include flex-centered;
+    @include theme-transition-base(background-color);
+
+    @extend .inter-medium ;
+
+    min-height: 38px;
+    flex-shrink: 0;
+    padding: 8px 8px 8px 16px;
+    background-color: var($support-bg-color);
+    border-radius: 16px;
+
+    svg {
+      flex-shrink: 0;
+      margin-right: 8px;
+
+      path {
+        @include theme-transition-base(fill);
+
+        fill: var($text-general);
+      }
+    }
+  }
+
+  .balance {
+    &__general {
+      position: relative;
+      display: flex;
+      height: 24px;
+    }
+
+    &__odometer-sceleton {
+      width: 11px;
+    }
+
+    &__divider {
+      margin: 0 4px;
+    }
+
+    &__frozen {
+      position: relative;
+      height: 24px;
+      color: var($gray);
+    }
+
+    &__buy-time {
+      @include theme-transition-base(background-color);
+      @include flex-centered;
+      @include default-hover;
+
+      width: 22px;
+      height: 22px;
+      justify-content: center;
+      margin-left: 19px;
+      background-color: var($accent-color-primary);
+      border-radius: 999px;
+
+      svg {
+        margin-right: 0;
+
+        path {
+          fill: var($bg-general);
+        }
+      }
+    }
   }
 }

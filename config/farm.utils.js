@@ -34,7 +34,6 @@ export const getDefaultCopmilation = () => ({
   },
   persistentCache: false,
   treeShaking: false,
-  // sourcemap: mode === 'dev' ? false : 'inline',
   sourcemap: false,
   script: {
     target: 'esnext',

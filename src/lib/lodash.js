@@ -1,6 +1,8 @@
 export const isEmpty = (obj) => [Object, Array].includes((obj || {}).constructor)
     && Object.entries((obj || {})).length === 0;
 
+export const isString = (str) => ((str || str === '') && typeof str.valueOf() === 'string');
+
 export const isObject = (value) => {
   const type = typeof value;
   return !!value && (type === 'object' || type === 'function');

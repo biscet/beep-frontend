@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 import React from 'react';
 import ReactDOM from 'react-dom';
 
@@ -11,7 +12,13 @@ import 'src/lib/react-helpers';
 
 import { setLoadAppliactionStateFn } from './models/App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const rootElement = document.getElementById('root');
+
+if (rootElement.hasChildNodes()) {
+  ReactDOM.hydrate(<App />, rootElement);
+} else {
+  ReactDOM.render(<App />, rootElement);
+}
 
 window.addEventListener('load', () => {
   if (document.readyState === 'complete') {

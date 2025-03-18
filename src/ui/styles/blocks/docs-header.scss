@@ -1,0 +1,14 @@
+.docs-header {
+  @include flex-centered;
+
+  justify-content: center;
+
+  &__logo {
+    @extend .chakra-petch-medium;
+
+    flex-shrink: 0;
+    margin-bottom: 44px;
+    color: var($text-general);
+    text-align: center;
+  }
+}

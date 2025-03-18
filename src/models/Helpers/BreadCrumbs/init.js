@@ -1,4 +1,4 @@
-import { sample, split } from 'effector';
+import { combine, sample, split } from 'effector';
 import { $pathnameUrl } from 'src/models/App';
 import { isEmpty } from 'src/lib/lodash';
 import { BREAD_CRUMBS_FIELD } from 'src/dict/breadcrumbs';
@@ -16,9 +16,8 @@ $currentBreadCrumbs
   .on(setCurrentBCFn, (_, breadcrumb) => breadcrumb);
 
 sample({
-  clock: $pathnameUrl,
-  source: $allBreadCrumbsCombineData,
-  fn: (allBreadCrumbs, pathnameUrl) => allBreadCrumbs.filter(
+  clock: combine($pathnameUrl, $allBreadCrumbsCombineData),
+  fn: ([pathnameUrl, allBreadCrumbs]) => allBreadCrumbs.filter(
     ({ [PATH]: path }) => isCurrentPath(pathnameUrl, path),
   ),
   target: triggerSplitBCLogicFn,

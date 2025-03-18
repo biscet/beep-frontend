@@ -8,14 +8,16 @@ import { ROUTES_FIELDS, WEB_PATH } from 'src/dict/path';
 import { $itemsRoutesWeb } from 'src/models/Web';
 
 import { ProjectsRoutes } from './children/Projects/ProjectsRoutes';
-import { DashboardRoutes } from './children/Dashboard/DashboardRoutes';
+import { PresetsRoutes } from './children/Presets/PresetsRoutes';
+import { PaymentRoutes } from './children/Payment/PaymentRoutes';
 
 const { PATH } = ROUTES_FIELDS;
-const { DASHBOARD, PROJECTS } = WEB_PATH;
+const { PRESETS, PROJECTS, PAYMENT } = WEB_PATH;
 
 const pathMap = {
-  [DASHBOARD]: DashboardRoutes,
+  [PRESETS]: PresetsRoutes,
   [PROJECTS]: ProjectsRoutes,
+  [PAYMENT]: PaymentRoutes,
 };
 
 export const WebRoutes = withRouter(({ match: { url } }) => {

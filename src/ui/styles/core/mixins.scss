@@ -3,8 +3,8 @@
   align-items: center;
 }
 
-@mixin theme-transition-base($pattern) {
-  transition: $pattern 0.1s linear;
+@mixin theme-transition-base($pattern, $type: linear, $time: 0.1s) {
+  transition: $pattern $time $type;
 }
 
 @mixin hover {
@@ -37,7 +37,7 @@
   justify-content: space-between;
 
   @if $height == 'auto' {
-    height: calc(100vh - $header-height);
+    height: calc(calc(var(--vh, 1vh) * 100) - $header-height);
     height: calc(100svh - $header-height);
   }
 

@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 $icon-width: 50px;
 
 .input {
@@ -16,6 +17,10 @@ $icon-width: 50px;
     color: var($text-general);
     white-space: nowrap;
 
+    @media (max-width: 900px) {
+      padding: 8px 16px;
+    }
+
     &::placeholder {
       color: var($input-border);
     }
@@ -28,6 +33,43 @@ $icon-width: 50px;
       border-color: var($accent-color-general);
       color: var($accent-color-general);
     }
+  }
+
+  &_search {
+    @include theme-transition-base(color);
+
+    width: 100%;
+    min-height: 40px;
+    caret-color: var($accent-color-general);
+    color: var($text-general);
+
+    &:focus {
+      color: var($accent-color-general);
+
+      & ~ #search-svg {
+        path {
+          fill: var($accent-color-general);
+        }
+      }
+    }
+
+    & ~ #search-svg {
+      width: 22px;
+      height: 22px;
+
+      path {
+        @include theme-transition-base(fill);
+
+        fill: var($text-general);
+      }
+    }
+  }
+
+  &_char {
+    width: 50px;
+    flex-shrink: 0;
+    padding: 0;
+    text-align: center;
   }
 
   &_error {
@@ -48,12 +90,23 @@ $icon-width: 50px;
   flex-direction: column;
   gap: 8px;
 
+  &_search {
+    width: 100%;
+  }
+
   p {
     @include theme-transition-base(color);
 
     @extend .caption-regular;
 
     color: var($input-border);
+  }
+
+  &__chars {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
   }
 
   &__error {
@@ -64,6 +117,7 @@ $icon-width: 50px;
     position: relative;
     display: flex;
     align-items: center;
+    gap: 16px;
 
     &[aria-valuetext="password"] .input_primary {
       padding-right: calc(24px + $icon-width);
@@ -71,6 +125,12 @@ $icon-width: 50px;
 
     &[aria-disabled="false"]:hover .input_primary {
       border-color: var($accent-color-general);
+    }
+  }
+
+  .box {
+    &_search {
+      flex-direction: row-reverse;
     }
   }
 

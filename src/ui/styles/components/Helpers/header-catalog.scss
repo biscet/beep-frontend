@@ -1,0 +1,59 @@
+
+.header-catalog {
+  @include flex-centered;
+  @include theme-transition-base(background-color);
+
+  width: 100%;
+  min-height: 40px;
+  justify-content: space-between;
+  padding: 8px 16px;
+  background-color: var($bg-general);
+  border-radius: 16px;
+  gap: 32px;
+
+  &__search {
+    @include flex-centered;
+
+    width: 100%;
+    gap: 16px;
+  }
+
+  &__type-list {
+    @include flex-centered;
+
+    width: max-content;
+    gap: 16px;
+  }
+
+  .type-list {
+    &__item {
+      cursor: pointer;
+
+      svg {
+        path {
+          fill: var($text-general);
+        }
+      }
+
+      &:hover {
+        svg {
+          path {
+            fill: var($accent-color-general);
+          }
+        }
+      }
+    }
+
+    .item {
+      &_active {
+        cursor: default;
+
+        svg {
+          path {
+            fill: var($accent-color-general);
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,248 @@
+.projects-content {
+  width: 100%;
+  max-width: 960px;
+  flex-shrink: 0;
+
+  @media (max-height: 850px) {
+    height: 100%;
+  }
+
+  &__button-box {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    padding-bottom: 20px;
+
+    @media (max-width: 500px) {
+      .button_primary {
+        width: 100% !important;
+      }
+    }
+  }
+
+  &__wrapper {
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 32px;
+
+    @media (max-height: 850px) {
+      height: 100%;
+    }
+  }
+
+  .player {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 540px;
+    flex-shrink: 0;
+    background-color: #1c171d;
+    border-radius: 32px;
+
+    svg {
+      flex-shrink: 0;
+    }
+
+    &__full-screen {
+      @include flex-centered;
+
+      justify-content: flex-end;
+    }
+
+    .custom-range {
+      width: 100px;
+      height: 6px;
+      flex-shrink: 0;
+      appearance: none;
+      background: var($accent-color-general);
+      border-radius: 5px;
+      outline: none;
+
+      &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 6px;
+        background: var($accent-color-general);
+        border-radius: 5px;
+      }
+
+      &::-webkit-slider-thumb {
+        width: 16px;
+        height: 16px;
+        border: 1px solid var($bg-general);
+        margin-top: -4px;
+        appearance: none;
+        background: var($accent-color-general);
+        border-radius: 999px;
+        cursor: pointer;
+      }
+
+      &::-webkit-slider-thumb:focus {
+        opacity: 0.8;
+      }
+    }
+
+    &__media-container {
+      width: 100%;
+      height: 100%;
+      flex-shrink: 0;
+      object-fit: contain;
+    }
+
+    &__footer {
+      position: absolute;
+      z-index: 2;
+      bottom: 0;
+      left: 0;
+      display: grid;
+      width: 100%;
+      flex-shrink: 0;
+      padding: 24px;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    &__controls {
+      @include flex-centered;
+
+      justify-content: center;
+      gap: 24px;
+    }
+
+    &__button {
+      cursor: pointer;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+
+    &__volume {
+      @include flex-centered;
+    }
+
+    &__volume-range {
+      @include flex-centered;
+
+      width: 116px;
+      height: 20px;
+      padding-right: 8px;
+      padding-left: 8px;
+    }
+  }
+
+  .track {
+    @include theme-transition-base(background-color);
+    @include flex-centered;
+
+    width: 100%;
+    height: 80px;
+    flex-shrink: 0;
+    justify-content: center;
+    background-color: var($bg-general);
+    border-radius: 32px;
+    cursor: pointer;
+
+    &__wave-container {
+      @include flex-centered;
+
+      position: relative;
+      overflow: hidden;
+      width: calc(100% - 64px);
+      height: 100%;
+      justify-content: center;
+      opacity: 0.75;
+    }
+
+    &__wave {
+      position: absolute;
+      z-index: 1;
+      top: 10px;
+      left: 0;
+      width: 100%;
+      height: calc(100% - 20px);
+    }
+
+    &__timestamps-container {
+      position: absolute;
+      z-index: 10;
+      left: 32px;
+      width: calc(100% - 64px);
+      height: 32px;
+    }
+
+    &__timestamps {
+      position: relative;
+      z-index: 3;
+      width: calc(100% - 32px);
+      height: 32px;
+      user-select: none;
+    }
+  }
+
+  .timestamp {
+    @include flex-centered;
+
+    position: absolute;
+    top: 0;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    border-radius: 999px;
+    cursor: pointer;
+
+    &__beep {
+      @include flex-centered;
+
+      @extend .caption-regular;
+
+      z-index: 3;
+      width: 32px;
+      height: 32px;
+      justify-content: center;
+      border: 1px solid var($bg-general);
+      background-color: var($accent-color-general);
+      border-radius: 999px;
+      color: var($bg-general);
+    }
+
+    &__tooltip {
+      @include flex-centered;
+
+      position: absolute;
+      z-index: 2;
+      bottom: 0;
+      left: 16px;
+      width: max-content;
+      height: 32px;
+      border: 2px solid var($accent-color-general);
+      background-color: var($bg-general);
+      border-radius: 0 8px 8px 0;
+    }
+
+    &__tooltip-range {
+      @include flex-centered;
+
+      height: 100%;
+      padding-right: 8px;
+      padding-left: 8px;
+
+      &:hover {
+        background-color: var($accent-color-general);
+      }
+    }
+
+    .tooltip-range {
+      &__first-children {
+        padding-left: 22px;
+      }
+    }
+
+    &__tooltip-divider {
+      width: 1px;
+      height: 100%;
+      background-color: var($accent-color-general);
+      opacity: 0.5;
+    }
+  }
+}

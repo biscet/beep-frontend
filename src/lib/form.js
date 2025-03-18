@@ -18,11 +18,19 @@ export const onSubmit = (submit) => (e) => {
 };
 
 export const getPropsField = ({
-  fieldName, props: { fields, errorText, hasError },
+  fieldName, props: { fields, errorText },
 }) => ({
   errorText: errorText(fieldName),
-  hasError: hasError(fieldName),
+  firstError: fields[fieldName].firstError,
   ...(getEventsField(get(fields, fieldName))),
+});
+
+export const getReflectPropsField = (fieldName, form) => ({
+  errorText: form.fields[fieldName].$errorText,
+  firstError: form.fields[fieldName].$firstError,
+  onBlur: form.fields[fieldName].onBlur,
+  onChange: form.fields[fieldName].onChange,
+  value: form.fields[fieldName].$value,
 });
 
 export const createFx = (data, timeout) => new Promise((resolve) => {

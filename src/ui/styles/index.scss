@@ -12,23 +12,39 @@
 // Layouts
 @import './layouts/default.scss';
 @import './layouts/web.scss';
+@import './layouts/docs.scss';
 
 // Components
 @import './components/Form/button.scss';
 @import './components/Form/input.scss';
 @import './components/Form/loader-spinner.scss';
+@import './components/Form/file-uploader.scss';
 @import './components/Helpers/i18n.scss';
 @import './components/Helpers/theme.scss';
 @import './components/Helpers/shimmer.scss';
 @import './components/Helpers/breadcrumbs.scss';
 @import './components/Helpers/modal.scss';
+@import './components/Helpers/header-catalog.scss';
+@import './components/Helpers/card-payment.scss';
+@import './components/Helpers/pagination.scss';
+@import './components/Helpers/loaders.scss';
+@import './components/Helpers/lawyer-footer.scss';
+@import './components/progress-bar.scss';
+@import './components/odometr.scss';
 
 // Blocks
 @import './blocks/header.scss';
 @import './blocks/sidebar.scss';
 @import './blocks/sidebar-header.scss';
+@import './blocks/docs-header.scss';
 
 // Pages
 @import './pages/default-page.scss';
 @import './pages/login-page.scss';
 @import './pages/registration-page.scss';
+@import './pages/payment-page.scss';
+@import './pages/prices-page.scss';
+@import './pages/Projects/catalog-page.scss';
+@import './pages/Projects/uploading-page.scss';
+@import './pages/Projects/viewing-page.scss';
+@import './pages/Projects/content-page.scss';

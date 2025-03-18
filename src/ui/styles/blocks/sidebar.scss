@@ -1,14 +1,43 @@
 .sidebar {
-  @include theme-transition-base(border-color);
-
   display: flex;
   overflow: hidden;
   width: $sidebar-width;
   height: 100%;
   flex-direction: column;
   flex-shrink: 0;
-  padding: 32px 16px;
+  padding: 32px 0;
   border-right: 1px var($border-sidebar) solid;
+  background-color: var($bg-general);
+  transition: background-color 0.1s linear, border-color 0.1s linear;
+
+  @media (max-width: 1280px) {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100vw;
+  }
+
+  &_close {
+    display: none;
+  }
+
+  &__burger {
+    position: absolute;
+    top: 36px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 8px;
+
+    span {
+      width: 32px;
+      height: 2px;
+      background-color: var($text-general);
+      border-radius: 12px;
+    }
+  }
 
   svg {
     path {
@@ -19,17 +48,20 @@
   }
 
   &__divider {
-    width: 100%;
+    width: calc(100% - 32px);
     height: 1px;
+    flex-shrink: 0;
     padding: 0 32px;
-    margin: 32px 0;
+    margin: 0 auto;
     background-color: var($border-sidebar);
   }
 
   &__logo {
     @extend .chakra-petch-medium;
 
+    max-width: fit-content;
     flex-shrink: 0;
+    margin: 0 auto;
     margin-bottom: 44px;
     color: var($text-general);
     text-align: center;
@@ -39,8 +71,11 @@
 
   &__routes {
     display: flex;
+    height: 100%;
     flex-direction: column;
+    padding: 32px 16px;
     gap: 8px;
+    overflow-x: hidden;
   }
 
   .user-info {
@@ -49,13 +84,14 @@
 
     position: relative;
     overflow: hidden;
-    width: 100%;
+    width: calc(100% - 32px);
     height: $sidebar-info-height;
     flex-shrink: 0;
     justify-content: space-between;
     padding: 16px;
     padding-right: 0;
     border: $sidebar-info-border;
+    margin: 0 16px;
     margin-bottom: $sidebar-info-mb;
     border-radius: $sidebar-radius;
 
@@ -96,6 +132,7 @@
       background-color: var($accent-color-general);
       border-radius: 16px;
       color: var($bg-general);
+      cursor: default;
       font-size: 24px;
       font-weight: 400;
     }
@@ -146,6 +183,9 @@
     }
 
     &_active-create-project {
+      width: calc(100% - 32px);
+      margin: 0 16px;
+      margin-bottom: 32px;
       background-color: var($create-project-button);
       color: var($create-project-button-text);
 
@@ -160,6 +200,12 @@
       }
     }
 
+    &_support {
+      width: calc(100% - 32px);
+      margin: 0 16px;
+      color: var($text-general);
+    }
+
     &:not([data-disabled="true"]):hover {
       background-color: var($accent-color-general);
       color: var($bg-general);
@@ -172,6 +218,10 @@
     }
 
     &_create-project {
+      width: calc(100% - 32px);
+      margin: 0 16px;
+      margin-bottom: 32px;
+
       &:not([data-disabled="true"]):hover {
         background-color: var($create-project-button-hover);
         color: var($bg-general);
@@ -188,7 +238,6 @@
   .bottom-side {
     display: flex;
     height: 100%;
-    min-height: 260px;
     flex-direction: column;
     justify-content: flex-end;
     gap: 18px;

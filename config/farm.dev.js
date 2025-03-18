@@ -15,7 +15,11 @@ export default defineConfig(() => ({
   server: {
     hmr: true,
     open: true,
-    port: 3005,
+    port: 3000,
+    headers: {
+      // 'Cross-Origin-Opener-Policy': 'same-origin',
+      // 'Cross-Origin-Embedder-Policy': 'require-corp',
+    },
   },
   vitePlugins: [
     FarmfeEslintPlugin({

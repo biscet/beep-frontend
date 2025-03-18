@@ -1,0 +1,78 @@
+.file-uploader {
+  @include theme-transition-base(background-color);
+
+  position: relative;
+  flex-shrink: 0;
+  background-color: var($bg-general);
+
+  &_primary {
+    @include flex-centered;
+
+    width: 100%;
+    max-width: 820px;
+    height: 100%;
+    min-height: 420px;
+    max-height: $file-uplaoder-max-height;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 32px;
+    outline: none;
+  }
+
+  .container {
+    @extend .inter-regular;
+
+    @include flex-centered;
+
+    max-width: 460px;
+    flex-direction: column;
+    justify-content: center;
+    color: var($text-general);
+
+    &__icon {
+      margin-bottom: 16px;
+    }
+
+    .icon {
+      &_drag {
+        path {
+          fill: var($accent-color-general);
+        }
+      }
+    }
+
+    &__text {
+      padding: 0 8px;
+      margin-bottom: 64px;
+      text-align: center;
+    }
+
+    &__text-upload {
+      padding: 0 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    &__file-name {
+      padding: 8px 0;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    &__file-size {
+      padding: 0 8px;
+      margin-bottom: 40px;
+      color: var($gray);
+      text-align: center;
+    }
+
+    &__formats {
+      @extend .caption-regular;
+
+      padding: 0 8px;
+      margin-top: 8px;
+      color: var($gray);
+      text-align: center;
+    }
+  }
+}

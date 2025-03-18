@@ -5,6 +5,7 @@ export const BREAD_CRUMBS_FIELD = {
   VISIBLE: 'visible',
   LINK: 'link',
   TRANSLATE: 'translate',
+  LOADING: 'loading',
 };
 
 export const BREAD_CRUMBS_ROUTE = {

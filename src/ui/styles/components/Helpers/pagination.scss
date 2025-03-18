@@ -1,0 +1,81 @@
+.pagination {
+  @include flex-centered;
+
+  width: 100%;
+  justify-content: center;
+
+  &__flex-box {
+    @include flex-centered;
+    @include theme-transition-base(background-color);
+
+    width: max-content;
+    padding: 16px;
+    background-color: var($bg-general);
+    border-radius: 16px;
+    gap: 16px;
+    user-select: none;
+
+    @media (max-width: 700px) {
+      width: calc(100vw - 16px);
+      justify-content: space-between;
+      padding: 16px 8px;
+      gap: 8px;
+      overflow-y: hidden;
+    }
+  }
+
+  &__item {
+    @include flex-centered;
+
+    min-width: 32px;
+    flex-shrink: 0;
+    justify-content: center;
+    padding: 5px 8px;
+    padding-left: 7px;
+    border-radius: 16px;
+    color: var($text-general);
+    cursor: default;
+    gap: 8px;
+
+    svg {
+      path {
+        fill: var($text-general);
+      }
+    }
+
+    &:is([data-disabled="true"]) {
+      opacity: 0.4;
+    }
+
+    &:not([data-active="true"]):hover {
+      background-color: var($accent-color-general);
+      color: white;
+      cursor: pointer;
+
+      svg {
+        path {
+          fill: var($text-general);
+        }
+      }
+    }
+  }
+
+  .item {
+    &_next {
+      padding-left: 16px;
+
+      #pagination-arrow-svg {
+        transform: rotate(180deg);
+      }
+    }
+
+    &_back {
+      padding-right: 16px;
+    }
+
+    &_active {
+      background-color: var($accent-color-general);
+      color: white;
+    }
+  }
+}

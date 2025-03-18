@@ -5,4 +5,5 @@ export const INPUT_TYPES = {
 
 export const INPUT_VARIATION = {
   PRIMARY: 'primary',
+  SEARCH: 'search',
 };

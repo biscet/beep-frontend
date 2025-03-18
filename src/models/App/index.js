@@ -12,9 +12,13 @@ export const settingsDomain = allDomain.createDomain('Settings');
 
 export const setLoadAppliactionStateFn = settingsDomain.createEvent();
 
+export const openMobileSidebarFn = settingsDomain.createEvent();
+
 export const $initApp = settingsDomain.createStore(false);
 
 export const $fullyLoadApplication = settingsDomain.createStore(false);
+
+export const $openMobileSidebar = settingsDomain.createStore(false);
 
 export const $pathParams = settingsDomain.createStore('');
 export const $pathnameUrl = settingsDomain.createStore('');

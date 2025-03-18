@@ -2,7 +2,7 @@
   #{$bg-general}: #1c171d;
   #{$text-general}: #ffffff;
   #{$pad-general}: 0 80px;
-  #{$accent-color-general}: #8d62f8;
+  #{$accent-color-general}: #a282ef;
   #{$accent-color-secondary}: #7d288b;
   #{$button-text}: #1c171d;
   #{$bg-preview}: #333333;
@@ -16,6 +16,10 @@
   #{$create-project-button}: #342237;
   #{$create-project-button-text}: #dc95e7;
   #{$create-project-button-hover}: #dc95e7;
+  #{$rainbow-button-gradient}: linear-gradient(264deg, #7d288b -6.6%, #a282ef 53.55%);
+  #{$bg-general-radial}: radial-gradient(277.91% 187.82% at 108.67% -8.04%, #1c171d 16%, rgba(125, 40, 139, 0.4) 53.5%, rgba(162, 130, 239, 0.4) 75%);
+  #{$bg-general-loader-radial}: radial-gradient(277.91% 187.82% at 108.67% -8.04%, #1c171d 16%, rgba(125, 40, 139, 1) 53.5%, rgba(162, 130, 239, 1) 75%);
+  #{$support-bg-color}: #453d58;
 
   .header {
     &_scrolled {
@@ -27,6 +31,10 @@
     -webkit-box-shadow: 0 0 0 30px #333333 inset !important;
     caret-color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
+  }
+
+  @media (max-width: 1280px) {
+    #{$pad-general}: 0 16px;
   }
 }
 
@@ -48,6 +56,10 @@
   #{$create-project-button}: #ffedfd;
   #{$create-project-button-text}: #dc95e7;
   #{$create-project-button-hover}: #e362f8;
+  #{$rainbow-button-gradient}: linear-gradient(to right, #e362f8, #8d62f8, #8d62f8);
+  #{$bg-general-radial}: radial-gradient(277.91% 187.82% at 108.67% -8.04%, #f2edff 9.9%, rgba(220, 149, 231, 0.7) 44.99%, rgba(141, 98, 248, 0.59) 67.91%);
+  #{$bg-general-loader-radial}: radial-gradient(277.91% 187.82% at 108.67% -8.04%, #f2edff 9.9%, rgba(220, 149, 231, 1) 44.99%, rgba(141, 98, 248, 1) 67.91%);
+  #{$support-bg-color}: #f2edff;
 
   .header {
     &_scrolled {
@@ -59,5 +71,9 @@
     -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
     caret-color: #333333 !important;
     -webkit-text-fill-color: #333333 !important;
+  }
+
+  @media (max-width: 1280px) {
+    #{$pad-general}: 0 16px;
   }
 }
