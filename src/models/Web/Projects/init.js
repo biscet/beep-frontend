@@ -6,9 +6,13 @@ import { CREATE_PROJECT_FIELDS, PROJECT_FIELDS } from 'src/dict/fields/models/pr
 import { notifyErrorFn, notifySuccessFn } from 'src/models/Helpers/Notify';
 import {
   $createProjectDone,
+  $projectsBackground,
+  $projectsStatuses,
   createProjectForm,
   createProjectFx,
   setCreateProjectFn,
+  setProjectsStatusesFn,
+  setProjectsBackgroundFn,
 } from '.';
 import {
   resetChunksFn, uploadingForm,
@@ -16,6 +20,12 @@ import {
 import { $isProjectPage, getProjectFn, goToProjectFn } from './Viewing';
 
 $createProjectDone.on(setCreateProjectFn, (_, done) => done);
+
+$projectsStatuses
+  .on(setProjectsStatusesFn, (_, projects) => projects);
+
+$projectsBackground
+  .on(setProjectsBackgroundFn, (_, projects) => projects);
 
 // Создание проекта
 sample({

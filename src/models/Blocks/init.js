@@ -5,9 +5,11 @@ import {
   $headerAnimationComplete, $isHoveredLogout, setHeaderAnimationStateFn,
   setIsHoveredLogoutFn, triggerLogoutFn, $scrolledRoot,
   setScrolledRootFn, rootScrolledEvent,
+  $webLayoutPaddingCondition,
+  $webLayoutPaddingConditionCombineData,
 } from '.';
 import { closeModalFn } from '../Helpers/Modal';
-import { logoutFn } from '../User';
+import { logoutFn } from '../Helpers/Logout';
 import { RouteGate, WebGate } from '../App';
 
 $headerAnimationComplete.on(setHeaderAnimationStateFn, (_, complete) => complete);
@@ -50,4 +52,13 @@ sample({
   clock: WebGate.close,
   fn: () => false,
   target: setIsHoveredLogoutFn,
+});
+
+sample({
+  clock: debounce({
+    source: $webLayoutPaddingConditionCombineData,
+    timeout: 150,
+  }),
+  fn: (pages) => pages.some(Boolean),
+  target: $webLayoutPaddingCondition,
 });

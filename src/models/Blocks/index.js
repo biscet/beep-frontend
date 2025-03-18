@@ -5,12 +5,15 @@ import {
 import { ProjectsSVG, StaffSVG } from 'src/ui/media/images';
 import { rootContainer } from 'src/dict/config';
 import { allDomain } from '../App';
+import { $isProjectCatalogPage } from '../Web/Projects/Catalog';
 
 const {
   NAME, ACTIVE, PATH, GENERAL_PAGE, VALIDATE, ICON,
 } = SIDEBAR_ROUTES_FIELDS;
 
-const { CATALOG, UPLOADING, VIEWING } = CRUD_PATH;
+const {
+  CATALOG, UPLOADING, VIEWING, CONTENT,
+} = CRUD_PATH;
 
 const blocksDomain = allDomain.createDomain('Blocks');
 
@@ -28,18 +31,24 @@ export const $headerAnimationComplete = blocksDomain.createStore(false);
 
 export const $isHoveredLogout = blocksDomain.createStore(false);
 
+export const $webLayoutPaddingCondition = blocksDomain.createStore(false);
+
+export const $webLayoutPaddingConditionCombineData = combine(
+  $isProjectCatalogPage, (isProjectCatalogPage) => [isProjectCatalogPage],
+);
+
 export const $sidebarRoutes = combine(() => [
   {
     [NAME]: 'Проекты',
     [ACTIVE]: true,
-    [VALIDATE]: [CATALOG, UPLOADING, VIEWING],
+    [VALIDATE]: [CATALOG, UPLOADING, VIEWING, CONTENT],
     [ICON]: ProjectsSVG,
     [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CATALOG}?page=1`,
     [GENERAL_PAGE]: WEB_PATH.PROJECTS,
   },
   {
     [NAME]: 'Шаблоны',
-    [ACTIVE]: true,
+    [ACTIVE]: false,
     [VALIDATE]: [CATALOG],
     [ICON]: StaffSVG,
     [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PRESETS}/${CATALOG}?page=1`,

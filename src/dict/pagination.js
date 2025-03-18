@@ -18,6 +18,6 @@ export const PAGINATION_ACTIONS = {
   FROM: 'from',
 };
 
-export const PAGINATION_UNITS = [10, 15, 20, 25];
+export const PAGINATION_UNITS = [15];
 
 export const crossPagination = PAGINATION_UNITS[0];

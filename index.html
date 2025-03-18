@@ -4,33 +4,37 @@
     <meta charset="utf-8">
     <meta name="google" content="notranslate">
 
-    <title>beep - ^%#@</title>
+    <title>get-beeped - ^%#@</title>
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="theme-color" content="#1c171d" />
     <meta name="msapplication-navbutton-color" content="#fff" />
     <meta name="apple-mobile-web-app-status-bar-style" content="#fff" />
 
-    <meta name="description" content="Beep Default Page" />
-    <meta name="keywords" content="Beep,Video" />
+    <meta name="description" content="Загрузите ваше видео, и наш AI обработает его, убирая маты. Получите очищенную аудиодорожку быстро и легко. Бесплатная и быстрая обработка видео онлайн." />
+    <meta name="keywords" content="обработка видео, запикивание мата, удаление мата из видео, AI обработка видео, аудиодорожка без мата, онлайн обработка видео, бесплатная обработка видео, get-beeped, video" />
 
-    <meta property="og:title" content="Beep Frontend" />
-    <meta property="og:description" content="Beep Default Page" />
-    <meta property="og:keywords" content="Beep,Video" />
+    <meta property="og:title" content="get-beeped - ^%#@" />
+    <meta property="og:description" content="Сервис помогает автоматически заглушать ненормативную лексику или любые нежелательные слова в ваших видео и аудио. Просто загрузите файл, и мы забипаем его. После обработки вы сможете увидеть, где именно были сделаны исправления и скачать готовый файл. Быстро, просто и удобно!" />
+    <meta property="og:keywords" content="обработка видео, запикивание мата, удаление мата из видео, AI обработка видео, аудиодорожка без мата, онлайн обработка видео, бесплатная обработка видео, get-beeped, video, мат, beep" />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content="***permalink***" />
     <meta property="og:image" content="***img***" />
     <meta property="og:image:type" content="image/jpeg" />    
 
-    <link rel="icon" type="image/png" sizes="64x64" href="/images/favicon.svg" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1c171d">
+
+    <link rel="manifest" href="/manifest.json">
+
+    <link rel="icon" type="image/png" sizes="64x64" href="/images/favicon.png" />
     <link rel="apple-touch-icon" href="/images/favicon.svg" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    
+
     <meta name="format-detection" content="telephone=no, address=no, email=no, date=no, password=no" />
     
     <script type="text/javascript">
@@ -41,16 +45,20 @@
 
       document.addEventListener('DOMContentLoaded', () => {
         const loaderAppContainer = document.getElementById('loader-application');
-        loaderAppContainer.style.backgroundColor = JSON.parse(theme) === 'dark' ? '#1c171d' : 'white';
 
-        function setFullHeight() {
-          let vh = window.innerHeight * 0.01;
-          document.documentElement.style.setProperty('--vh', `${vh}px`);
+        if(loaderAppContainer){
+          loaderAppContainer.style.backgroundColor = JSON.parse(theme) === 'dark' ? '#1c171d' : 'white';
         }
-
-        window.addEventListener('resize', setFullHeight);
-        window.addEventListener('load', setFullHeight);
       });
+
+
+      const setFullHeight = () => {
+        let vh = window.innerHeight * 0.01;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      }
+
+      window.addEventListener('resize', setFullHeight);
+      window.addEventListener('load', setFullHeight);
     </script>
 
     <style type="text/css">
@@ -78,12 +86,30 @@
         left: 0;
         overflow: hidden;
       }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --background-color: #ffffff;
+          --theme-color: #ffffff;
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background-color: #1c171d;
+          --theme-color: #1c171d;
+        }
+      }
     </style>
+
+    <meta name="selfwork.ru" content="" />
+    <script src="https://pro.selfwork.ru/merchant-app/smz-init-payment.js" defer></script>
   </head>
   <body>
     <div id="root"></div>
     <div id="loader-application"></div>
     <div id="loader-web-page" style="display: none;"></div>
+    
     <script type="module" src="/src/index.jsx"></script>
   </body>
 </html>

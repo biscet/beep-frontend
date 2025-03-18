@@ -8,7 +8,7 @@ import {
   I18nContext, ShimmerSideBarCreateBtn, ShimmerSideBarLink, ShimmerUserInfo,
 } from 'src/ui/components/Helpers';
 import { BUTTON_TYPES, BUTTON_VARIATION } from 'src/dict/fields/button';
-import { LogoutSVG, AddSVG } from 'src/ui/media/images';
+import { LogoutSVG, AddSVG, SupportSVG } from 'src/ui/media/images';
 import { getUserInfoFx } from 'src/models/Login';
 import {
   CRUD_PATH, PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH,
@@ -19,11 +19,14 @@ import { CreateProject } from 'src/ui/components/modals';
 import {
   $isHoveredLogout, $sidebarRoutes, setIsHoveredLogoutFn, triggerLogoutFn,
 } from 'src/models/Blocks';
-import { $initApp, $pathnameUrl } from 'src/models/App';
-import { isEmpty } from 'src/lib/lodash';
+import {
+  $initApp, $openMobileSidebar, $pathnameUrl, openMobileSidebarFn,
+} from 'src/models/App';
+import { cx, isEmpty } from 'src/lib/lodash';
 import { AnimatePresence, motion } from 'framer-motion';
 import { USER_INFO_LOGOUT_ANIMATE, USER_INFO_SPAN_ANIMATE, USER_INFO_WRAPPER_ANIMATE } from 'src/dict/animate';
-import { prependObstacleFn } from 'src/lib/helpers';
+import { prependFn, prependObstacleFn } from 'src/lib/helpers';
+import { $innerSizes } from 'src/models/Helpers/Resize';
 
 const { EMAIL, USERNAME, AVATAR } = USER_FIELDS;
 const {
@@ -46,21 +49,23 @@ const UserUnfo = createComponent(
     return loading ? <ShimmerUserInfo /> : (
       <div className="sidebar__user-info user-info">
         <div className="user-info__box">
-          <p className="user-info__avatar">{avatarChar}</p>
+          <div className="user-info__avatar">
+            {avatarChar}
+          </div>
 
           <AnimatePresence>
             {!isHovered && (
-            <motion.div
-              key="user-info__wrapper"
-              className="user-info__wrapper"
-              initial={USER_INFO_WRAPPER_ANIMATE.initial}
-              animate={USER_INFO_WRAPPER_ANIMATE.animate}
-              exit={USER_INFO_WRAPPER_ANIMATE.exit}
-              transition={USER_INFO_WRAPPER_ANIMATE.transition}
-            >
-              <div title={email}>{email}</div>
-              <div title={username}>{username}</div>
-            </motion.div>
+              <motion.div
+                key="user-info__wrapper"
+                className="user-info__wrapper"
+                initial={USER_INFO_WRAPPER_ANIMATE.initial}
+                animate={USER_INFO_WRAPPER_ANIMATE.animate}
+                exit={USER_INFO_WRAPPER_ANIMATE.exit}
+                transition={USER_INFO_WRAPPER_ANIMATE.transition}
+              >
+                <div title={email}>{email}</div>
+                <div title={username}>{username}</div>
+              </motion.div>
             )}
           </AnimatePresence>
         </div>
@@ -149,7 +154,7 @@ const CreateProjectComponent = createComponent(
           type={BUTTON_TYPES.BUTTON}
           variant={BUTTON_VARIATION.TEXT}
           activeClass="bottom-side__link link link_active-create-project"
-          nonActiveClass="bottom-side__link link link_create-project "
+          nonActiveClass="bottom-side__link link link_create-project"
           onClick={isModal(modalIsOpen)}
           conditionClass={modalIsOpen}
           data-disabled={modalIsOpen}
@@ -167,25 +172,63 @@ const PolicyLink = React.memo(() => {
   return (
     <a
       className="bottom-side__policy"
-      href="#"
-      download
+      href="/privacy"
+      target="__blank"
+      rel="noopener noreferrer"
     >
       {t('Политика конфиденциальности')}
     </a>
   );
 });
 
-export const Sidebar = () => {
-  const [userInfoPending, initApp] = useUnit([getUserInfoFx.pending, $initApp]);
+const SupportLink = React.memo(() => {
+  const t = useContext(I18nContext);
 
   return (
-    <div className="sidebar">
+    <a
+      href="https://t.me/beep_support_bot"
+      target="__blank"
+      rel="noopener noreferrer"
+      className="bottom-side__link link link_support"
+    >
+      <SupportSVG />
+      {t('Чат с поддержкой')}
+    </a>
+  );
+});
+
+export const Sidebar = () => {
+  const [
+    userInfoPending, initApp, openMobileSidebar, { width },
+
+  ] = useUnit([getUserInfoFx.pending, $initApp, $openMobileSidebar, $innerSizes]);
+
+  return (
+    <div className={
+      cx({
+        defaultClass: ['sidebar'],
+        activeClass: 'sidebar_close',
+        condition: (openMobileSidebar === false) && (width < 1281),
+      })
+    }
+    >
+      {(width < 1281) ? (
+        <div
+          className="sidebar__burger"
+          onClick={prependFn(openMobileSidebarFn, !openMobileSidebar)}
+        >
+          <span />
+          <span />
+          <span />
+        </div>
+      ) : null}
+
       <NavLink
         to={`/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}?page=1`}
         className="sidebar__logo"
         activeClassName=""
       >
-        beep
+        get-beeped
       </NavLink>
 
       <CreateProjectComponent loading={userInfoPending || !initApp} />
@@ -195,6 +238,7 @@ export const Sidebar = () => {
       <SidebarRoutes loading={userInfoPending || !initApp} />
 
       <div className="sidebar__bottom-side bottom-side">
+        <SupportLink />
         <UserUnfo loading={userInfoPending || !initApp} />
         <PolicyLink />
       </div>

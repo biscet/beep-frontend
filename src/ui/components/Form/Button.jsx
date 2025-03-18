@@ -4,7 +4,7 @@ import { BUTTON_TYPES, BUTTON_VARIATION } from 'src/dict/fields/button';
 import { cx } from 'src/lib/lodash';
 
 export const Button = React.memo(({
-  type, children, path, conditionClass, onClick,
+  type, children, path, conditionClass, onClick, href,
   activeClass, nonActiveClass, variant, disabled, ...rest
 }) => {
   const className = cx({
@@ -25,6 +25,20 @@ export const Button = React.memo(({
       >
         {children}
       </NavLink>
+    );
+  }
+
+  if (type === BUTTON_TYPES.DOWNLOAD) {
+    return (
+      <a
+        className={className}
+        href={href}
+        download
+        disabled={disabled}
+        {...rest}
+      >
+        {children}
+      </a>
     );
   }
 

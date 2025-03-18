@@ -17,10 +17,14 @@ export const goToWebPageFn = webDomain.createEvent();
 export const $itemsRoutesWeb = combine(() => [
   {
     [PATH]: WEB_PATH.PRESETS,
-    [ACTIVE]: true,
+    [ACTIVE]: false,
   },
   {
     [PATH]: WEB_PATH.PROJECTS,
+    [ACTIVE]: true,
+  },
+  {
+    [PATH]: WEB_PATH.PAYMENT,
     [ACTIVE]: true,
   },
 ].filter(({ [ACTIVE]: active }) => active));

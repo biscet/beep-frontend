@@ -58,7 +58,7 @@ const FormButton = createComponent(
         disabled={disabledRegistrationButton || registrationPending}
         type={BUTTON_TYPES.SUBMIT}
         nonActiveClass="button_full"
-        id="registration"
+        form="registration"
       >
         {registrationPending === false ? t('Зарегистрироваться') : <LoaderSpinnerSVG />}
       </Button>
@@ -79,6 +79,20 @@ export const Registration = () => {
             <EmailField />
             <UserNameField />
             <PasswordField />
+          </div>
+
+          <div className="registration-page__caption">
+            {t('Регистрируясь на нашем сайте, вы автоматически подтверждаете, что ознакомлены с условиями нашей')}
+            {' '}
+            <a
+              href="/offer"
+              target="__blank"
+              rel="noopener noreferrer"
+            >
+              {t('оферты')}
+            </a>
+            {' '}
+            {t('и принимаете их. Пожалуйста, внимательно прочитайте условия, прежде чем завершить регистрацию.')}
           </div>
 
           <FormButton />

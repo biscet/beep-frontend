@@ -1,14 +1,10 @@
 import { defineConfig } from '@farmfe/core';
 import path from 'node:path';
-import { v4 as uuidv4 } from 'uuid';
-import FarmfeObfuscatorPlugin from 'rollup-plugin-javascript-obfuscator';
 import FarmfeSitemap from 'vite-plugin-sitemap';
-import { PAGES_PATH } from '../src/dict/path';
 import { getDefaultCopmilation, getFarmBuildPlugins, getFarmDefine } from './farm.utils';
+import { dynamicRoutes, robots } from './farm.sitemap';
 
 const utilsCfg = { mode: 'prod' };
-
-const dynamicRoutes = Object.values(PAGES_PATH);
 
 export default defineConfig(() => ({
   root: path.resolve(__dirname, '../'),
@@ -39,21 +35,11 @@ export default defineConfig(() => ({
     FarmfeSitemap({
       dynamicRoutes,
       outDir: 'build',
-      generateRobotsTxt: false,
+      generateRobotsTxt: true,
+      readable: false,
       hostname: process.env.FARM_SITEMAP_HOST,
-    }),
-    FarmfeObfuscatorPlugin({
-      debugger: false,
-      options: {
-        debugProtection: false,
-        controlFlowFlattening: true,
-        disableConsoleOutput: true,
-        optionsPreset: 'default',
-        renameGlobals: true,
-        target: 'browser',
-        sourceMap: false,
-        seed: uuidv4(),
-      },
+      robots,
+      changefreq: 'weekly',
     }),
   ],
   plugins: getFarmBuildPlugins(utilsCfg),

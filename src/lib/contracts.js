@@ -7,17 +7,36 @@ import { THEME_FIELD, THEMES } from 'src/dict/theme';
 import { crossPagination, PAGINATION_FIELDS, PAGINATION_UNITS } from 'src/dict/pagination';
 import { LANG_FIELD, LANGUAGES } from 'src/dict/translates';
 import {
-  BACKEND_PROJECT_STATUS_FIELDS, CHUNK_UPLOAD_FIELDS, ETAGS_FIELDS, PROJECT_FIELDS,
+  BACKEND_PROJECT_STATUS_FIELDS, CHUNK_UPLOAD_FIELDS,
+  COMPLETE_UPLOAD_CHUNKS_FIELDS, crossPlayerVolume, PLAYER_VOLUME_FIELD,
+  PROJECT_FIELDS,
 } from 'src/dict/fields/models/projects';
+import { crossCatalogType, TYPE_CATALOG_FIELD, TYPES_CATALOG_FIELDS } from 'src/dict/header-catalog';
 import { get, isEmpty } from './lodash';
 
-const { CREATED, ERROR } = BACKEND_PROJECT_STATUS_FIELDS;
+const { CREATED, DONE } = BACKEND_PROJECT_STATUS_FIELDS;
 
 export const themeContract = () => and(str, {
   isData: (data) => or(val(THEMES.DARK), val(THEMES.LIGHT)).isData(data),
   getErrorMessages: () => {
     storage.set(THEME_FIELD, getTheme());
     return 'The theme can only be "light" or "dark"';
+  },
+});
+
+export const typeCatalogContract = () => and(str, {
+  isData: (data) => or(val(TYPES_CATALOG_FIELDS.ROW), val(TYPES_CATALOG_FIELDS.COLUMN)).isData(data),
+  getErrorMessages: () => {
+    storage.set(TYPE_CATALOG_FIELD, crossCatalogType);
+    return 'The catalog type can only be "row" or "column"';
+  },
+});
+
+export const playerVolumeContract = () => and(num, {
+  isData: (data) => data >= 0 && data <= 100,
+  getErrorMessages: () => {
+    storage.set(PLAYER_VOLUME_FIELD, crossPlayerVolume);
+    return 'Volume can be from 0 to 100';
   },
 });
 
@@ -87,6 +106,14 @@ export const yandexContainerErrorContract = (data) => obj({
 
 export const canBeUploadPageContract = (states) => and(
   { isData: ({ page }) => page },
-  { isData: ({ data }) => ![CREATED, ERROR].includes(get(data, PROJECT_FIELDS.STATUS, '')) },
-)
-  .isData(states);
+  { isData: ({ data }) => ![CREATED].includes(get(data, PROJECT_FIELDS.STATUS, '')) },
+).isData(states);
+
+export const canBeContentPageContract = (states) => and(
+  { isData: ({ page }) => page },
+  { isData: ({ data }) => ![DONE].includes(get(data, PROJECT_FIELDS.STATUS, '')) },
+).isData(states);
+
+export const completeChunksUploadContract = (data) => obj({
+  [COMPLETE_UPLOAD_CHUNKS_FIELDS.FILE_KEY]: str,
+}).isData(data);

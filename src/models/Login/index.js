@@ -12,6 +12,8 @@ import { authLoginSign, getUserInfoSign } from 'src/api/login';
 
 const loginDomain = allDomain.createDomain('Login');
 
+export const goToLoginPageFn = loginDomain.createEvent();
+
 export const $tokenData = loginDomain.createStore({
   accessToken: storage.get(TOKENS.ACCESS),
   refreshToken: storage.get(TOKENS.REFRESH),

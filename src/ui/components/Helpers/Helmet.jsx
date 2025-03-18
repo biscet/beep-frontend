@@ -11,6 +11,7 @@ export const Helmet = createComponent($helmetCombineData, (_, helmetCombineData)
     [HELMET_FIELDS.TITLE]: helmetTitle,
     [HELMET_FIELDS.DESCRIPTION]: helmetDescription,
     [HELMET_FIELDS.KEYWORDS]: helmetKeywords,
+    [HELMET_FIELDS.CANONICAL]: helmetCanonical,
   } = helmetCombineData;
 
   return (
@@ -23,6 +24,8 @@ export const Helmet = createComponent($helmetCombineData, (_, helmetCombineData)
       <meta property="og:title" content={helmetTitle} />
       <meta property="og:description" content={helmetDescription} />
       <meta property="og:keywords" content={helmetKeywords} />
+
+      <link rel="canonical" href={helmetCanonical} />
     </Head>
   );
 });

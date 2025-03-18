@@ -1,6 +1,14 @@
 .login-page {
   @include page-creator('auto', 'auto', 'auto') {
     align-items: center;
+
+    @media (max-width: 1280px) {
+      padding-top: 80px;
+    }
+
+    @media (max-width: 900px) {
+      padding-top: 20px;
+    }
   }
 
   &__wrapper {
@@ -8,11 +16,53 @@
   }
 
   .window {
+    &_code {
+      gap: 24px;
+    }
+
     &__box {
       display: flex;
       width: 100%;
       flex-direction: column;
       gap: 32px;
+    }
+
+    .box {
+      &_code {
+        margin-top: 8px;
+        gap: 8px;
+
+        @media (max-width: 900px) {
+          .input_char {
+            width: 36px;
+            height: 46px;
+          }
+        }
+
+        p {
+          @include theme-transition-base(color);
+
+          @extend .caption-regular;
+
+          color: var($input-border);
+        }
+      }
+    }
+
+    &__timer {
+      @extend .caption-regular;
+
+      .button_text {
+        @extend .caption-regular;
+      }
+    }
+
+    &__footer {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
     }
   }
 
@@ -21,6 +71,11 @@
     z-index: -1;
     filter: blur(70px);
 
+    @media (max-width: 1280px) {
+      width: 200px !important;
+      height: 230px !important;
+    }
+
     &_one {
       top: -75px;
       left: -100px;
@@ -28,6 +83,11 @@
       height: 280px;
       animation: shape-animation 4s linear infinite;
       background: var($accent-color-general);
+
+      @media (max-width: 1280px) {
+        top: 0;
+        left: 0;
+      }
     }
 
     &_two {
@@ -37,6 +97,11 @@
       height: 280px;
       animation: shape-animation 7s linear infinite;
       background: var($accent-color-general);
+
+      @media (max-width: 1280px) {
+        right: 0;
+        bottom: 0;
+      }
     }
 
     &_three {
@@ -46,6 +111,11 @@
       height: 260px;
       animation: shape-animation 5s alternate infinite;
       background-color: var($accent-color-secondary);
+
+      @media (max-width: 1280px) {
+        top: 0;
+        right: 0;
+      }
     }
   }
 }

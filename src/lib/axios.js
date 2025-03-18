@@ -2,18 +2,21 @@ import axios from 'axios';
 import { storage } from 'src/lib/storage';
 import { CONFIG, TOKENS } from 'src/dict/config';
 import { isEmpty, saltString } from 'src/lib/lodash';
-import { logoutFn } from 'src/models/User';
+import { logoutFn } from 'src/models/Helpers/Logout';
 
 const { ACCESS, REFRESH } = TOKENS;
+const { PROCESSUNG_API_URL, PROJECTS_API_URL, USERS_API_URL } = CONFIG;
 
-const axiosConfig = {
-  baseURL: `${CONFIG.API_URL}`,
+const axiosConfig = (url) => ({
+  baseURL: url,
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
-};
+});
 
-const instance = axios.create(axiosConfig);
+const userInstance = axios.create(axiosConfig(USERS_API_URL));
+const projectsInstance = axios.create(axiosConfig(PROJECTS_API_URL));
+const processingInstance = axios.create(axiosConfig(PROCESSUNG_API_URL));
 
 let refreshPromise;
 
@@ -24,9 +27,7 @@ class RefreshTokenError extends Error {
   }
 }
 
-initiateTokensInterceptors(instance);
-
-const sendRefreshTokenRequest = async (refreshToken) => instance.post('/auth/refresh', { [REFRESH]: refreshToken });
+const sendRefreshTokenRequest = async (refreshToken) => userInstance.post('/auth/refresh', { [REFRESH]: refreshToken });
 
 const refreshTokens = async () => {
   const refreshToken = await storage.get(REFRESH);
@@ -52,7 +53,7 @@ const handleRetryRequestErrors = (errorFromSecondRequest) => {
   const isRefreshTokenRequestFailed = errorFromSecondRequest instanceof RefreshTokenError;
   const isFailedToRefreshTokens = isRefreshTokenRequestFailed || isRetryRequestUnauthorized;
 
-  if (isFailedToRefreshTokens) {
+  if (isFailedToRefreshTokens || errorFromSecondRequest.response?.status === 502) {
     logoutFn();
   }
 
@@ -63,9 +64,9 @@ const retryRequest = async (originalReq) => {
   const retryRequestObject = { ...originalReq };
 
   retryRequestObject.isRetryAttempt = true;
-  retryRequestObject.headers.Authorization = instance.defaults.headers.common.Authorization;
+  retryRequestObject.headers.Authorization = userInstance.defaults.headers.common.Authorization;
 
-  const retryRequestResponse = await instance.request(retryRequestObject);
+  const retryRequestResponse = await userInstance.request(retryRequestObject);
 
   return retryRequestResponse;
 };
@@ -79,6 +80,10 @@ const handleResponseError = async (error) => {
 
   if (isRefreshRequest || isLoginRequest || isSecondAttempt || !isOriginalRequestUnauthorized) {
     throw error;
+  }
+
+  if (isRefreshRequest && !isOriginalRequestUnauthorized) {
+    logoutFn();
   }
 
   try {
@@ -104,7 +109,7 @@ const addAuthHeaderToRequest = async (requestConfig) => {
   return updatedConfig;
 };
 
-function initiateTokensInterceptors(axiosInstance) {
+const initiateTokensInterceptors = (axiosInstance) => {
   axiosInstance.interceptors.request.use(
     (requestConfig) => addAuthHeaderToRequest(requestConfig),
     (error) => Promise.reject(error),
@@ -114,6 +119,10 @@ function initiateTokensInterceptors(axiosInstance) {
     (response) => response.data,
     (error) => handleResponseError(error),
   );
-}
+};
 
-export { instance as axios };
+[userInstance, processingInstance, projectsInstance].forEach((instance) => {
+  initiateTokensInterceptors(instance);
+});
+
+export { userInstance, processingInstance, projectsInstance };

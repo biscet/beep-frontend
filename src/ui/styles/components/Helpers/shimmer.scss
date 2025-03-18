@@ -23,6 +23,16 @@
     'user-info' calc(100% - 32px) $sidebar-info-height $sidebar-radius,
     'side-bar-link' calc(100% - 32px) $sidebar-link-height $sidebar-radius,
     'side-bar-breadcrumbs' 50% 25px,
+    'resend-code' 100% 25px,
+    'project-viewing-values' 100% 25px,
+    'project-uploading' 100% 550px 32px,
+    'project-content-player' 100% 540px 32px,
+    'project-content-wave' 100% 80px 32px,
+    'project-content-button' 270px 58px 24px,
+    'project-catalog-row' 100% 284px,
+    'project-catalog-column' 100% 221px,
+    'payment-cards-quantity' 80% 21px,
+    'payment-cards-button' 100% 54px 24px,
   );
 
   @each $name, $width, $height, $border-radius in $shimmers {
@@ -32,10 +42,14 @@
       flex-shrink: 0;
       border-radius: $border-radius;
     }
+  }
 
-    &_side-bar-breadcrumbs {
-      max-width: 500px;
-    }
+  &_side-bar-breadcrumbs {
+    max-width: 500px;
+  }
+
+  &_project-uploading {
+    max-width: 470px;
   }
 
   &_side-bar-link,

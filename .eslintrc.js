@@ -51,6 +51,7 @@ module.exports = {
     'unicorn/prevent-abbreviations': 'off',
     'unicorn/no-array-for-each': 'off',
     'unicorn/no-null': 'off',
+    'jsx-a11y/media-has-caption': 'off',
     'import/prefer-default-export': 'off',
     'no-case-declarations': 'off',
     'no-param-reassign': 'off',

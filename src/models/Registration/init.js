@@ -3,9 +3,14 @@ import { debounce } from 'patronum';
 import { errorMsgHandler } from 'src/lib/url';
 import { REGISTRATION_ERRORS, REGISTRATION_FIELDS } from 'src/dict/fields/models/registration';
 import { notifyErrorFn } from 'src/models/Helpers/Notify';
+import { goToLoginPageFn, loginForm } from 'src/models/Login';
+import { DEFAULT_RESEND_CODE, USER_CONFIRM_FIELDS } from 'src/dict/fields/models/user';
 import { LOGIN_FIELDS } from 'src/dict/fields/models/login';
-import { authLoginFx } from 'src/models/Login';
-import { $isRegistrationPage, authRegistrationFx, registrationForm } from '.';
+import {
+  $isRegistrationPage, authRegistrationFx,
+  registrationForm,
+} from '.';
+import { $secondsToResendEmailCode, userConfirmForm } from '../User';
 
 sample({
   clock: debounce({
@@ -26,11 +31,22 @@ sample({
 sample({
   clock: authRegistrationFx.doneData,
   source: registrationForm.$values,
-  fn: (form) => ({
-    [LOGIN_FIELDS.EMAIL]: form[REGISTRATION_FIELDS.EMAIL],
-    [LOGIN_FIELDS.PASSWORD]: form[REGISTRATION_FIELDS.PASSWORD],
-  }),
-  target: authLoginFx,
+  target: [
+    userConfirmForm.setForm.prepend((form) => ({
+      [USER_CONFIRM_FIELDS.EMAIL]: form[REGISTRATION_FIELDS.EMAIL],
+    })),
+    loginForm.setForm.prepend((form) => ({
+      [LOGIN_FIELDS.EMAIL]: form[REGISTRATION_FIELDS.EMAIL],
+      [LOGIN_FIELDS.PASSWORD]: form[REGISTRATION_FIELDS.PASSWORD],
+    })),
+    goToLoginPageFn,
+  ],
+});
+
+sample({
+  clock: authRegistrationFx.doneData,
+  fn: () => DEFAULT_RESEND_CODE,
+  target: $secondsToResendEmailCode,
 });
 
 sample({

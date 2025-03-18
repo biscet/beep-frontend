@@ -1,0 +1,28 @@
+serviceAccountName: "default"
+container:
+  tag: ""
+  resources:
+    requests:
+      memory: "300Mi"
+      cpu: "250m"
+    limits:
+      memory: "600Mi"
+      cpu: "500m"
+imagePullSecrets:
+  - name: "yandex-cr-secret"
+replicaCount: 1
+env:
+  #etc
+  - name: PORT
+    value: "80"
+
+service:
+  type: "NodePort"
+  nodePort: 30007
+ingress:
+  enabled: true
+  hosts:
+    - host: "front-dev.local"
+      paths:
+        - path: /
+          pathType: ImplementationSpecific

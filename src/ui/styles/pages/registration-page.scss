@@ -1,9 +1,27 @@
 .registration-page {
   @include page-creator('auto', 'none', 'none') {
-    min-height: 850px;
+    min-height: 900px;
     align-items: center;
     padding-top: 8vh;
     padding-top: 8svh;
+
+    @media (max-width: 1280px) {
+      padding-top: 80px;
+    }
+
+    @media (max-width: 900px) {
+      padding-top: 20px;
+    }
+  }
+
+  &__caption {
+    @extend .caption-regular;
+
+    color: var($input-border);
+
+    a {
+      color: var($accent-color-general);
+    }
   }
 
   &__wrapper {
@@ -24,6 +42,11 @@
     z-index: -1;
     filter: blur(70px);
 
+    @media (max-width: 1280px) {
+      width: 200px !important;
+      height: 230px !important;
+    }
+
     &_one {
       top: -75px;
       left: -100px;
@@ -31,6 +54,11 @@
       height: 280px;
       animation: shape-animation 4s linear infinite;
       background: var($accent-color-general);
+
+      @media (max-width: 1280px) {
+        top: 0;
+        left: 0;
+      }
     }
 
     &_two {
@@ -40,6 +68,11 @@
       height: 340px;
       animation: shape-animation 7s linear infinite;
       background: var($accent-color-general);
+
+      @media (max-width: 1280px) {
+        top: 0;
+        right: 0;
+      }
     }
 
     &_three {
@@ -49,6 +82,11 @@
       height: 350px;
       animation: shape-animation 5s alternate infinite;
       background-color: var($accent-color-secondary);
+
+      @media (max-width: 1280px) {
+        bottom: 0;
+        left: 0;
+      }
     }
   }
 }

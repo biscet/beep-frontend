@@ -5,6 +5,8 @@ $header-height: 104px;
 $file-uplaoder-max-height: 550px;
 
 $bg-general: --bg-general;
+$bg-general-radial: --bg-general-radial;
+$bg-general-loader-radial: --bg-general-loader-radial;
 $text-general: --text-general;
 $pad-general: --pad-general;
 $accent-color-general: --accent-color-general;
@@ -22,6 +24,7 @@ $create-project-button: --create-project-button;
 $create-project-button-text: --create-project-button-text;
 $create-project-button-hover: --create-project-button-hover;
 $rainbow-button-gradient: --rainbow-button-gradient;
+$support-bg-color: --support-bg-color;
 
 $sidebar-width: 292px;
 $sidebar-radius: 24px;
@@ -29,4 +32,7 @@ $sidebar-info-height: 82px;
 $sidebar-info-mb: 10px;
 $sidebar-info-border: 1px solid var($border-sidebar);
 $sidebar-header-height: 64px;
+$sidebar-header-height-mobile: 124px;
 $sidebar-link-height: 54px;
+
+$statuses-colors: ('done' #118c3b, 'error' #9d3333, 'processing' #f1ae03,);

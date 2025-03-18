@@ -5,14 +5,13 @@ import { useDropzone } from 'react-dropzone';
 import { AnimatePresence, motion } from 'framer-motion';
 import { DEFAULT_FILE_UPLOADER_ANIMATION, DEFAULT_PROGRESS_ANIMATION } from 'src/dict/animate';
 import { DoneUploaderSVG, UploaderSVG } from 'src/ui/media/images';
-import { formatFileSize } from 'src/lib/helpers';
+import { progressFillStyle } from 'src/lib/helpers';
+import { formatFileSize } from 'src/lib/file';
 import { I18nContext } from '../Helpers';
 
 const {
   BINARY, FILE, MAX_FILES, ACCEPT,
 } = FILE_UPLOADER_FIELDS;
-
-const progressFillStyle = (uploadProgress) => ({ transform: `translateX(-${100 - uploadProgress}%)` });
 
 const getAllFormats = (accept) => {
   const allFormats = [];

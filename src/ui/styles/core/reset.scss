@@ -24,7 +24,12 @@ html,
 body {
   overflow: hidden;
   width: 100vw;
-  min-width: 1280px;
+}
+
+iframe {
+  border: none;
+  background-color: white;
+  outline: none;
 }
 
 a,

@@ -30,93 +30,142 @@ export const $currentBreadCrumbs = breadCrumbsDomain.createStore({
   }],
 });
 
-export const $webPresetsBC = combine($detailProject, (detailProject) => [{
-  [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PRESETS, CRUD_PATH.CATALOG],
-  [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
-  [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
-    {
-      [PATH]: CRUD_PATH.CATALOG,
-      [NAME]: 'Шаблоны',
-      [ACTIVE]: true,
-      [LINK]: '',
-      [VISIBLE]: true,
-      [TRANSLATE]: true,
-      [LOADING]: false,
-    },
-  ].filter(({ [VISIBLE]: visible }) => visible),
-},
-{
-  [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.CATALOG],
-  [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
-  [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
-    {
-      [PATH]: CRUD_PATH.CATALOG,
-      [NAME]: 'Проекты',
-      [ACTIVE]: true,
-      [LINK]: '',
-      [VISIBLE]: true,
-      [TRANSLATE]: true,
-      [LOADING]: false,
-    },
-  ].filter(({ [VISIBLE]: visible }) => visible),
-},
-{
-  [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.UPLOADING],
-  [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
-  [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
-    {
-      [PATH]: CRUD_PATH.CATALOG,
-      [NAME]: 'Проекты',
-      [ACTIVE]: true,
-      [LINK]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}`,
-      [VISIBLE]: true,
-      [TRANSLATE]: true,
-      [LOADING]: false,
-    },
-    {
-      [PATH]: CRUD_PATH.UPLOADING,
-      [NAME]: detailProject[PROJECT_FIELDS.NAME],
-      [ACTIVE]: true,
-      [LINK]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${detailProject[PROJECT_FIELDS.ID]}/${CRUD_PATH.VIEWING}`,
-      [VISIBLE]: true,
-      [TRANSLATE]: false,
-      [LOADING]: isEmpty(detailProject),
-    },
-    {
-      [PATH]: CRUD_PATH.UPLOADING,
-      [NAME]: 'Загрузка файла',
-      [ACTIVE]: true,
-      [LINK]: '',
-      [VISIBLE]: true,
-      [TRANSLATE]: true,
-      [LOADING]: false,
-    },
-  ].filter(({ [VISIBLE]: visible }) => visible),
-},
-{
-  [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.VIEWING],
-  [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
-  [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
-    {
-      [PATH]: CRUD_PATH.CATALOG,
-      [NAME]: 'Проекты',
-      [ACTIVE]: true,
-      [LINK]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}`,
-      [VISIBLE]: true,
-      [TRANSLATE]: true,
-      [LOADING]: false,
-    },
-    {
-      [PATH]: CRUD_PATH.UPLOADING,
-      [NAME]: detailProject[PROJECT_FIELDS.NAME],
-      [ACTIVE]: true,
-      [LINK]: '',
-      [VISIBLE]: true,
-      [TRANSLATE]: false,
-      [LOADING]: isEmpty(detailProject),
-    },
-  ].filter(({ [VISIBLE]: visible }) => visible),
-}].filter(({ [BREAD_CRUMBS_ROUTE.VISIBLE]: visible }) => visible));
+export const $webPresetsBC = combine($detailProject, (detailProject) => [
+  {
+    [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PAYMENT],
+    [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
+    [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
+      {
+        [PATH]: CRUD_PATH.CATALOG,
+        [NAME]: 'Покупка минут',
+        [ACTIVE]: true,
+        [LINK]: '',
+        [VISIBLE]: true,
+        [TRANSLATE]: true,
+        [LOADING]: false,
+      },
+    ].filter(({ [VISIBLE]: visible }) => visible),
+  },
+  {
+    [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PRESETS, CRUD_PATH.CATALOG],
+    [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
+    [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
+      {
+        [PATH]: CRUD_PATH.CATALOG,
+        [NAME]: 'Шаблоны',
+        [ACTIVE]: true,
+        [LINK]: '',
+        [VISIBLE]: true,
+        [TRANSLATE]: true,
+        [LOADING]: false,
+      },
+    ].filter(({ [VISIBLE]: visible }) => visible),
+  },
+  {
+    [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.CATALOG],
+    [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
+    [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
+      {
+        [PATH]: CRUD_PATH.CATALOG,
+        [NAME]: 'Проекты',
+        [ACTIVE]: true,
+        [LINK]: '',
+        [VISIBLE]: true,
+        [TRANSLATE]: true,
+        [LOADING]: false,
+      },
+    ].filter(({ [VISIBLE]: visible }) => visible),
+  },
+  {
+    [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.UPLOADING],
+    [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
+    [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
+      {
+        [PATH]: CRUD_PATH.CATALOG,
+        [NAME]: 'Проекты',
+        [ACTIVE]: true,
+        [LINK]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}`,
+        [VISIBLE]: true,
+        [TRANSLATE]: true,
+        [LOADING]: false,
+      },
+      {
+        [PATH]: CRUD_PATH.UPLOADING,
+        [NAME]: detailProject[PROJECT_FIELDS.NAME],
+        [ACTIVE]: true,
+        [LINK]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${detailProject[PROJECT_FIELDS.ID]}/${CRUD_PATH.VIEWING}`,
+        [VISIBLE]: true,
+        [TRANSLATE]: false,
+        [LOADING]: isEmpty(detailProject),
+      },
+      {
+        [PATH]: CRUD_PATH.UPLOADING,
+        [NAME]: 'Загрузка файла',
+        [ACTIVE]: true,
+        [LINK]: '',
+        [VISIBLE]: true,
+        [TRANSLATE]: true,
+        [LOADING]: false,
+      },
+    ].filter(({ [VISIBLE]: visible }) => visible),
+  },
+  {
+    [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.CONTENT],
+    [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
+    [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
+      {
+        [PATH]: CRUD_PATH.CATALOG,
+        [NAME]: 'Проекты',
+        [ACTIVE]: true,
+        [LINK]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}`,
+        [VISIBLE]: true,
+        [TRANSLATE]: true,
+        [LOADING]: false,
+      },
+      {
+        [PATH]: CRUD_PATH.CONTENT,
+        [NAME]: detailProject[PROJECT_FIELDS.NAME],
+        [ACTIVE]: true,
+        [LINK]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${detailProject[PROJECT_FIELDS.ID]}/${CRUD_PATH.VIEWING}`,
+        [VISIBLE]: true,
+        [TRANSLATE]: false,
+        [LOADING]: isEmpty(detailProject),
+      },
+      {
+        [PATH]: CRUD_PATH.CONTENT,
+        [NAME]: 'Страница просмотра',
+        [ACTIVE]: true,
+        [LINK]: '',
+        [VISIBLE]: true,
+        [TRANSLATE]: true,
+        [LOADING]: false,
+      },
+    ].filter(({ [VISIBLE]: visible }) => visible),
+  },
+  {
+    [BREAD_CRUMBS_ROUTE.PATH]: [PAGES_PATH.WEB, WEB_PATH.PROJECTS, CRUD_PATH.VIEWING],
+    [BREAD_CRUMBS_ROUTE.VISIBLE]: true,
+    [BREAD_CRUMBS_ROUTE.BREADCRUMBS]: [
+      {
+        [PATH]: CRUD_PATH.CATALOG,
+        [NAME]: 'Проекты',
+        [ACTIVE]: true,
+        [LINK]: `/${PAGES_PATH.WEB}/${WEB_PATH.PROJECTS}/${CRUD_PATH.CATALOG}`,
+        [VISIBLE]: true,
+        [TRANSLATE]: true,
+        [LOADING]: false,
+      },
+      {
+        [PATH]: CRUD_PATH.UPLOADING,
+        [NAME]: detailProject[PROJECT_FIELDS.NAME],
+        [ACTIVE]: true,
+        [LINK]: '',
+        [VISIBLE]: true,
+        [TRANSLATE]: false,
+        [LOADING]: isEmpty(detailProject),
+      },
+    ].filter(({ [VISIBLE]: visible }) => visible),
+  }].filter(({ [BREAD_CRUMBS_ROUTE.VISIBLE]: visible }) => visible));
 
 export const $allBreadCrumbsCombineData = combine(
   $webPresetsBC,

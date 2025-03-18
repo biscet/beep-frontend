@@ -7,13 +7,13 @@ import {
 import { get, isEmpty } from 'src/lib/lodash';
 import { reflect } from '@effector/reflect';
 import {
-  BurgerSVG, CharsSVG, DictSVG, DoneSVG, EditSVG,
-  ErrorSVG, ProcessSVG, SettingsSVG, SoundSVG,
-  StaffSVG, TimerSVG,
+  BurgerSVG, CharsSVG, DoneSVG, EditSVG,
+  ErrorSVG, ProcessSVG, SettingsSVG, TimerSVG,
+  // SoundSVG, StaffSVG, DictSVG,
 } from 'src/ui/media/images';
-import { convertMinutesToHoursAndMinutes } from 'src/lib/helpers';
+import { convertMinutesToHoursAndMinutes } from 'src/lib/date';
 
-const { DONE, ERROR } = BACKEND_PROJECT_STATUS_FIELDS;
+const { DONE, ERROR, CREATED } = BACKEND_PROJECT_STATUS_FIELDS;
 
 const FIELD_TYPES = {
   TEXT: 'text',
@@ -71,7 +71,7 @@ export const NameProjectField = reflect({
     body: $detailProject.map((data) => get(data, PROJECT_FIELDS.NAME, '-')),
     name: 'Название проекта:',
     divider: false,
-    editable: true,
+    editable: false,
     Icon: CharsSVG,
     translateBody: false,
     type: FIELD_TYPES.TEXT,
@@ -141,8 +141,16 @@ export const EstimateProjectField = reflect({
   view: Field,
   bind: {
     body: $detailProject.map((data) => {
-      const time = get(data, PROJECT_FIELDS.ESTIMATE, 0);
-      if (isEmpty(time)) { return null; }
+      const time = Number(get(data, PROJECT_FIELDS.ESTIMATE, 0));
+      const status = get(data, PROJECT_FIELDS.STATUS, '');
+      const conditionShowTime = [DONE, ERROR, CREATED].includes(status);
+
+      if (!conditionShowTime && time <= 0) {
+        return convertMinutesToHoursAndMinutes(2);
+      }
+
+      if (isEmpty(time) || conditionShowTime) { return null; }
+
       return convertMinutesToHoursAndMinutes(time);
     }),
     name: 'До окончания обработки:',
@@ -154,41 +162,41 @@ export const EstimateProjectField = reflect({
   },
 });
 
-export const PresetProjectField = reflect({
-  view: Field,
-  bind: {
-    body: 'Cтандартный',
-    name: 'Шаблон:',
-    divider: true,
-    editable: true,
-    Icon: StaffSVG,
-    translateBody: true,
-    type: FIELD_TYPES.TEXT,
-  },
-});
+// export const PresetProjectField = reflect({
+//   view: Field,
+//   bind: {
+//     body: 'Cтандартный',
+//     name: 'Шаблон:',
+//     divider: true,
+//     editable: true,
+//     Icon: StaffSVG,
+//     translateBody: true,
+//     type: FIELD_TYPES.TEXT,
+//   },
+// });
 
-export const SoundProjectField = reflect({
-  view: Field,
-  bind: {
-    body: '-',
-    name: 'Звук:',
-    divider: true,
-    editable: true,
-    Icon: SoundSVG,
-    translateBody: false,
-    type: FIELD_TYPES.SOUND,
-  },
-});
+// export const SoundProjectField = reflect({
+//   view: Field,
+//   bind: {
+//     body: '-',
+//     name: 'Звук:',
+//     divider: true,
+//     editable: true,
+//     Icon: SoundSVG,
+//     translateBody: false,
+//     type: FIELD_TYPES.SOUND,
+//   },
+// });
 
-export const DictProjectField = reflect({
-  view: Field,
-  bind: {
-    body: 'яблоко, компьютер, река, солнце, книга, телефон, город, музыка, самолет, цветок, лес, океан, машина, дом, мост, дождь, звезда, гора, зима, школа, ветер, письмо, магазин, кошка, собака, дождь, звезда, гора, зима, школа, ветер, письмо, магазин, кошка, собака',
-    name: 'Словарь:',
-    divider: true,
-    editable: true,
-    Icon: DictSVG,
-    translateBody: false,
-    type: FIELD_TYPES.TEXT,
-  },
-});
+// export const DictProjectField = reflect({
+//   view: Field,
+//   bind: {
+//     body: 'яблоко, компьютер, река, солнце, книга, телефон, город, музыка, самолет, цветок, лес, океан, машина, дом, мост, дождь, звезда, гора, зима, школа, ветер, письмо, магазин, кошка, собака, дождь, звезда, гора, зима, школа, ветер, письмо, магазин, кошка, собака',
+//     name: 'Словарь:',
+//     divider: true,
+//     editable: true,
+//     Icon: DictSVG,
+//     translateBody: false,
+//     type: FIELD_TYPES.TEXT,
+//   },
+// });

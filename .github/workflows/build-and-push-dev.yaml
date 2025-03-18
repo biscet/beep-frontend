@@ -1,0 +1,109 @@
+name: DEV Docker Build, Push, and Deploy
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+
+jobs:
+  build-and-push:
+    runs-on: dev
+    outputs:
+      commit_hash: ${{ steps.get_commit_hash.outputs.hash }}
+      APP_NAME: ${{ env.APP_NAME }}
+    env:
+      REGISTRY_NAME: ${YANDEX_REGISTRY_NAME}
+      REGISTRY_TOKEN: ${YANDEX_REGISTRY_TOKEN}
+      RUNNER_TOKEN: ${DEV_RUNNER_TOKEN}
+      RUNNER_SSH_KEY: ${DEV_RUNNER_SSH_KEY}
+      APP_NAME: front
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Get the short commit hash
+      id: get_commit_hash
+      run: echo "::set-output name=hash::$(git rev-parse --short=7 HEAD)"
+
+    - name: Echo environment variables
+      run: |
+        echo "REGISTRY_NAME: ${{ env.REGISTRY_NAME }}"
+        echo "REGISTRY_TOKEN: ${{ env.REGISTRY_TOKEN }}"
+        echo "APP_NAME: ${{ env.APP_NAME }}"
+        echo "COMMIT_HASH: ${{ steps.get_commit_hash.outputs.hash }}"
+        echo "RUNNER_TOKEN: ${{ env.RUNNER_TOKEN }}"
+        echo "RUNNER_SSH_KEY: ${{ env.RUNNER_SSH_KEY }}"
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Login to Yandex Container Registry
+      env:
+        DOCKER_CONFIG: /tmp/.docker
+      run: |
+        echo ${{ env.REGISTRY_TOKEN }} | docker login --username oauth --password-stdin cr.yandex
+
+    - name: Build Docker image
+      env:
+        DOCKER_CONFIG: /tmp/.docker
+        GATEWAY_HOST: "http://front-dev.local"
+        SITEMAP_HOST: "http://front-dev.local/"
+      run: |
+        docker build \
+          --build-arg GATEWAY_HOST="${{ env.GATEWAY_HOST }}" \
+          --build-arg SITEMAP_HOST="${{ env.SITEMAP_HOST }}" \
+          -t "${{ env.REGISTRY_NAME }}/${{ env.APP_NAME }}:${{ steps.get_commit_hash.outputs.hash }}" .
+
+    - name: Push Docker image
+      env:
+        DOCKER_CONFIG: /tmp/.docker
+      run: |
+        docker push "${{ env.REGISTRY_NAME }}/${{ env.APP_NAME }}:${{ steps.get_commit_hash.outputs.hash }}"
+
+  update-helm:
+    runs-on: dev
+    needs: build-and-push
+    env:
+      RUNNER_SSH_KEY: ${DEV_RUNNER_SSH_KEY}
+      RUNNER_TOKEN: ${DEV_RUNNER_TOKEN}
+      COMMIT_HASH: ${{ needs.build-and-push.outputs.commit_hash }}
+      APP_NAME: ${{ needs.build-and-push.outputs.APP_NAME }}
+
+    steps:
+    - name: Checkout Service Repo
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 1
+
+    - name: Checkout deploy repo
+      uses: actions/checkout@v4
+      with:
+        repository: get-beeped/deploy
+        ssh-key: ${{ secrets.DEV_RUNNER_SSH_KEY }}
+        path: deploy_repo
+        ref: main
+
+    - name: Execute create-dev.sh to setup HelmCharts
+      working-directory: deploy_repo
+      run: |
+        chmod 777 create-dev.sh
+        ./create-dev.sh ${{ env.APP_NAME }}
+
+    - name: Replace values_dev.yaml with new version from Service Repo
+      run: |
+        cp ./.k8s/values_dev.yaml deploy_repo/HelmCharts/${{ env.APP_NAME }}-chart/values_dev.yaml
+
+    - name: Replace container tag with commit hash
+      run: |
+        sed -i "s/tag: \"\"/tag: \"${{ env.COMMIT_HASH }}\"/" deploy_repo/HelmCharts/${{ env.APP_NAME }}-chart/values_dev.yaml
+
+    - name: Commit and Push changes to Deploy Repo
+      working-directory: deploy_repo
+      run: |
+        git config --global user.name "${{ env.NAME_GIT }}"
+        git config --global user.email "${{ env.EMAIL_GIT }}"
+        git add .
+        git commit -m "Updated values_dev.yaml with new configuration and commit hash"
+        git push origin main

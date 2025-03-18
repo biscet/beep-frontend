@@ -1,0 +1,41 @@
+.loader-layout {
+  @include flex-centered;
+
+  position: absolute;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  background: var($bg-general-loader-radial);
+
+  &__gif {
+    position: relative;
+    left: 25px;
+    width: 150px;
+    height: 150px;
+    pointer-events: none;
+  }
+}
+
+.loader-pages {
+  @include flex-centered;
+
+  position: absolute;
+  z-index: 15;
+  top: $sidebar-header-height;
+  left: 0;
+  width: 100%;
+  height: calc(100% - $sidebar-header-height);
+  justify-content: center;
+  background: var($bg-general-radial);
+
+  &__gif {
+    position: relative;
+    left: 25px;
+    width: 150px;
+    height: 150px;
+    pointer-events: none;
+  }
+}

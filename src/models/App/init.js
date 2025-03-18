@@ -13,9 +13,20 @@ import {
   $initGateCombineData,
   RouteGate,
   $initApp,
+  $openMobileSidebar,
+  openMobileSidebarFn,
 } from './index';
 import { $enqueueSnackbar } from '../Helpers/Notify';
 import { $history } from '../Helpers/History';
+
+$openMobileSidebar
+  .on(openMobileSidebarFn, (_, state) => state);
+
+sample({
+  clock: debounce({ timeout: 150, source: $pathnameUrl }),
+  fn: () => false,
+  target: openMobileSidebarFn,
+});
 
 sample({
   clock: AppGate.state,
@@ -96,6 +107,7 @@ sample({
     } else {
       rootContainer.scrollTo(0, 0);
     }
+
     return null;
   },
 });

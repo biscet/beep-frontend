@@ -4,14 +4,17 @@ import {
 import {
   postCompleteUploadChunkSign,
   postConfirmSTTSign, postUploadChunkSign,
+  postValidateForUploadSign,
 } from 'src/api/projects';
 import { isCurrentPath } from 'src/lib/url';
 import { $pathnameUrl } from 'src/models/App';
-import { UPLOADING_FIELDS } from 'src/dict/fields/models/projects';
+import { CHUNK_UPLOAD_FIELDS, UPLOADING_FIELDS } from 'src/dict/fields/models/projects';
 import { rules } from 'src/lib/rules';
 import { createForm } from 'effector-forms';
-import { combine } from 'effector';
-import { isEmpty } from 'src/lib/lodash';
+import { combine, sample } from 'effector';
+import { get, isEmpty } from 'src/lib/lodash';
+import { notifyErrorFn } from 'src/models/Helpers/Notify';
+import { createFactory } from '@withease/factories';
 import { projectsDomain } from '..';
 
 const { UPLOADING } = CRUD_PATH;
@@ -26,12 +29,19 @@ export const continueUploadChunksFn = projectsDomain.createEvent();
 export const $etagsChunks = projectsDomain.createStore([]);
 export const $detailChunks = projectsDomain.createStore({});
 
+export const $uploadingFile = projectsDomain.createStore(false);
+
+export const validateForUploadFx = projectsDomain.createEffect(postValidateForUploadSign);
 export const chunkUploadFx = projectsDomain.createEffect(postUploadChunkSign);
 export const completeChunkUploadFx = projectsDomain.createEffect(postCompleteUploadChunkSign);
 export const confirmSTTFx = projectsDomain.createEffect(postConfirmSTTSign);
 
 export const $isProjectUploadPage = $pathnameUrl.map(
   (path) => isCurrentPath(path, [PAGES_PATH.WEB, WEB_PATH.PROJECTS, UPLOADING]),
+);
+
+export const $totalChunksForFile = $detailChunks.map(
+  (data) => get(data, CHUNK_UPLOAD_FIELDS.TOTAL_CHUNKS, 0),
 );
 
 export const uploadingForm = createForm({
@@ -52,4 +62,15 @@ export const $disabledUploadingProjectCombineData = combine(uploadingForm.$value
   } = values;
 
   return [file].some((field) => isEmpty(field));
+});
+
+export const failedChunksFb = createFactory(({ contract, clock }) => {
+  sample({
+    clock,
+    filter: (data) => (isEmpty(contract) ? true : !contract(data)),
+    target: [
+      notifyErrorFn.prepend(() => 'Начать обработку файла не удалось. Попробуйте еще раз.'),
+      resetChunksFn,
+    ],
+  });
 });

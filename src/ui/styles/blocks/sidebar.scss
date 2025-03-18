@@ -1,6 +1,4 @@
 .sidebar {
-  @include theme-transition-base(border-color);
-
   display: flex;
   overflow: hidden;
   width: $sidebar-width;
@@ -9,6 +7,37 @@
   flex-shrink: 0;
   padding: 32px 0;
   border-right: 1px var($border-sidebar) solid;
+  background-color: var($bg-general);
+  transition: background-color 0.1s linear, border-color 0.1s linear;
+
+  @media (max-width: 1280px) {
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100vw;
+  }
+
+  &_close {
+    display: none;
+  }
+
+  &__burger {
+    position: absolute;
+    top: 36px;
+    left: 16px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 8px;
+
+    span {
+      width: 32px;
+      height: 2px;
+      background-color: var($text-general);
+      border-radius: 12px;
+    }
+  }
 
   svg {
     path {
@@ -30,7 +59,9 @@
   &__logo {
     @extend .chakra-petch-medium;
 
+    max-width: fit-content;
     flex-shrink: 0;
+    margin: 0 auto;
     margin-bottom: 44px;
     color: var($text-general);
     text-align: center;
@@ -167,6 +198,12 @@
       &:hover {
         opacity: 1;
       }
+    }
+
+    &_support {
+      width: calc(100% - 32px);
+      margin: 0 16px;
+      color: var($text-general);
     }
 
     &:not([data-disabled="true"]):hover {

@@ -1,0 +1,14 @@
+.docs-layout {
+  width: 100%;
+  max-width: 100vw;
+  padding-top: 20px;
+  padding-right: 26px;
+  padding-left: 36px;
+  overflow-x: hidden;
+  word-wrap: break-word;
+
+  * {
+    background: var($bg-general) !important;
+    color: var($text-general) !important;
+  }
+}

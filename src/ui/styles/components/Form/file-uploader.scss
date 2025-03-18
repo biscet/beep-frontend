@@ -42,21 +42,25 @@
     }
 
     &__text {
+      padding: 0 8px;
       margin-bottom: 64px;
       text-align: center;
     }
 
     &__text-upload {
+      padding: 0 8px;
       margin-bottom: 20px;
       text-align: center;
     }
 
     &__file-name {
+      padding: 8px 0;
       margin-bottom: 8px;
       text-align: center;
     }
 
     &__file-size {
+      padding: 0 8px;
       margin-bottom: 40px;
       color: var($gray);
       text-align: center;
@@ -65,6 +69,7 @@
     &__formats {
       @extend .caption-regular;
 
+      padding: 0 8px;
       margin-top: 8px;
       color: var($gray);
       text-align: center;

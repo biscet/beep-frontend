@@ -1,45 +1,27 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useUnit } from 'effector-react';
 import { isEmpty } from 'src/lib/lodash';
 import { $pagination, $paginationCurrentPage, goToPageByPaginationFn } from 'src/models/Helpers/Pagination';
 import { PAGINATION_ACTIONS, PAGINATION_FIELDS } from 'src/dict/pagination';
+import { PaginationArrowSVG } from 'src/ui/media/images';
+import { $innerSizes } from 'src/models/Helpers/Resize';
 import { I18nContext } from './i18n';
 
-const changePaginationUnit = (unit, currentPage, total) => () => {
-  const maxPages = Math.ceil(total / unit);
-  console.log(maxPages, currentPage);
-};
+const changePage = (number) => () => goToPageByPaginationFn({
+  [PAGINATION_FIELDS.ACTION]: PAGINATION_ACTIONS.FROM,
+  [PAGINATION_FIELDS.DATA_NUMBER]: number,
+});
 
-export const Pagination = React.memo(({ total }) => {
+export const Pagination = ({ total }) => {
   const t = useContext(I18nContext);
   let page = useUnit($paginationCurrentPage);
-  const paginationUnit = useUnit($pagination);
+  const [paginationUnit, { width }] = useUnit([$pagination, $innerSizes]);
   const limit = paginationUnit;
   const maxPages = Math.ceil(total / limit);
-
-  useEffect(() => {
-    if (page > maxPages && maxPages !== 0) {
-      console.log('error');
-    }
-  }, [total, page]);
 
   if (isEmpty(page)) page = '1';
 
   const currentPage = Number.parseInt(page, 10);
-
-  if (isEmpty(total) || total <= 0) return null;
-
-  if (maxPages < 2) {
-    return (
-      <div className="pagination">
-        <div className="pagination-flex-box" style={{ fontSize: 14 }}>
-          {t('Всего: ')}
-          {' '}
-          {isEmpty(total) ? 0 : total}
-        </div>
-      </div>
-    );
-  }
 
   const items = [];
 
@@ -55,67 +37,74 @@ export const Pagination = React.memo(({ total }) => {
 
   // eslint-disable-next-line no-plusplus
   for (let number = leftSide; number <= rightSide; number++) {
-    items.push(
-      <div
-        key={number}
-        className={`pagination__item ${number === currentPage ? 'pagination__active' : ''}`}
-        data-active={number === currentPage ? 'true' : 'false'}
-        onClick={() => goToPageByPaginationFn({
-          [PAGINATION_FIELDS.ACTION]: PAGINATION_ACTIONS.FROM,
-          [PAGINATION_FIELDS.DATA_NUMBER]: number,
-        })}
-      >
-        {number}
-      </div>,
-    );
+    if (number !== 1 && number !== maxPages) {
+      items.push(
+        <div
+          key={number}
+          className={`pagination__item item ${number === currentPage ? 'item_active' : ''}`}
+          data-active={number === currentPage ? 'true' : 'false'}
+          onClick={changePage(number)}
+          data-disabled="false"
+        >
+          {number}
+        </div>,
+      );
+    }
   }
 
   return (
     <div className="pagination">
-      <div className="pagination-flex-box" style={{ fontSize: 14 }}>
-        {t('Всего: ')}
-        {' '}
-        {isEmpty(total) ? 0 : total}
-      </div>
+      <div className="pagination__flex-box">
+        <div
+          className="pagination__item item item_back"
+          onClick={currentPage > 1 ? changePage(currentPage - 1) : null}
+          data-active={currentPage === 1 ? 'true' : 'false'}
+          data-disabled={currentPage === 1 ? 'true' : 'false'}
+        >
+          <PaginationArrowSVG />
+          {width < 700 ? null : t('Назад')}
+        </div>
+        <div
+          onClick={changePage(1)}
+          data-disabled="false"
+          data-active={currentPage === 1 ? 'true' : 'false'}
+          className={`pagination__item item ${currentPage === 1 ? 'item_active' : ''}`}
+        >
+          1
+        </div>
 
-      <div className="pagination-flex-box">
-        {currentPage > 1 && (
-          <>
-            <div className="pagination__item" onClick={null}>
-              first
-            </div>
-
-            <div className="pagination__item" onClick={null}>
-              left
-            </div>
-          </>
-        )}
+        {currentPage > 4
+          ? (<div className="pagination__item" data-disabled="false" data-active="true">...</div>)
+          : null}
 
         {items}
 
-        {currentPage < rightSide && (
-          <>
-            <div className="pagination__item" onClick={null}>
-              right
-            </div>
-            <div className="pagination__item" onClick={null}>
-              last
-            </div>
-          </>
-        )}
-      </div>
+        {currentPage + 3 < maxPages
+          ? (<div className="pagination__item" data-disabled="false" data-active="true">...</div>)
+          : null}
 
-      <div className="pagination-flex-box">
-        {[5, 10, 15, 20, 25, 30].map((el, i) => (
-          <div
-            className={`pagination__item ${el === paginationUnit ? 'pagination__active' : ''}`}
-            key={i}
-            onClick={changePaginationUnit(el, currentPage, total)}
-          >
-            {el}
-          </div>
-        ))}
+        {maxPages > 1
+          ? (
+            <div
+              className={`pagination__item item ${currentPage === maxPages ? 'item_active' : ''}`}
+              onClick={currentPage !== maxPages ? changePage(maxPages) : null}
+              data-active={currentPage === maxPages ? 'true' : 'false'}
+              data-disabled="false"
+            >
+              {maxPages}
+            </div>
+          ) : null}
+
+        <div
+          className="pagination__item item item_next"
+          onClick={currentPage < maxPages ? changePage(currentPage + 1) : null}
+          data-active={currentPage === maxPages ? 'true' : 'false'}
+          data-disabled={currentPage === maxPages ? 'true' : 'false'}
+        >
+          {width < 700 ? null : t('Дальше')}
+          <PaginationArrowSVG />
+        </div>
       </div>
     </div>
   );
-});
+};

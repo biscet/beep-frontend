@@ -7,17 +7,21 @@ import { get, isEmpty } from 'src/lib/lodash';
 import { CRUD_PATH, ROUTES_FIELDS } from 'src/dict/path';
 import { $itemsRoutesProjects } from 'src/models/Web/Projects';
 
-import { Catalog } from './children/Catalog';
-import { Uploading } from './children/Uploading';
+import { Catalog } from './children/Catalog/Catalog';
+import { Uploading } from './children/Uploading/Uploading';
 import { Viewing } from './children/Viewing/Viewing';
+import { Content } from './children/Content/Content';
 
 const { PATH } = ROUTES_FIELDS;
-const { CATALOG, UPLOADING, VIEWING } = CRUD_PATH;
+const {
+  CATALOG, UPLOADING, VIEWING, CONTENT,
+} = CRUD_PATH;
 
 const pathMap = {
   [CATALOG]: Catalog,
   [UPLOADING]: Uploading,
   [VIEWING]: Viewing,
+  [CONTENT]: Content,
 };
 
 export const ProjectsRoutes = withRouter(({ match: { url } }) => {
@@ -30,7 +34,7 @@ export const ProjectsRoutes = withRouter(({ match: { url } }) => {
     <Switch location={location} key={location.pathname}>
       {routes.map(
         ({ [PATH]: path }) => {
-          const crud = [UPLOADING, VIEWING].includes(path) ? `:id/${path}` : path;
+          const crud = [UPLOADING, VIEWING, CONTENT].includes(path) ? `:id/${path}` : path;
 
           return (
             <Route

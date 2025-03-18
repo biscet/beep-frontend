@@ -7,6 +7,7 @@ export const passwordPattern = /^.{8,}$/;
 export const userNamePattern = /^[\dA-Za-z]{4,30}$/;
 export const projectNamePattern = /^.{1,255}$/;
 export const uuidPattern = /[\da-f]{8}-[\da-f]{4}-[1-5][\da-f]{3}-[89ab][\da-f]{3}-[\da-f]{12}/i;
+export const codePattern = /^\d*$/;
 
 export const rules = {
   required: () => ({
@@ -22,6 +23,17 @@ export const rules = {
       isValid: emailPattern.test(value),
       errorText: 'Указан некорректный email-адрес.',
     }),
+  }),
+  confirmCode: (digits) => ({
+    name: 'confirmCode',
+    validator: (value) => {
+      const code = value.join('');
+
+      return {
+        isValid: codePattern.test(code) && code.length === digits,
+        errorText: 'Не корректное количество символов.',
+      };
+    },
   }),
   username: () => ({
     name: 'username',

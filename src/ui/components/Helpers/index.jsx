@@ -4,8 +4,8 @@ export { ThemePicker } from './Theme';
 export { BreadCrumbs } from './BreadCrumbs';
 export { Modal } from './Modal';
 export { Pagination } from './Pagination';
+export { HeaderCatalog } from './HeaderCatalog';
+export { SupportButton } from './SupportButton';
+export { LawyerFooter } from './LawyerFooter';
 
-export {
-  ShimmerUserInfo, ShimmerBreadCrumbs, ShimmerSideBarLink,
-  ShimmerSideBarCreateBtn,
-} from './Shimmer';
+export * from './Shimmer';

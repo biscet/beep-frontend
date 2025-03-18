@@ -51,8 +51,14 @@
   &__button-box {
     display: flex;
     width: 100%;
-    justify-content: center;
+    justify-content: flex-end;
     margin-top: 40px;
+
+    @media (max-width: 500px) {
+      .button_large {
+        width: 100% !important;
+      }
+    }
 
     #arrow-svg {
       path {
@@ -80,58 +86,9 @@
     background-color: var($bg-general);
     border-radius: 32px;
     color: var($text-general);
-  }
 
-  .shape-container {
-    position: sticky;
-    z-index: -1;
-    top: 0;
-    width: 100%;
-  }
-
-  .shape {
-    position: absolute;
-    flex-shrink: 0;
-    filter: blur(70px);
-
-    &_one {
-      top: 20px;
-      left: -280px;
-      width: 300px;
-      height: 32vh;
-      height: 32svh;
-      animation: shape-animation 4s linear infinite;
-      background: var($accent-color-secondary);
-    }
-
-    &_two {
-      bottom: calc($sidebar-header-height - calc(var(--vh, 1vh) * 85));
-      left: -170px;
-      width: 330px;
-      height: 34vh;
-      height: 34svh;
-      animation: shape-animation 7s linear infinite;
-      background: var($accent-color-general);
-    }
-
-    &_three {
-      top: -20px;
-      right: -280px;
-      width: 430px;
-      height: 35vh;
-      height: 35svh;
-      animation: shape-animation 4s linear infinite;
-      background: var($accent-color-general);
-    }
-
-    &_four {
-      right: -185px;
-      bottom: calc($sidebar-header-height - calc(var(--vh, 1vh) * 85));
-      width: 600px;
-      height: 26vh;
-      height: 26svh;
-      animation: shape-animation 7s linear infinite;
-      background: var($accent-color-secondary);
+    @media (max-width: 1280px) {
+      padding: 32px 16px;
     }
   }
 

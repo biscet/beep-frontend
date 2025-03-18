@@ -11,6 +11,11 @@ $modals: ('create-project' 530px,);
   &_web {
     width: calc(100% - $sidebar-width);
     margin-left: $sidebar-width;
+
+    @media (max-width: 1280px) {
+      width: 100%;
+      margin-left: 0;
+    }
   }
 
   &__wrapper {
@@ -33,6 +38,10 @@ $modals: ('create-project' 530px,);
     @each $name, $width in $modals {
       &_#{$name} {
         width: $width;
+      }
+
+      @media (max-width: 1280px) {
+        width: calc(100% - 32px);
       }
     }
 

@@ -164,3 +164,16 @@ export const USER_INFO_SPAN_ANIMATE = {
   exit: { width: 0, opacity: 0 },
   transition: { duration: 0.1 },
 };
+
+export const SUPPORT_BUTTON_ANIMATE = {
+  initial: { x: 0 },
+  animate: (isHovered) => ({ x: isHovered ? 0 : 0 }),
+  transition: { duration: 0.1 },
+};
+
+export const SUPPORT_BUTTON_SPAN_ANIMATE = {
+  initial: { width: 0, opacity: 0 },
+  animate: { width: 'auto', opacity: 1 },
+  exit: { width: 0, opacity: 0 },
+  transition: { duration: 0.1 },
+};

@@ -1,3 +1,3 @@
-import { axios } from 'src/lib/axios';
+import { userInstance } from 'src/lib/axios';
 
-export const authRegistrationSign = (data) => axios.post('/auth/register', data);
+export const authRegistrationSign = (data) => userInstance.post('/auth/register', data);

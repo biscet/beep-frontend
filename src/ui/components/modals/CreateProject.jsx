@@ -33,7 +33,7 @@ const FormButton = createComponent(
         type={BUTTON_TYPES.SUBMIT}
         disabled={disabledCreateProjectCombineData}
         nonActiveClass="create-project__button button_full"
-        id="createProject"
+        form="createProject"
       >
         {!createProjectDone ? t('Далее') : <LoaderSpinnerSVG />}
       </Button>
@@ -60,7 +60,7 @@ export const CreateProject = ({ closeModalFn }) => {
           condition: hasError(),
         })}
       >
-        {t('Название проекта должно быть уникальным и содержать от 1 до 255 символов.')}
+        {t('Название проекта должно содержать от 1 до 255 символов.')}
       </p>
 
       <ProjectNameField />

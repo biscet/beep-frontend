@@ -4,7 +4,7 @@ import {
   cx, get, isEmpty, isObject,
 } from 'src/lib/lodash';
 import { I18nContext } from 'src/ui/components/Helpers';
-import { EyeSVG } from 'src/ui/media/images';
+import { EyeSVG, SearchSVG } from 'src/ui/media/images';
 
 const handlerChange = ({ onChange }) => (e) => {
   onChange(isObject(e) ? get(e, 'target.value', '') : e);
@@ -37,14 +37,24 @@ export const Input = ({
   const currentValue = isObject(value) ? get(value, 'target.value', '') : value;
 
   return (
-    <div className="input-group">
+    <div className={cx({
+      defaultClass: ['input-group'],
+      activeClass: 'input-group_search',
+      condition: INPUT_VARIATION.SEARCH === variant,
+    })}
+    >
       <input type={type} name={name} className="autocomplete-input" autoComplete="off" />
 
       <div
-        className="input-group__box"
+        className={cx({
+          defaultClass: ['input-group__box', 'box'],
+          activeClass: 'box_search',
+          condition: INPUT_VARIATION.SEARCH === variant,
+        })}
         aria-disabled={disabled}
         aria-valuetext={type}
       >
+
         <input
           {...restProps}
           type={viewPass ? 'text' : type}
@@ -57,6 +67,8 @@ export const Input = ({
           className={className}
           placeholder={t(placeholder)}
         />
+
+        {INPUT_VARIATION.SEARCH === variant ? <SearchSVG /> : null}
 
         {INPUT_TYPES.PASSWORD === type ? (
           <div
