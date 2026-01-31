@@ -1,8 +1,10 @@
 export const PAGES_PATH = {
   DEFAULT: '',
+  DASHBOARD: 'dashboard',
   REGISTRATION: 'registration',
   LOGIN: 'login',
   WEB: 'web',
+  SOUNDS: 'sounds',
   OFFER: 'offer',
   PRIVACY: 'privacy',
   PRICES: 'prices',

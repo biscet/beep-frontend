@@ -29,10 +29,12 @@ import { WebRoutes } from './children/Web/WebRoutes';
 import { Offer } from './children/Offer';
 import { Privacy } from './children/Privacy';
 import { Prices } from './children/Prices';
+import { Dashboard } from './children/Dashboard';
+import { Sounds } from './children/Sounds';
 
 const {
   DEFAULT, LOGIN, REGISTRATION, PRICES,
-  WEB, OFFER, PRIVACY,
+  WEB, OFFER, PRIVACY, DASHBOARD, SOUNDS,
 } = PAGES_PATH;
 
 const Routes = () => {
@@ -50,6 +52,8 @@ const Routes = () => {
         <Switch location={location} key={location.pathname}>
           <Route path={`/${LOGIN}`} component={Login} exact />
           <Route path={`/${DEFAULT}`} component={Default} exact />
+          <Route path={`/${SOUNDS}`} component={Sounds} exact />
+          <Route path={`/${DASHBOARD}`} component={Dashboard} exact />
           <Route path={`/${REGISTRATION}`} component={Registration} exact />
           <Route path={`/${PRICES}`} component={Prices} exact />
 

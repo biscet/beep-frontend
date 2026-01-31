@@ -37,6 +37,11 @@ const WebLayout = ({ children }) => {
         >
           {children}
         </motion.div>
+
+        <div className="web-content__shape web-content__shape_one" />
+        <div className="web-content__shape web-content__shape_two" />
+        <div className="web-content__shape web-content__shape_three" />
+        <div className="web-content__shape web-content__shape_four" />
       </div>
 
       <LoaderLayout />

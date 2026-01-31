@@ -1,31 +1,13 @@
-import React, {
-  useContext, useEffect, useRef, useState,
-} from 'react';
+import React, { useContext } from 'react';
 import { BUTTON_TYPES, BUTTON_VARIATION } from 'src/dict/fields/button';
 import { PAGES_PATH } from 'src/dict/path';
 import { Button } from 'src/ui/components/Form';
 import { I18nContext, LawyerFooter } from 'src/ui/components/Helpers';
 import { ArrowSVG } from 'src/ui/media/images';
 import { MouseParallaxChild } from 'react-parallax-mouse';
-import { useUnit } from 'effector-react';
-import { $pathnameUrl } from 'src/models/App';
 
 export const Default = () => {
   const t = useContext(I18nContext);
-  const pathname = useUnit($pathnameUrl);
-  const [muted, setMuted] = useState(true);
-
-  const videoRef = useRef(null);
-
-  useEffect(() => {
-    if (pathname !== '/') {
-      videoRef.current.style = 'opacity: 0;';
-    }
-  }, [pathname]);
-
-  const onClick = () => {
-    setMuted(!muted);
-  };
 
   return (
     <div className="default-page">
@@ -44,23 +26,12 @@ export const Default = () => {
         </div>
 
         <div className="default-page__preview preview">
-          <video
-            className="preview__box"
-            src="/videos/beeped.mp4"
-            muted={muted}
-            loop
-            autoPlay
-            ref={videoRef}
-          >
-            {t('Ваш браузер не поддерживает видео.')}
-          </video>
-
-          <Button
-            type={BUTTON_TYPES.BUTTON}
-            onClick={onClick}
-          >
-            {t(muted ? 'Включить звук' : 'Выключить звук')}
-          </Button>
+          <div className="preview__box">
+            <img
+              src="/images/general.png"
+              alt={t('Превью сервиса beep')}
+            />
+          </div>
 
           <div className="preview__symbol symbol symbol_one">
             <MouseParallaxChild

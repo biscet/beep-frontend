@@ -6,7 +6,6 @@
   top: 0;
   width: 100%;
   height: $header-height;
-  backdrop-filter: blur(15px);
 
   &__box {
     @include flex-centered;

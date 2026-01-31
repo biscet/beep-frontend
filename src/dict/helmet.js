@@ -3,7 +3,7 @@ import { HELMET_FIELDS } from './fields/models/app';
 import { CRUD_PATH, PAGES_PATH, WEB_PATH } from './path';
 
 const {
-  DEFAULT, LOGIN, REGISTRATION, WEB,
+  DEFAULT, DASHBOARD, SOUNDS, LOGIN, REGISTRATION, WEB,
   OFFER, PRIVACY, PRICES,
 } = PAGES_PATH;
 
@@ -11,6 +11,8 @@ const { PRESETS, PROJECTS, PAYMENT } = WEB_PATH;
 
 export const HELMET_ROUTES = [
   DEFAULT,
+  SOUNDS,
+  DASHBOARD,
   LOGIN,
   REGISTRATION,
   OFFER,
@@ -30,6 +32,18 @@ export const HELMET_DICT = {
     [HELMET_FIELDS.DESCRIPTION]: 'Загрузите ваше видео, и наш AI обработает его, убирая маты. Получите очищенную аудиодорожку быстро и легко. Бесплатная и быстрая обработка видео онлайн.',
     [HELMET_FIELDS.KEYWORDS]: 'обработка видео, запикивание мата, удаление мата из видео, AI обработка видео, аудиодорожка без мата, онлайн обработка видео, бесплатная обработка видео, get-beeped, video, мат, beep',
     [HELMET_FIELDS.CANONICAL]: `${CONFIG.SITEMAP_URL}${DEFAULT}`,
+  },
+  [SOUNDS]: {
+    [HELMET_FIELDS.TITLE]: 'get-beeped - Звуки',
+    [HELMET_FIELDS.DESCRIPTION]: 'Скоро появится библиотека звуков и примеров для загрузки.',
+    [HELMET_FIELDS.KEYWORDS]: 'звуки, библиотека звуков, samples, get-beeped, audio',
+    [HELMET_FIELDS.CANONICAL]: `${CONFIG.SITEMAP_URL}${SOUNDS}`,
+  },
+  [DASHBOARD]: {
+    [HELMET_FIELDS.TITLE]: 'get-beeped - Дашборд',
+    [HELMET_FIELDS.DESCRIPTION]: 'Информация о вашей активности и истории обработки.',
+    [HELMET_FIELDS.KEYWORDS]: 'дашборд, статистика, история, get-beeped',
+    [HELMET_FIELDS.CANONICAL]: `${CONFIG.SITEMAP_URL}${DASHBOARD}`,
   },
   [LOGIN]: {
     [HELMET_FIELDS.TITLE]: 'get-beeped - Вход',
