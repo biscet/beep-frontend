@@ -1,5 +1,5 @@
-import { userInstance } from 'src/lib/axios';
+import { localBackend } from 'src/services/local-backend';
 
-export const getPaymentCardsInfoSign = () => userInstance.get('/minutes/packs');
+export const getPaymentCardsInfoSign = () => localBackend.getPaymentCards();
 
-export const getPaymentAcquireSign = (data) => userInstance.post('/minutes/buy', data);
+export const getPaymentAcquireSign = (data) => localBackend.buyPack(data);

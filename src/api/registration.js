@@ -1,3 +1,3 @@
-import { userInstance } from 'src/lib/axios';
+import { localBackend } from 'src/services/local-backend';
 
-export const authRegistrationSign = (data) => userInstance.post('/auth/register', data);
+export const authRegistrationSign = (data) => localBackend.registerUser(data);

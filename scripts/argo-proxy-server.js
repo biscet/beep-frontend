@@ -18,7 +18,7 @@ app.use('/api/projects-dev', createProxyMiddleware({
   target: process.env.PROJECTS_HOST,
   changeOrigin: true,
   pathRewrite: {
-    '^/api/projects-dev': '', 
+    '^/api/projects-dev': '',
   },
   onError: (err, req, res) => {
     res.status(500).json({ error: 'Proxy Error', details: err.message });

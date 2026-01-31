@@ -80,17 +80,21 @@ sample({
     }),
   ],
   source: [$pathParams, $paginationQuery, catalogForm.$values],
-  filter: ([pathParams]) => !isEmpty(getQueryParamFromUrl(pathParams, 'page')),
-  fn: ([, paginationQuery, form]) => {
+  fn: ([pathParams, paginationQuery, form]) => {
     const params = getAllQueryParamsFromUrl();
     const projectParams = { [PROJECT_FIELDS.NAME]: get(form, PROJECT_FIELDS.NAME, '') };
-    delete params.page;
+    const pageParam = getQueryParamFromUrl(pathParams, 'page');
+    const merged = { ...params, ...paginationQuery, ...projectParams };
 
-    if (isEmpty(projectParams[PROJECT_FIELDS.NAME])) {
-      delete projectParams[PROJECT_FIELDS.NAME];
+    if (isEmpty(pageParam)) {
+      merged.page = '1';
     }
 
-    return { ...params, ...paginationQuery, ...projectParams };
+    if (isEmpty(projectParams[PROJECT_FIELDS.NAME])) {
+      delete merged[PROJECT_FIELDS.NAME];
+    }
+
+    return merged;
   },
   target: getCatalogProjectsFx,
 });

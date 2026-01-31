@@ -1,26 +1,26 @@
-import { projectsInstance, processingInstance } from 'src/lib/axios';
+import { localBackend } from 'src/services/local-backend';
 
 export const getCatalogProjectsSign = (data) => {
   const params = new URLSearchParams(data);
-  return projectsInstance.get('/get-user-projects', { params });
+  return localBackend.getCatalogProjects(Object.fromEntries(params));
 };
 
 export const getProjectSign = (data) => {
   const params = new URLSearchParams(data);
-  return projectsInstance.get('/get-project-details', { params });
+  return localBackend.getProjectDetails(Object.fromEntries(params));
 };
 
 export const getFileDetailsSign = (data) => {
   const params = new URLSearchParams(data);
-  return projectsInstance.get('/get-file-details', { params });
+  return localBackend.getFileDetails(Object.fromEntries(params));
 };
 
-export const postCreateProjectSign = (data) => projectsInstance.post('/create-project', data);
+export const postCreateProjectSign = (data) => localBackend.createProject(data);
 
-export const postValidateForUploadSign = async (data) => processingInstance.post('/validate-for-upload', await data);
+export const postValidateForUploadSign = async (data) => localBackend.validateForUpload(await data);
 
-export const postUploadChunkSign = (data) => processingInstance.postForm('/upload-chunk', data);
+export const postUploadChunkSign = (data) => localBackend.uploadChunk(data);
 
-export const postCompleteUploadChunkSign = async (data) => processingInstance.post('/complete-chunk-upload', await data);
+export const postCompleteUploadChunkSign = async (data) => localBackend.completeChunkUpload(await data);
 
-export const postConfirmSTTSign = async (data) => processingInstance.post('/confirm-stt', await data);
+export const postConfirmSTTSign = async (data) => localBackend.confirmStt(await data);

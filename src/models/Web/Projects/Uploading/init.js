@@ -185,16 +185,17 @@ sample({
   fn: async ([values, detailChunks, detailProject], data) => {
     const type = get(detailChunks, CHUNK_UPLOAD_FIELDS.EXT_TYPE, 'video') === 'video'
       ? TYPES_FIELDS.VIDEO_MP4 : TYPES_FIELDS.VIDEO_MP3;
+    const file = get(values, UPLOADING_FIELDS.FILE, {})[FILE_UPLOADER_FIELDS.FILE];
+    const durationFile = file ? await getMediaDuration(file) : 0;
 
     return {
-      [COMPLETE_UPLOAD_CHUNKS_FIELDS.DURATION]: await getMediaDuration(
-        get(values, UPLOADING_FIELDS.FILE, {})[FILE_UPLOADER_FIELDS.FILE],
-      ),
+      [COMPLETE_UPLOAD_CHUNKS_FIELDS.DURATION]: durationFile,
       [COMPLETE_UPLOAD_CHUNKS_FIELDS.CONTENT_LANGUAGEE]: 'RU',
       [COMPLETE_UPLOAD_CHUNKS_FIELDS.FILE_KEY]: get(data, COMPLETE_UPLOAD_CHUNKS_FIELDS.FILE_KEY, null),
       [CHUNK_UPLOAD_FIELDS.PROJECT_ID]: detailChunks[CHUNK_UPLOAD_FIELDS.PROJECT_ID],
       [CHUNK_UPLOAD_FIELDS.TYPE]: type,
       [CHUNK_UPLOAD_FIELDS.OPERATION_ID]: get(detailProject, CHUNK_UPLOAD_FIELDS.OPERATION_ID, ''),
+      file,
     };
   },
   target: confirmSTTFx.prepend(async (data) => data),
