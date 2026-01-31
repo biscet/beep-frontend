@@ -117,9 +117,12 @@ const SidebarRoutes = createComponent(
             [GENERAL_PAGE]: page,
           }) => {
             const urls = pathnameUrl.split('/');
-            const conditionClass = urls.filter(
+            const matches = urls.filter(
               (url) => (url === page) || (validate.includes(url)),
-            ).length > 1;
+            );
+            const matchCount = matches.length;
+            const isWebSection = urls.includes(PAGES_PATH.WEB);
+            const conditionClass = isWebSection ? matchCount > 1 : matchCount > 0;
 
             return (
               <Button

@@ -22,6 +22,8 @@ export { SearchSVG } from './Form/SearchSVG';
 export { LogoutSVG } from './Sidebar/LogoutSVG';
 export { ProjectsSVG } from './Sidebar/ProjectsSVG';
 export { PresetsSVG } from './Sidebar/PresetsSVG';
+export { DashboardSVG } from './Sidebar/DashboardSVG';
+export { SoundsSVG } from './Sidebar/SoundsSVG';
 export { MoneySVG } from './Sidebar/MoneySVG';
 export { BuySVG } from './Sidebar/BuySVG';
 

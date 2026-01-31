@@ -47,6 +47,8 @@ const PRICE_TABLE = [
   },
 ];
 
+const DEFAULT_USER_BALANCE = 220;
+
 class MockBackendError extends Error {
   constructor(msg, extra = {}) {
     super(msg);
@@ -130,6 +132,19 @@ const wait = (ms) => new Promise((resolve) => {
   }, ms);
 });
 
+const ensureInitialUserBalance = async (user) => {
+  const currentBalance = typeof user.balance === 'number' ? user.balance : 0;
+
+  if (currentBalance > 0) {
+    return currentBalance;
+  }
+
+  const updatedUser = { ...user, balance: DEFAULT_USER_BALANCE };
+  await putRecord(STORE_NAMES.USERS, updatedUser);
+
+  return DEFAULT_USER_BALANCE;
+};
+
 const sessions = new Map();
 
 const getCurrentUserId = () => {
@@ -179,7 +194,7 @@ export const localBackend = {
       email: normalizedEmail,
       username,
       password,
-      balance: 0,
+      balance: DEFAULT_USER_BALANCE,
       frozen_balance: 0,
       isActive: true,
       createdAt: Date.now(),
@@ -216,12 +231,15 @@ export const localBackend = {
       throw new MockBackendError('User not found');
     }
 
+    const balance = await ensureInitialUserBalance(user);
+    const frozenBalance = typeof user.frozen_balance === 'number' ? user.frozen_balance : 0;
+
     return {
       username: user.username,
       email: user.email,
       id: user.id,
-      balance: user.balance ?? 0,
-      frozen_balance: user.frozen_balance ?? 0,
+      balance,
+      frozen_balance: frozenBalance,
     };
   },
 

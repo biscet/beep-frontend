@@ -2,7 +2,12 @@ import { combine } from 'effector';
 import {
   CRUD_PATH, PAGES_PATH, SIDEBAR_ROUTES_FIELDS, WEB_PATH,
 } from 'src/dict/path';
-import { ProjectsSVG, StaffSVG } from 'src/ui/media/images';
+import {
+  DashboardSVG,
+  ProjectsSVG,
+  SoundsSVG,
+  StaffSVG,
+} from 'src/ui/media/images';
 import { rootContainer } from 'src/dict/config';
 import { allDomain } from '../App';
 import { $isProjectCatalogPage } from '../Web/Projects/Catalog';
@@ -47,12 +52,28 @@ export const $sidebarRoutes = combine(() => [
     [GENERAL_PAGE]: WEB_PATH.PROJECTS,
   },
   {
+    [NAME]: 'Дашборд',
+    [ACTIVE]: true,
+    [VALIDATE]: [PAGES_PATH.DASHBOARD],
+    [ICON]: DashboardSVG,
+    [PATH]: `/${PAGES_PATH.DASHBOARD}`,
+    [GENERAL_PAGE]: PAGES_PATH.DASHBOARD,
+  },
+  {
     [NAME]: 'Шаблоны',
-    [ACTIVE]: false,
+    [ACTIVE]: true,
     [VALIDATE]: [CATALOG],
     [ICON]: StaffSVG,
     [PATH]: `/${PAGES_PATH.WEB}/${WEB_PATH.PRESETS}/${CATALOG}?page=1`,
     [GENERAL_PAGE]: WEB_PATH.PRESETS,
+  },
+  {
+    [NAME]: 'Звуки',
+    [ACTIVE]: true,
+    [VALIDATE]: [PAGES_PATH.SOUNDS],
+    [ICON]: SoundsSVG,
+    [PATH]: `/${PAGES_PATH.SOUNDS}`,
+    [GENERAL_PAGE]: PAGES_PATH.SOUNDS,
   },
 ].filter(({ [ACTIVE]: active }) => active));
 
