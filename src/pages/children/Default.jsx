@@ -27,10 +27,15 @@ export const Default = () => {
 
         <div className="default-page__preview preview">
           <div className="preview__box">
-            <img
-              src="/images/general.png"
-              alt={t('Превью сервиса beep')}
-            />
+            <video
+              src="/videos/beeped-ai.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              {t('Ваш браузер не поддерживает видео.')}
+            </video>
           </div>
 
           <div className="preview__symbol symbol symbol_one">

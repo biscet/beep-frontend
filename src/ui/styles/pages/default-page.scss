@@ -82,11 +82,12 @@
       border-radius: 32px;
       object-fit: cover;
 
-      img {
+      video {
         display: block;
-        width: 100%;
-        height: 100%;
+        width: 101%;
+        height: 101%;
         object-fit: cover;
+        object-position: calc(56% + 23px) center;
       }
 
       @media (max-width: 1000px) {
